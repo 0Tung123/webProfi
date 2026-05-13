@@ -26,19 +26,24 @@ export const HERO_CARDS = [
 
 export const SERVICES = [
   {
-    title: "Thiết kế UI/UX",
-    desc: "Giao diện trực quan, trải nghiệm người dùng mượt mà giúp thương hiệu ghi dấu ấn.",
-    icon: "🎨",
+    title: "Thiết kế",
+    desc: "Khám phá cách chúng tôi thiết kế website chuyên nghiệp giúp khách hàng bán hàng trực tuyến hiệu quả và tạo ấn tượng thương hiệu tốt hơn.",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    title: "Lập trình Website",
-    desc: "Website hiệu suất cao, responsive hoàn hảo với công nghệ hiện đại nhất.",
-    icon: "💻",
+    title: "Brand",
+    desc: "Xây dựng bản sắc thương hiệu độc đáo, từ logo đến chiến lược truyền thông toàn diện.",
+    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    title: "Chụp ảnh & Video",
-    desc: "Hình ảnh chuyên nghiệp, video sáng tạo kể câu chuyện thương hiệu.",
-    icon: "📸",
+    title: "Lập trình",
+    desc: "Phát triển website và ứng dụng di động với công nghệ tiên tiến nhất, đảm bảo tốc độ và bảo mật.",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    title: "Chụp ảnh",
+    desc: "Ghi lại những khoảnh khắc đắt giá và sản xuất nội dung hình ảnh/video chất lượng cao cho thương hiệu.",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 

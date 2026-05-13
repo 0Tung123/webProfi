@@ -9,6 +9,7 @@ export default function Footer() {
           <a
             href="#top"
             className="font-(family-name:--font-display) text-2xl font-semibold text-white"
+            suppressHydrationWarning
           >
             hat<span className="text-[#d5af34]">&apos;</span>studio
           </a>
@@ -20,6 +21,7 @@ export default function Footer() {
                 key={item.href}
                 href={item.href}
                 className="transition-colors hover:text-[#d5af34]"
+                suppressHydrationWarning
               >
                 {item.label}
               </a>

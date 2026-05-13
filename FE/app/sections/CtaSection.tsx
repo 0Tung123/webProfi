@@ -37,12 +37,14 @@ export default function CtaSection() {
           <a
             href="mailto:hello@hatmedia.dev"
             className="inline-flex items-center justify-center rounded-full bg-[#d5af34] px-10 py-4 text-sm font-bold uppercase tracking-[0.15em] text-black transition-all duration-300 hover:bg-[#e8c84a] hover:scale-105 shadow-[0_14px_35px_rgba(213,175,52,0.25)]"
+            suppressHydrationWarning
           >
             Liên hệ ngay
           </a>
           <a
             href="#projects"
             className="inline-flex items-center justify-center rounded-full border border-[rgba(255,255,255,0.15)] px-10 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[rgba(255,255,255,0.05)]"
+            suppressHydrationWarning
           >
             Xem dự án
           </a>

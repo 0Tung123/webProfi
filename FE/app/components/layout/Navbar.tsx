@@ -38,6 +38,7 @@ export default function Navbar() {
           href="#top"
           className="font-(family-name:--font-display) text-2xl font-semibold text-[var(--text-0)] md:text-[28px]"
           aria-label="HAT Studio"
+          suppressHydrationWarning
         >
           hat<span className="text-[var(--accent)]">&apos;</span>studio
         </a>
@@ -49,6 +50,7 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 className="hover:text-[var(--accent)]"
+                suppressHydrationWarning
               >
                 {item.label}
               </a>

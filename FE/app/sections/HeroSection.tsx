@@ -77,6 +77,7 @@ export default function HeroSection() {
             <a 
               href="#contact" 
               className="group inline-flex items-center justify-center gap-3 rounded-full border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.2)] backdrop-blur-sm"
+              suppressHydrationWarning
             >
               KHÁM PHÁ MÀN ĐÊM
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
