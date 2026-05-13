@@ -17,10 +17,10 @@ const revealVariants = {
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-24 md:py-40 overflow-hidden">
+    <section id="about" className="relative py-16 md:py-24 overflow-hidden">
       
       {/* Faint Vertical Grid Lines Background (Matching the reference image) */}
-      <div className="absolute inset-0 z-0 flex justify-between px-6 lg:px-12 xl:px-16 pointer-events-none opacity-[0.03] max-w-[1780px] mx-auto">
+      <div className="absolute inset-0 z-0 flex justify-between px-6 lg:px-12 xl:px-16 pointer-events-none opacity-[0.03] max-w-[1920px] mx-auto">
         <div className="w-px h-full bg-white" />
         <div className="w-px h-full bg-white hidden sm:block" />
         <div className="w-px h-full bg-white" />
@@ -28,7 +28,7 @@ export default function AboutSection() {
         <div className="w-px h-full bg-white" />
       </div>
 
-      <div className="mx-auto w-full max-w-[1200px] px-6 relative z-10">
+      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10">
         <div className="flex flex-col items-center text-center">
           
           <motion.h2 

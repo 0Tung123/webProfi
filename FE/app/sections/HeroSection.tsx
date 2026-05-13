@@ -24,9 +24,9 @@ export default function HeroSection() {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] w-full overflow-hidden pt-24 pb-16 flex items-center"
+      className="relative min-h-[90svh] w-full overflow-hidden pt-28 pb-12 flex items-center"
     >
-      <div className="mx-auto flex w-full max-w-[1780px] flex-col lg:flex-row items-center justify-between px-6 lg:px-12 xl:px-16 relative z-10">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col lg:flex-row items-center justify-between px-6 lg:px-12 xl:px-16 relative z-10">
         
         {/* Left: Text Content */}
         <div className="w-full lg:w-[50%] flex flex-col justify-center">
@@ -35,7 +35,7 @@ export default function HeroSection() {
             initial="hidden"
             animate="show"
             custom={0.1}
-            className="flex items-center gap-4 mb-8"
+            className="flex items-center gap-4 mb-6"
           >
             <div className="h-[1px] w-12 bg-[#d5af34]" />
             <p className="text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#d5af34]">
@@ -48,13 +48,13 @@ export default function HeroSection() {
             initial="hidden"
             animate="show"
             custom={0.2}
-            className="font-(family-name:--font-display) text-[54px] sm:text-[72px] lg:text-[96px] xl:text-[116px] font-bold leading-[1.05] tracking-tight text-white uppercase"
+            className="font-(family-name:--font-display) text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.05] tracking-tight text-white uppercase"
           >
             ĐỊNH HÌNH <br />
-            <span className="font-(family-name:--font-serif) italic font-medium text-[#d5af34] lowercase block -mt-2 sm:-mt-4">
+            <span className="font-(family-name:--font-serif) italic font-medium text-[#d5af34] lowercase block -mt-2 sm:-mt-3">
               nghệ thuật
             </span>
-            <span className="-mt-2 sm:-mt-4 block">NGUYÊN BẢN</span>
+            <span className="-mt-2 sm:-mt-3 block">NGUYÊN BẢN</span>
           </motion.h1>
 
           <motion.p
@@ -62,7 +62,7 @@ export default function HeroSection() {
             initial="hidden"
             animate="show"
             custom={0.3}
-            className="mt-8 max-w-2xl text-[16px] sm:text-[20px] text-[var(--text-1)] font-light leading-relaxed"
+            className="mt-6 max-w-2xl text-[15px] sm:text-[18px] text-[var(--text-1)] font-light leading-relaxed"
           >
             Tại <strong className="font-semibold text-white">HATMedia</strong>, chúng tôi xem mỗi dự án như một bản phác thảo trong bóng tối — nơi ánh sáng của nghệ thuật gặp gỡ sự chuẩn xác của công nghệ.
           </motion.p>
@@ -72,7 +72,7 @@ export default function HeroSection() {
             initial="hidden"
             animate="show"
             custom={0.4}
-            className="mt-12"
+            className="mt-10"
           >
             <a 
               href="#contact" 
@@ -84,8 +84,8 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right: Static/Floating Composition matching Image 2 */}
-        <div className="w-full lg:w-[50%] h-[600px] lg:h-[800px] mt-24 lg:mt-0 relative flex items-center justify-center">
+        {/* Right: Static/Floating Composition */}
+        <div className="w-full lg:w-[50%] h-[400px] lg:h-[550px] mt-16 lg:mt-0 relative flex items-center justify-center">
           
           {/* Concentric Dashed Rings */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full border border-dashed border-[rgba(255,255,255,0.1)]" />
