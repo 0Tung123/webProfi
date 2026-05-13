@@ -8,14 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 
-const NAV_ITEMS = [
-  { label: "Gioi thieu", href: "#about" },
-  { label: "Du an", href: "#projects" },
-  { label: "Dich vu", href: "#services" },
-  { label: "Goc nhin", href: "#clients" },
-  { label: "Lien he", href: "#contact" },
-];
-
+import { NAV_ITEMS } from "@/app/lib/data";
 export default function Navbar() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);

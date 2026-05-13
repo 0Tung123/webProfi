@@ -3,29 +3,7 @@ import ScrollReveal from "@/app/components/common/ScrollReveal";
 import Navbar from "@/app/components/layout/Navbar";
 import HeroSection from "@/app/sections/HeroSection";
 
-const SERVICES = [
-  "Digital strategy",
-  "UX/UI design",
-  "Frontend development",
-  "Brand experience",
-];
-
-const PROJECTS = [
-  "Brand platform for a finance team",
-  "Interactive launch page for a product campaign",
-  "Commerce experience with a cleaner conversion flow",
-];
-
-const CLIENTS = [
-  "EXIMBANK",
-  "PETROLIMEX",
-  "BAOVIET",
-  "MB",
-  "LPBANK",
-  "LOTTE",
-  "DEWEY",
-  "SENDESIGN",
-];
+import { SERVICES, PROJECTS, CLIENTS } from "@/app/lib/data";
 
 export default function Home() {
   return (

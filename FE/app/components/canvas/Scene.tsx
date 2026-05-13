@@ -9,17 +9,19 @@ import * as THREE from "three";
 function FloatingShape() {
   const { viewport } = useThree();
   const ref = useRef<THREE.Mesh>(null);
+  const time = useRef(0);
   const { scrollYProgress } = useScroll();
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (ref.current) {
+      time.current += delta;
       const scroll = scrollYProgress.get();
       
       const targetY = THREE.MathUtils.lerp(-viewport.height, viewport.height * 0.2, scroll * 1.5);
-      ref.current.position.y = THREE.MathUtils.damp(ref.current.position.y, targetY, 4, state.delta);
+      ref.current.position.y = THREE.MathUtils.damp(ref.current.position.y, targetY, 4, delta);
       
-      ref.current.rotation.x = THREE.MathUtils.lerp(0.2, -0.1, scroll) + state.clock.elapsedTime * 0.1;
-      ref.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1 + state.clock.elapsedTime * 0.15;
+      ref.current.rotation.x = THREE.MathUtils.lerp(0.2, -0.1, scroll) + time.current * 0.1;
+      ref.current.rotation.y = Math.sin(time.current * 0.5) * 0.1 + time.current * 0.15;
     }
   });
 
@@ -48,12 +50,14 @@ function Particles() {
   }
   const geoRef = useRef<THREE.BufferGeometry>(null);
   const pointsRef = useRef<THREE.Points>(null);
+  const time = useRef(0);
   const { scrollYProgress } = useScroll();
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (pointsRef.current) {
+      time.current += delta;
       const scroll = scrollYProgress.get();
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.05 + scroll * Math.PI;
+      pointsRef.current.rotation.y = time.current * 0.05 + scroll * Math.PI;
       pointsRef.current.position.y = scroll * 2;
     }
   });
@@ -64,8 +68,7 @@ function Particles() {
         <bufferAttribute
           attach="attributes-position"
           count={count}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
       </bufferGeometry>
       <pointsMaterial size={0.03} color="#ffd700" transparent opacity={0.6} sizeAttenuation />

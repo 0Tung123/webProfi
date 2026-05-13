@@ -18,23 +18,7 @@ const revealVariants = {
   }),
 };
 
-const cards = [
-  { 
-    id: "design", 
-    src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop",
-    alt: "Design"
-  },
-  { 
-    id: "code", 
-    src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    alt: "Code"
-  },
-  { 
-    id: "photo", 
-    src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop",
-    alt: "Photography"
-  },
-];
+import { HERO_CARDS as cards } from "@/app/lib/data";
 
 export default function HeroSection() {
   return (
