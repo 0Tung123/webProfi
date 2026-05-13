@@ -1,43 +1,59 @@
 "use client";
 
 import { useEffect } from "react";
-
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 export default function SmoothScroll() {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
+      "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (prefersReducedMotion) {
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     const lenis = new Lenis({
-      duration: 1,
+      lerp: 0.04,
+      wheelMultiplier: 0.6,
       smoothWheel: true,
       syncTouch: true,
-      touchMultiplier: 1.1,
+      touchMultiplier: 1.2,
     });
 
-    const onTick = (time: number) => {
-      lenis.raf(time * 1000);
-    };
+    let rafId: number;
 
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add(onTick);
-    gsap.ticker.lagSmoothing(0);
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
 
-    window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    rafId = requestAnimationFrame(raf);
+
+    document.documentElement.classList.add("lenis", "lenis-smooth");
+
+    let isScrolling = false;
+    let scrollTimeout: NodeJS.Timeout;
+
+    lenis.on("scroll", () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        document.documentElement.classList.add("lenis-scrolling");
+        document.documentElement.classList.remove("lenis-stopped");
+      }
+      
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+        document.documentElement.classList.remove("lenis-scrolling");
+        document.documentElement.classList.add("lenis-stopped");
+      }, 50); // 50ms không có event scroll -> đã dừng cuộn
+    });
 
     return () => {
-      gsap.ticker.remove(onTick);
-      lenis.off("scroll", ScrollTrigger.update);
+      cancelAnimationFrame(rafId);
+      clearTimeout(scrollTimeout);
+      document.documentElement.classList.remove("lenis", "lenis-smooth", "lenis-scrolling", "lenis-stopped");
       lenis.destroy();
     };
   }, []);

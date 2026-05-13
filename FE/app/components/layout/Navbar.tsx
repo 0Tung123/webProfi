@@ -1,23 +1,24 @@
 "use client";
 
-import { useState } from "react";
-
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
-
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "@/app/lib/data";
+
 export default function Navbar() {
-  const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (current) => {
-    const previous = scrollY.getPrevious() ?? 0;
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setHidden(currentScrollY > lastScrollY && currentScrollY > 80);
+      lastScrollY = currentScrollY;
+    };
 
-    setHidden(current > previous && current > 80);
-  });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <motion.header

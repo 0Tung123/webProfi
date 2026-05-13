@@ -2,15 +2,17 @@ import Container from "@/app/components/common/Container";
 import ScrollReveal from "@/app/components/common/ScrollReveal";
 import Navbar from "@/app/components/layout/Navbar";
 import HeroSection from "@/app/sections/HeroSection";
+import AboutSection from "@/app/sections/AboutSection";
 
 import { SERVICES, PROJECTS, CLIENTS } from "@/app/lib/data";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
       <ScrollReveal />
       <Navbar />
       <HeroSection />
+      <AboutSection />
 
       <section id="services" className="py-20 md:py-28">
         <Container>
@@ -56,17 +58,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="about" className="py-20 md:py-28">
-        <Container>
-          <p
-            data-reveal
-            className="max-w-6xl font-(family-name:--font-display) text-4xl leading-tight tracking-normal text-[var(--text-0)] md:text-6xl"
-          >
-            We focus on clear ideas, careful typography, smooth motion, and
-            digital experiences that feel intentional.
-          </p>
-        </Container>
-      </section>
+      
 
       <section id="clients" className="py-20 md:py-28">
         <Container>
