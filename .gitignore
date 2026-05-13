@@ -141,3 +141,66 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# ========================
+# OS generated files
+# ========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ========================
+# IDE / Editor
+# ========================
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+
+# ========================
+# Build & Output
+# ========================
+build/
+dist/
+out/
+.output/
+*.local
+
+# ========================
+# Environment & Secrets
+# ========================
+*.pem
+*.key
+*.cert
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# ========================
+# AI / Agent config (không cần push)
+# ========================
+.claude/
+CLAUDE.md
+AGENTS.md
+.gemini/
+.cursor/
+.copilot/
+
+# ========================
+# Misc
+# ========================
+*.map
+.vercel
+.netlify
+.turbo
