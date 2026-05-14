@@ -15,7 +15,7 @@ export default memo(function HeroSection() {
     <section
       id="top"
       ref={heroRef}
-      className="relative min-h-[90svh] w-full overflow-hidden pt-28 pb-12 flex items-center"
+      className="relative w-full overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 flex items-center"
     >
       <div className="mx-auto flex w-full max-w-[1920px] flex-col lg:flex-row items-center justify-between px-6 lg:px-12 xl:px-16 relative z-10">
 
@@ -69,16 +69,11 @@ export default memo(function HeroSection() {
         </div>
 
         {/* Right: Static/Floating Composition */}
-        <div className="w-full lg:w-[50%] h-[400px] lg:h-[550px] mt-16 lg:mt-0 relative flex items-center justify-center">
-
-          {/* Concentric Dashed Rings */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full border border-dashed border-[var(--surface-border)]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[650px] w-[650px] rounded-full border border-dashed border-[var(--surface-border)]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[900px] w-[900px] rounded-full border border-dashed border-[rgba(0,0,0,0.03)]" />
+        <div className="w-full lg:w-[50%] mt-12 lg:mt-0 relative flex items-center justify-center min-h-[350px] sm:min-h-[450px] lg:min-h-[550px]">
 
           {/* Center Large Image (Monitor/Design) */}
           <div
-            className={`relative z-10 h-[300px] w-[90%] sm:h-[400px] sm:w-[600px] lg:h-[450px] lg:w-[650px] overflow-hidden rounded-2xl shadow-2xl bg-[var(--surface)] transition-all duration-[var(--dur-slow)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+            className={`relative z-10 w-full max-w-[650px] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-2xl bg-[var(--surface)] transition-all duration-[var(--dur-slow)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
             style={{ transitionDelay: '0.2s' }}
           >
             <Image
@@ -86,28 +81,28 @@ export default memo(function HeroSection() {
               alt={cards[0].alt}
               className="h-full w-full object-cover"
               fill
-              sizes="(max-width: 768px) 90vw, (max-width: 1024px) 600px, 650px"
+              sizes="(max-width: 768px) 100vw, 650px"
               priority
             />
           </div>
 
           {/* Top Right Small Image (Team/Photo) */}
           <div
-            className="absolute z-20 -right-4 top-10 sm:right-0 sm:top-16 lg:-right-10 lg:top-24 h-[120px] w-[180px] sm:h-[180px] sm:w-[280px] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
+            className="absolute z-20 -right-2 top-0 sm:right-0 sm:top-10 lg:-right-8 lg:top-16 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
           >
             <Image
               src={cards[2].src}
               alt={cards[2].alt}
               className="h-full w-full object-cover"
               fill
-              sizes="(max-width: 768px) 180px, 280px"
+              sizes="(max-width: 768px) 40vw, 280px"
               loading="lazy"
             />
           </div>
 
           {/* Bottom Left Small Image (Interior/Code) */}
           <div
-            className="absolute z-20 -left-4 bottom-10 sm:left-4 sm:bottom-20 lg:-left-16 lg:bottom-32 h-[120px] w-[180px] sm:h-[180px] sm:w-[280px] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
+            className="absolute z-20 -left-2 bottom-0 sm:left-4 sm:bottom-12 lg:-left-12 lg:bottom-24 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
             style={{ animationDelay: '1s' }}
           >
             <Image
@@ -115,11 +110,10 @@ export default memo(function HeroSection() {
               alt={cards[1].alt}
               className="h-full w-full object-cover"
               fill
-              sizes="(max-width: 768px) 180px, 280px"
+              sizes="(max-width: 768px) 40vw, 280px"
               loading="lazy"
             />
           </div>
-
         </div>
       </div>
     </section>

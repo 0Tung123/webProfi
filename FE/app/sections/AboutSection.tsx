@@ -8,7 +8,7 @@ export default memo(function AboutSection() {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
-    <section id="about" className="relative py-16 md:py-24 overflow-hidden bg-[var(--bg-0)]">
+    <section id="about" className="relative py-12 md:py-16 overflow-hidden bg-[var(--bg-0)]">
       <div
         ref={ref}
         className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10"

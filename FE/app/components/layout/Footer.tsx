@@ -11,19 +11,19 @@ export default memo(function Footer() {
     <footer ref={footerRef} className="relative bg-white pt-24 pb-8 overflow-hidden">
       
       {/* 1. Large High-Impact CTA */}
-      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-32 relative">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-12">
-          <h2 className="font-display text-[42px] md:text-[72px] font-bold text-black leading-[1.1] tracking-tight max-w-2xl">
+      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-24 md:mb-32 relative">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-12">
+          <h2 className="font-display text-[32px] sm:text-[48px] md:text-[72px] font-bold text-black leading-[1.1] tracking-tight max-w-2xl">
             Hiện thực hoá <br /> ý tưởng của bạn
           </h2>
 
           {/* Massive Red Circle with Arrow */}
-          <div className="relative group cursor-pointer mr-0 md:mr-12">
-            <div className="w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-[#ff334b] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_0_50px_rgba(255,51,75,0.3)]">
+          <div className="relative group cursor-pointer self-end md:self-auto">
+            <div className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] bg-[#ff334b] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_0_50px_rgba(255,51,75,0.3)]">
               <svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
-                className="w-12 h-12 md:w-20 md:h-20 text-black transform transition-transform duration-500 group-hover:translate-x-2"
+                className="w-8 h-8 sm:w-12 sm:h-12 md:w-20 md:h-20 text-black transform transition-transform duration-500 group-hover:translate-x-2"
                 stroke="currentColor" 
                 strokeWidth="2.5" 
                 strokeLinecap="round" 

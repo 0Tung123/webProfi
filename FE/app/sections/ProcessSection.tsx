@@ -8,7 +8,7 @@ export default memo(function ProcessSection() {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
-    <section id="process" className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+    <section id="process" className="relative py-16 md:py-24 overflow-hidden bg-[var(--bg-0)]">
       
       {/* Background Accent (Pinkish Blur) */}
       <div className="absolute top-1/2 -right-48 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff4d6d] opacity-[0.05] blur-[140px] rounded-full pointer-events-none" />
