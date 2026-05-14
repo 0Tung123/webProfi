@@ -1,8 +1,8 @@
 "use client";
 
 import { memo } from "react";
-import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
+import { ABOUT_CONTENT } from "@/app/lib/data";
 
 export default memo(function AboutSection() {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.1 });
@@ -17,7 +17,7 @@ export default memo(function AboutSection() {
           <div className={`reveal flex items-center gap-4 mb-10 ${isVisible ? 'is-visible' : ''}`}>
             <span className="w-8 h-px bg-[var(--accent)]" />
             <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
-              Về HAT Studio
+              {ABOUT_CONTENT.subtitle}
             </span>
           </div>
 
@@ -25,25 +25,21 @@ export default memo(function AboutSection() {
             className={`reveal font-display text-[38px] sm:text-[52px] lg:text-[68px] font-bold text-[var(--text-0)] leading-[1.05] tracking-tight ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.1s' }}
           >
-            Thấu hiểu, đồng hành và <br className="hidden lg:block" />
-            thiết kế trải nghiệm digital <br className="hidden lg:block" />
-            không giới hạn.
+            {ABOUT_CONTENT.title}
           </h2>
 
           <p
             className={`reveal mt-10 sm:mt-12 max-w-2xl text-[18px] sm:text-[20px] text-[var(--text-1)] font-light leading-relaxed ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.2s' }}
           >
-            Chúng tôi xây dựng cho mình Tư duy thiết kế, Triết lý sáng tạo và gửi gắm 
-            Giá trị cho mỗi thương hiệu, mỗi doanh nghiệp cũng như cả cộng đồng. 
-            Mỗi dự án là một câu chuyện độc bản được kể bằng ngôn ngữ của trải nghiệm và cảm xúc.
+            {ABOUT_CONTENT.desc}
           </p>
 
           <div className={`reveal mt-16 flex items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             <div className="text-[12px] font-bold uppercase tracking-widest text-[var(--text-2)]">
               Dẫn đầu xu hướng từ
             </div>
-            <div className="text-[24px] font-display font-light text-[var(--text-0)]">2026</div>
+            <div className="text-[24px] font-display font-light text-[var(--text-0)]">{ABOUT_CONTENT.since}</div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import { SERVICES } from "@/app/lib/data";
+import { SERVICES, CONTACT_INFO, OFFICE_LOCATIONS, SOCIAL_LINKS } from "@/app/lib/data";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 
 export default memo(function Footer() {
@@ -52,14 +52,12 @@ export default memo(function Footer() {
           <div className={`reveal flex flex-col gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Trụ sở</h4>
             <div className="flex flex-col gap-6 text-[13px] leading-relaxed text-black/60">
-              <div>
-                <p className="font-bold text-black/30 mb-2">Văn phòng đại diện</p>
-                <p>Tầng 5, 33 Giang Văn Minh, Kim Mã,<br />Ba Đình, Hà Nội</p>
-              </div>
-              <div>
-                <p className="font-bold text-black/30 mb-2">Trung tâm công nghệ</p>
-                <p>2/28/93 Hoàng Văn Thái, Thanh Xuân,<br />Hà Nội</p>
-              </div>
+              {OFFICE_LOCATIONS.map((loc) => (
+                <div key={loc.name}>
+                  <p className="font-bold text-black/30 mb-2">{loc.name}</p>
+                  <p>{loc.address}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -69,15 +67,15 @@ export default memo(function Footer() {
             <div className="flex flex-col gap-4 text-[13px] text-black/60">
               <div className="flex gap-4">
                 <span className="font-bold text-black/30 w-12 shrink-0">Phone</span>
-                <p>(+84) 97 531 9889<br />(+84) 86 929 1771</p>
+                <p>{CONTACT_INFO.phones.join(' / ')}</p>
               </div>
               <div className="flex gap-4">
                 <span className="font-bold text-black/30 w-12 shrink-0">Email</span>
-                <p>info@hatmedia.dev</p>
+                <p>{CONTACT_INFO.emails.join(' / ')}</p>
               </div>
               <div className="flex gap-4">
                 <span className="font-bold text-black/30 w-12 shrink-0">Website</span>
-                <p>hatmedia.dev</p>
+                <p>{CONTACT_INFO.website}</p>
               </div>
             </div>
           </div>
@@ -116,8 +114,8 @@ export default memo(function Footer() {
           </p>
           
           <div className="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-black/50">
-            {["Facebook", "Behance", "Dribbble", "LinkedIn"].map(social => (
-              <a key={social} href="#" className="hover:text-[var(--accent)] transition-colors">{social}</a>
+            {SOCIAL_LINKS.map(social => (
+              <a key={social.label} href={social.href} className="hover:text-[var(--accent)] transition-colors">{social.label}</a>
             ))}
           </div>
         </div>

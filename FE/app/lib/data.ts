@@ -104,30 +104,30 @@ export const PROCESS_BY_FIELD = {
     title: "Thiết kế Brand",
     desc: "Chúng tôi xây dựng thương hiệu dựa trên sự thấu hiểu sâu sắc về giá trị cốt lõi, từ đó tạo nên bản sắc độc bản và bền vững theo thời gian.",
     steps: [
-      { step: "01", title: "Strategy", desc: "Định vị thương hiệu và giá trị cốt lõi." },
-      { step: "02", title: "Concept", desc: "Sáng tạo biểu tượng và ngôn ngữ thiết kế." },
-      { step: "03", title: "Identity", desc: "Xây dựng hệ thống nhận diện toàn diện." },
-      { step: "04", title: "Guidelines", desc: "Hướng dẫn sử dụng và bàn giao tài liệu." }
+      { step: "01", title: "Chiến lược", desc: "Định vị thương hiệu và giá trị cốt lõi." },
+      { step: "02", title: "Ý tưởng", desc: "Sáng tạo biểu tượng và ngôn ngữ thiết kế." },
+      { step: "03", title: "Nhận diện thương hiệu", desc: "Xây dựng hệ thống nhận diện toàn diện." },
+      { step: "04", title: "Hướng dẫn sử dụng", desc: "Hướng dẫn sử dụng và bàn giao tài liệu." }
     ]
   },
   code: {
     title: "Lập trình",
     desc: "Công nghệ là công cụ để hiện thực hóa sáng tạo. Chúng tôi ưu tiên mã nguồn sạch, hiệu năng tối ưu và khả năng mở rộng linh hoạt.",
     steps: [
-      { step: "01", title: "Architecture", desc: "Thiết lập cấu trúc và lựa chọn công nghệ." },
-      { step: "02", title: "Development", desc: "Lập trình tính năng và giao diện mượt mà." },
-      { step: "03", title: "Integration", desc: "Kết nối dữ liệu và tối ưu hóa hiệu năng." },
-      { step: "04", title: "Deployment", desc: "Triển khai hệ thống và hỗ trợ vận hành." }
+      { step: "01", title: "Kiến trúc", desc: "Thiết lập cấu trúc và lựa chọn công nghệ." },
+      { step: "02", title: "Phát triển", desc: "Lập trình tính năng và giao diện mượt mà." },
+      { step: "03", title: "Tích hợp", desc: "Kết nối dữ liệu và tối ưu hóa hiệu năng." },
+      { step: "04", title: "Triển khai", desc: "Triển khai hệ thống và hỗ trợ vận hành." }
     ]
   },
   photo: {
     title: "Chụp ảnh",
     desc: "Mỗi khung hình là một câu chuyện. Chúng tôi sử dụng ánh sáng và góc nhìn nghệ thuật để tôn vinh giá trị thực của sản phẩm và con người.",
     steps: [
-      { step: "01", title: "Pre-production", desc: "Lên Concept và chuẩn bị bối cảnh." },
-      { step: "02", title: "Shooting", desc: "Thực hiện chụp với kỹ thuật chuyên sâu." },
-      { step: "03", title: "Post-processing", desc: "Hậu kỳ hình ảnh và tinh chỉnh màu sắc." },
-      { step: "04", title: "Delivery", desc: "Bàn giao hình ảnh chất lượng cao nhất." }
+      { step: "01", title: "Chuẩn bị trước", desc: "Lên Concept và chuẩn bị bối cảnh." },
+      { step: "02", title: "Chụp", desc: "Thực hiện chụp với kỹ thuật chuyên sâu." },
+      { step: "03", title: "Hậu kỳ", desc: "Hậu kỳ hình ảnh và tinh chỉnh màu sắc." },
+      { step: "04", title: "Bàn giao", desc: "Bàn giao hình ảnh chất lượng cao nhất." }
     ]
   }
 };
@@ -153,6 +153,48 @@ export const SKILLS: Skill[] = [
   "Branding",
   "Motion Graphics",
 ];
+
+export const ABOUT_CONTENT = {
+  subtitle: "Về HAT Studio",
+  title: "Thấu hiểu, đồng hành và thiết kế trải nghiệm digital không giới hạn.",
+  desc: "Chúng tôi xây dựng cho mình Tư duy thiết kế, Triết lý sáng tạo và gửi gắm Giá trị cho mỗi thương hiệu, mỗi doanh nghiệp cũng như cả cộng đồng. Mỗi dự án là một câu chuyện độc bản được kể bằng ngôn ngữ của trải nghiệm và cảm xúc.",
+  since: "2026"
+};
+
+export const CONTACT_INFO = {
+  phones: ["(+84) 123 456 789", "(+84) 987 654 321"],
+  emails: ["contact@hatmedia.vn"],
+  website: "hatmedia.vn"
+};
+
+export const OFFICE_LOCATIONS = [
+  {
+    name: "Showroom ",
+    address: "Số 4, ngách 19/143 Kim Mã, phường Kim Mã, quận Ba Đình, Hà Nội"
+  },
+  {
+    name: "Studio",
+    address: "số 2, lộc dư, thượng phúc, hà nội"
+  }
+];
+
+export const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://facebook.com" },
+  { label: "Behance", href: "https://behance.net" },
+  { label: "LinkedIn", href: "https://linkedin.com" },
+  { label: "Instagram", href: "https://instagram.com" }
+];
+
+export const BENEFITS_CONTENT = {
+  philosophy: "Our Philosophy",
+  statement: "Chúng tôi không chỉ kiến tạo sản phẩm số, HATMedia đồng hành cùng thương hiệu để định hình giá trị và tạo ra những trải nghiệm chạm tới cảm xúc.",
+  founder: {
+    name: "Anh Lê Xuân Hải",
+    role: "Founder of HATMedia",
+    initial: "H"
+  },
+  watermark: "Manifesto"
+};
 
 export const CLIENTS: Client[] = [
   "MSB", "NCB", "VietinBank", "Thang Long University", "BTEC", "British Council",

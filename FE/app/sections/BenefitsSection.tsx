@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { BENEFITS } from "@/app/lib/data";
+import { BENEFITS, BENEFITS_CONTENT, ABOUT_CONTENT } from "@/app/lib/data";
 
 export default memo(function BenefitsSection() {
   const { ref, isVisible } = useIntersectionObserver();
@@ -24,7 +24,7 @@ export default memo(function BenefitsSection() {
             <div className={`reveal hidden md:flex flex-col gap-8 pt-4 ${isVisible ? 'is-visible' : ''}`}>
               <div className="w-px h-32 bg-[var(--accent)]" />
               <span className="text-[10px] font-bold uppercase tracking-[0.5em] vertical-text text-[var(--accent)]">
-                Our Philosophy
+                {BENEFITS_CONTENT.philosophy}
               </span>
             </div>
 
@@ -34,16 +34,16 @@ export default memo(function BenefitsSection() {
                 className={`reveal font-serif italic text-[36px] sm:text-[54px] lg:text-[72px] font-medium text-[var(--text-0)] leading-[1.3] tracking-tight ${isVisible ? 'is-visible' : ''}`}
                 style={{ transitionDelay: '0.1s' }}
               >
-                "Chúng tôi không chỉ kiến tạo sản phẩm số, HATMedia đồng hành cùng thương hiệu để định hình giá trị và tạo ra những trải nghiệm chạm tới cảm xúc."
+                "{BENEFITS_CONTENT.statement}"
               </h2>
               
               <div className={`reveal mt-16 flex items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
                 <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-bold text-xl">
-                  H
+                  {BENEFITS_CONTENT.founder.initial}
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[20px] font-bold text-[var(--text-0)]">Anh Lê Xuân Hải</span>
-                  <span className="text-[14px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">Founder of HATMedia</span>
+                  <span className="text-[20px] font-bold text-[var(--text-0)]">{BENEFITS_CONTENT.founder.name}</span>
+                  <span className="text-[14px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">{BENEFITS_CONTENT.founder.role}</span>
                 </div>
               </div>
             </div>
@@ -54,8 +54,8 @@ export default memo(function BenefitsSection() {
 
       {/* Modern Watermark - Restored without rising animation */}
       <div className="absolute -bottom-8 right-12 flex flex-col items-end opacity-[0.03] select-none pointer-events-none">
-        <span className="text-[120px] lg:text-[180px] font-display font-black leading-none uppercase">Manifesto</span>
-        <span className="text-[40px] font-serif italic -mt-4">Since 2026</span>
+        <span className="text-[120px] lg:text-[180px] font-display font-black leading-none uppercase">{BENEFITS_CONTENT.watermark}</span>
+        <span className="text-[40px] font-serif italic -mt-4">Since {ABOUT_CONTENT.since}</span>
       </div>
 
       <style jsx>{`
