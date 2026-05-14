@@ -28,23 +28,23 @@ export const HERO_CARDS: HeroCard[] = [
 
 export const SERVICES: Service[] = [
   {
-    title: "Chiến lược Digital",
-    desc: "Nghiên cứu thị trường, định vị thương hiệu và xây dựng lộ trình tiếp cận người dùng toàn diện trên môi trường số.",
+    title: "Thiết Kế",
+    desc: "Giải pháp sáng tạo đa lĩnh vực từ UI/UX website, ứng dụng di động đến thiết kế bao bì, mô phỏng 3D, các ấn phẩm truyền thông kỹ thuật số hiện đại và nhiều hơn nữa.",
     image: "/images/tk.png",
   },
   {
-    title: "Thiết kế UI/UX",
-    desc: "Tạo ra các giao diện trực quan, đậm tính nguyên bản và tối ưu hóa luồng tương tác của người dùng cuối.",
-    image: "/images/tk.png",
+    title: "Thiết kế Brand",
+    desc: "Xây dựng bộ nhận diện thương hiệu đồng bộ, từ logo, màu sắc, typography đến hệ thống hình ảnh giúp thương hiệu nổi bật và dễ ghi nhớ.",
+    image: "/images/brand.png",
   },
   {
-    title: "Phát triển Web/App",
-    desc: "Ứng dụng công nghệ lõi tiên tiến nhất để biến các bản thiết kế phức tạp thành sản phẩm hoạt động mượt mà.",
+    title: "Lập Trình",
+    desc: "Phát triển website, ứng dụng và hệ thống số với công nghệ phù hợp, hiệu năng ổn định, dễ mở rộng và vận hành mượt mà.",
     image: "/images/code.png",
   },
   {
-    title: "Trải nghiệm Media",
-    desc: "Chụp ảnh sản phẩm, quay phim doanh nghiệp và sản xuất 3D Motion để hình ảnh hóa câu chuyện thương hiệu.",
+    title: "Chụp ảnh",
+    desc: "Chụp ảnh sản phẩm, chân dung thương hiệu và hình ảnh truyền thông nhằm thể hiện rõ câu chuyện, phong cách và giá trị của doanh nghiệp.",
     image: "/images/camera.png",
   },
 ];
@@ -89,12 +89,48 @@ export const BENEFITS: Benefit[] = [
   "Hỗ trợ kỹ thuật tận tâm sau bàn giao",
 ];
 
-export const PROCESS_STEPS: ProcessStep[] = [
-  { step: "01", title: "Trao đổi", desc: "Lắng nghe ý tưởng và mục tiêu của bạn." },
-  { step: "02", title: "Lên kế hoạch", desc: "Wireframe, thiết kế prototype và xác nhận." },
-  { step: "03", title: "Phát triển", desc: "Code, tích hợp và kiểm thử kỹ lưỡng." },
-  { step: "04", title: "Bàn giao", desc: "Ra mắt sản phẩm và hỗ trợ liên tục." },
-];
+export const PROCESS_BY_FIELD = {
+  design: {
+    title: "Thiết kế",
+    desc: "Quy trình thiết kế của chúng tôi tập trung vào việc cân bằng giữa tính thẩm mỹ hiện đại và hiệu quả trải nghiệm, đảm bảo mỗi sản phẩm đều có linh hồn riêng.",
+    steps: [
+      { step: "01", title: "Nghiên cứu", desc: "Tìm kiếm cảm hứng, phong cách và xu hướng sáng tạo." },
+      { step: "02", title: "Phác thảo", desc: "Hiện thực hóa ý tưởng qua các bản vẽ và bố cục sơ khởi." },
+      { step: "03", title: "Hoàn thiện", desc: "Tinh chỉnh chi tiết, màu sắc và chất liệu thị giác." },
+      { step: "04", title: "Sản xuất", desc: "Xuất bản phẩm chất lượng cao cho mọi nền tảng." }
+    ]
+  },
+  brand: {
+    title: "Thiết kế Brand",
+    desc: "Chúng tôi xây dựng thương hiệu dựa trên sự thấu hiểu sâu sắc về giá trị cốt lõi, từ đó tạo nên bản sắc độc bản và bền vững theo thời gian.",
+    steps: [
+      { step: "01", title: "Strategy", desc: "Định vị thương hiệu và giá trị cốt lõi." },
+      { step: "02", title: "Concept", desc: "Sáng tạo biểu tượng và ngôn ngữ thiết kế." },
+      { step: "03", title: "Identity", desc: "Xây dựng hệ thống nhận diện toàn diện." },
+      { step: "04", title: "Guidelines", desc: "Hướng dẫn sử dụng và bàn giao tài liệu." }
+    ]
+  },
+  code: {
+    title: "Lập trình",
+    desc: "Công nghệ là công cụ để hiện thực hóa sáng tạo. Chúng tôi ưu tiên mã nguồn sạch, hiệu năng tối ưu và khả năng mở rộng linh hoạt.",
+    steps: [
+      { step: "01", title: "Architecture", desc: "Thiết lập cấu trúc và lựa chọn công nghệ." },
+      { step: "02", title: "Development", desc: "Lập trình tính năng và giao diện mượt mà." },
+      { step: "03", title: "Integration", desc: "Kết nối dữ liệu và tối ưu hóa hiệu năng." },
+      { step: "04", title: "Deployment", desc: "Triển khai hệ thống và hỗ trợ vận hành." }
+    ]
+  },
+  photo: {
+    title: "Chụp ảnh",
+    desc: "Mỗi khung hình là một câu chuyện. Chúng tôi sử dụng ánh sáng và góc nhìn nghệ thuật để tôn vinh giá trị thực của sản phẩm và con người.",
+    steps: [
+      { step: "01", title: "Pre-production", desc: "Lên Concept và chuẩn bị bối cảnh." },
+      { step: "02", title: "Shooting", desc: "Thực hiện chụp với kỹ thuật chuyên sâu." },
+      { step: "03", title: "Post-processing", desc: "Hậu kỳ hình ảnh và tinh chỉnh màu sắc." },
+      { step: "04", title: "Delivery", desc: "Bàn giao hình ảnh chất lượng cao nhất." }
+    ]
+  }
+};
 
 export const TESTIMONIALS: Testimonial[] = [
   {

@@ -1,12 +1,13 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { PROCESS_STEPS, CLIENTS } from "@/app/lib/data";
+import { PROCESS_BY_FIELD, CLIENTS } from "@/app/lib/data";
 
 export default memo(function ProcessSection() {
   const { ref: stepsRef, isVisible: stepsVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { ref: partnersRef, isVisible: partnersVisible } = useIntersectionObserver({ threshold: 0.2 });
+  const [activeField, setActiveField] = useState<keyof typeof PROCESS_BY_FIELD>("design");
 
   return (
     <section id="process" className="relative py-16 md:py-24 overflow-hidden bg-[var(--bg-0)]">
@@ -16,42 +17,76 @@ export default memo(function ProcessSection() {
 
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10">
         
-        {/* 1. Process Header & Steps */}
+        {/* 1. Process Header & Category Selection */}
         <div ref={stepsRef} className="mb-32">
-          <div
-            className={`reveal flex items-center gap-4 mb-10 ${stepsVisible ? 'is-visible' : ''}`}
-          >
-            <span className="w-8 h-px bg-[var(--accent)]" />
-            <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
-              Lộ trình triển khai
-            </span>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-10">
+            <div className="max-w-2xl">
+              <div
+                className={`reveal flex items-center gap-4 mb-10 ${stepsVisible ? 'is-visible' : ''}`}
+              >
+                <span className="w-8 h-px bg-[var(--accent)]" />
+                <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
+                  Lộ trình triển khai
+                </span>
+              </div>
+
+              <h2
+                className={`reveal font-display text-[36px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${stepsVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: '0.1s' }}
+              >
+                Quy trình tối ưu <br className="hidden lg:block" /> cho từng mục tiêu
+              </h2>
+
+              <p 
+                className={`reveal mt-6 text-[16px] text-[var(--text-2)] font-light leading-relaxed max-w-xl transition-all duration-700 ${stepsVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: '0.2s' }}
+              >
+                {PROCESS_BY_FIELD[activeField].desc}
+              </p>
+            </div>
+
+            {/* Field Selectors */}
+            <div className={`reveal flex flex-wrap gap-2 ${stepsVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
+              {(Object.keys(PROCESS_BY_FIELD) as Array<keyof typeof PROCESS_BY_FIELD>).map((key) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveField(key)}
+                  className={`px-6 py-3 rounded-full text-[13px] font-bold uppercase tracking-wider transition-all duration-500 border ${
+                    activeField === key 
+                      ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-lg' 
+                      : 'bg-transparent text-[var(--text-2)] border-[var(--surface-border)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                  }`}
+                >
+                  {PROCESS_BY_FIELD[key].title}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <h2
-            className={`reveal font-display text-[36px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight mb-16 ${stepsVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.1s' }}
-          >
-            Cách chúng tôi <br className="hidden lg:block" /> kiến tạo giá trị
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {PROCESS_STEPS.map((item, i) => (
+          {/* Steps Grid - Dynamic based on activeField */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PROCESS_BY_FIELD[activeField].steps.map((item, i) => (
               <div
-                key={item.step}
-                className={`reveal group relative p-8 rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-500 hover:border-[var(--accent)] hover:shadow-xl ${stepsVisible ? 'is-visible' : ''}`}
+                key={`${activeField}-${item.step}`}
+                className={`reveal group relative p-8 rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-700 hover:border-[var(--accent)] hover:shadow-xl ${stepsVisible ? 'is-visible' : ''}`}
                 style={{
-                  transitionDelay: `${0.1 * i + 0.2}s`,
+                  transitionDelay: `${0.1 * i + 0.3}s`,
                 }}
               >
                 <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--bg-1)] text-[var(--accent)] font-display text-2xl font-bold group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-500">
                   {item.step}
                 </div>
-                <h3 className="font-display text-[22px] font-bold text-[var(--text-0)] mb-4">
+                <h3 className="font-display text-[20px] font-bold text-[var(--text-0)] mb-4">
                   {item.title}
                 </h3>
-                <p className="text-[15px] text-[var(--text-1)] leading-relaxed font-light">
+                <p className="text-[14px] text-[var(--text-2)] leading-relaxed font-light">
                   {item.desc}
                 </p>
+
+                {/* Subtle Progress Line connecting steps on desktop */}
+                {i < 3 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-px bg-[var(--surface-border)]" />
+                )}
               </div>
             ))}
           </div>
