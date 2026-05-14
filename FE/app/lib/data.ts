@@ -28,23 +28,23 @@ export const HERO_CARDS: HeroCard[] = [
 
 export const SERVICES: Service[] = [
   {
-    title: "Thiết kế",
-    desc: "Khám phá cách chúng tôi thiết kế website chuyên nghiệp giúp khách hàng bán hàng trực tuyến hiệu quả và tạo ấn tượng thương hiệu tốt hơn.",
+    title: "Chiến lược Digital",
+    desc: "Nghiên cứu thị trường, định vị thương hiệu và xây dựng lộ trình tiếp cận người dùng toàn diện trên môi trường số.",
     image: "/images/tk.png",
   },
   {
-    title: "Brand",
-    desc: "Xây dựng bản sắc thương hiệu độc đáo, từ logo đến chiến lược truyền thông toàn diện.",
+    title: "Thiết kế UI/UX",
+    desc: "Tạo ra các giao diện trực quan, đậm tính nguyên bản và tối ưu hóa luồng tương tác của người dùng cuối.",
     image: "/images/tk.png",
   },
   {
-    title: "Lập trình",
-    desc: "Phát triển website và ứng dụng di động với công nghệ tiên tiến nhất, đảm bảo tốc độ và bảo mật.",
+    title: "Phát triển Web/App",
+    desc: "Ứng dụng công nghệ lõi tiên tiến nhất để biến các bản thiết kế phức tạp thành sản phẩm hoạt động mượt mà.",
     image: "/images/code.png",
   },
   {
-    title: "Chụp ảnh",
-    desc: "Ghi lại những khoảnh khắc đắt giá và sản xuất nội dung hình ảnh/video chất lượng cao cho thương hiệu.",
+    title: "Trải nghiệm Media",
+    desc: "Chụp ảnh sản phẩm, quay phim doanh nghiệp và sản xuất 3D Motion để hình ảnh hóa câu chuyện thương hiệu.",
     image: "/images/camera.png",
   },
 ];
