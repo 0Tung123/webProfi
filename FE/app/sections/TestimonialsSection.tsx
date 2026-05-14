@@ -1,47 +1,40 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { memo } from "react";
+import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { TESTIMONIALS } from "@/app/lib/data";
 
-export default function TestimonialsSection() {
+export default memo(function TestimonialsSection() {
+  const { ref: sectionRef, isVisible } = useIntersectionObserver();
+
   return (
-    <section id="testimonials" className="relative py-20 md:py-28">
+    <section id="testimonials" ref={sectionRef} className="relative py-20 md:py-28">
       <div className="mx-auto w-full max-w-[1920px] px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#d5af34] uppercase mb-4"
+        <p
+          className={`reveal text-center text-xs sm:text-sm font-semibold tracking-wide text-accent uppercase mb-4 ${isVisible ? 'is-visible' : ''}`}
         >
           Đánh giá
-        </motion.p>
+        </p>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
+        <h2
+          className={`reveal text-center font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16 ${isVisible ? 'is-visible' : ''}`}
+          style={{ transitionDelay: '0.1s' }}
         >
           Khách hàng nói gì?
-        </motion.h2>
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {TESTIMONIALS.map((item, i) => (
-            <motion.div
+            <div
               key={item.author}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] as const }}
-              className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-8"
+              className={`reveal rounded-2xl border border-surface bg-surface p-8 ${isVisible ? 'is-visible' : ''}`}
+              style={{ transitionDelay: `${0.15 * i + 0.2}s` }}
             >
               <p className="text-lg text-[var(--text-1)] font-light leading-relaxed italic mb-6">
                 &ldquo;{item.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-[rgba(213,175,52,0.2)] flex items-center justify-center text-[#d5af34] font-bold text-sm">
+                <div className="h-10 w-10 rounded-full bg-accent-20 flex items-center justify-center text-accent font-bold text-sm">
                   {item.author[0]}
                 </div>
                 <div>
@@ -49,10 +42,10 @@ export default function TestimonialsSection() {
                   <p className="text-[var(--text-2)] text-xs">{item.role}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
-}
+});

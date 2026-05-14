@@ -1,4 +1,6 @@
-export const NAV_ITEMS = [
+import type { NavItem, HeroCard, Service, Project, Testimonial, ProcessStep, Skill, Benefit, Client } from './types';
+
+export const NAV_ITEMS: NavItem[] = [
   { label: "Giới thiệu", href: "#about" },
   { label: "Dịch vụ", href: "#services" },
   { label: "Dự án", href: "#projects" },
@@ -6,25 +8,25 @@ export const NAV_ITEMS = [
   { label: "Liên hệ", href: "#contact" },
 ];
 
-export const HERO_CARDS = [
-  { 
-    id: "design", 
+export const HERO_CARDS: HeroCard[] = [
+  {
+    id: "design",
     src: "/images/tk.png",
     alt: "Design"
   },
-  { 
-    id: "code", 
+  {
+    id: "code",
     src: "/images/code.png",
     alt: "Code"
   },
-  { 
-    id: "photo", 
+  {
+    id: "photo",
     src: "/images/camera.png",
     alt: "Photography"
   },
 ];
 
-export const SERVICES = [
+export const SERVICES: Service[] = [
   {
     title: "Thiết kế",
     desc: "Khám phá cách chúng tôi thiết kế website chuyên nghiệp giúp khách hàng bán hàng trực tuyến hiệu quả và tạo ấn tượng thương hiệu tốt hơn.",
@@ -47,7 +49,7 @@ export const SERVICES = [
   },
 ];
 
-export const PROJECTS = [
+export const PROJECTS: Project[] = [
   {
     title: "Olinycallr Dashboard",
     category: "Web App",
@@ -65,21 +67,21 @@ export const PROJECTS = [
   },
 ];
 
-export const BENEFITS = [
+export const BENEFITS: Benefit[] = [
   "Tốc độ triển khai nhanh chóng",
   "Thiết kế cá nhân hoá theo thương hiệu",
   "Code sạch, dễ bảo trì và mở rộng",
   "Hỗ trợ kỹ thuật tận tâm sau bàn giao",
 ];
 
-export const PROCESS_STEPS = [
+export const PROCESS_STEPS: ProcessStep[] = [
   { step: "01", title: "Trao đổi", desc: "Lắng nghe ý tưởng và mục tiêu của bạn." },
   { step: "02", title: "Lên kế hoạch", desc: "Wireframe, thiết kế prototype và xác nhận." },
   { step: "03", title: "Phát triển", desc: "Code, tích hợp và kiểm thử kỹ lưỡng." },
   { step: "04", title: "Bàn giao", desc: "Ra mắt sản phẩm và hỗ trợ liên tục." },
 ];
 
-export const TESTIMONIALS = [
+export const TESTIMONIALS: Testimonial[] = [
   {
     quote: "HATMedia đã giúp chúng tôi xây dựng một nền tảng quản lý khách hàng hiệu quả và trực quan.",
     author: "Nguyễn Văn A",
@@ -92,7 +94,7 @@ export const TESTIMONIALS = [
   },
 ];
 
-export const SKILLS = [
+export const SKILLS: Skill[] = [
   "React / Next.js",
   "Node.js",
   "UI/UX Design",
@@ -101,7 +103,7 @@ export const SKILLS = [
   "Motion Graphics",
 ];
 
-export const CLIENTS = [
+export const CLIENTS: Client[] = [
   "EXIMBANK",
   "PETROLIMEX",
   "BAOVIET",

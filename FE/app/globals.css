@@ -46,16 +46,6 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Ensure smooth transitions for fixed elements if needed */
-.lenis-scrolling .fixed-element {
-  pointer-events: none;
-}
-
-/* MAGIC HACK: Disable pointer events (hovers) during scroll to give 100% CPU to 3D Canvas */
-html.lenis-scrolling * {
-  pointer-events: none !important;
-}
-
 body {
   background-color: var(--bg-0);
   background-image: 
@@ -86,19 +76,58 @@ body::before {
   box-sizing: border-box;
 }
 
-::selection {
-  background: var(--accent);
-  color: #000000;
+/* ===== UTILITY CLASSES (replace arbitrary values) ===== */
+.text-accent { color: var(--accent); }
+.bg-surface { background: var(--surface); }
+.bg-surface-border { border-color: var(--surface-border); }
+.border-surface { border-color: var(--surface-border); }
+
+.bg-black-5 { background-color: rgba(0,0,0,0.05); }
+.bg-accent-20 { background-color: rgba(213,175,52,0.2); }
+.bg-accent-15 { background-color: rgba(213,175,52,0.15); }
+.bg-accent-soft { background-color: rgba(213,175,52,0.15); }
+.text-white-80 { color: rgba(255,255,255,0.8); }
+.border-black-10 { border-color: rgba(0,0,0,0.1); }
+.border-black-3 { border-color: rgba(0,0,0,0.03); }
+
+.tracking-wide { letter-spacing: 0.3em; }
+.tracking-widest { letter-spacing: 0.2em; }
+
+.font-display { font-family: var(--font-display); }
+.font-serif { font-family: var(--font-serif); }
+.font-body { font-family: var(--font-body); }
+
+/* ===== ANIMATION CLASSES ===== */
+/* Float animation for hero images */
+@keyframes float {
+  0%, 100% { transform: translateY(-10px); }
+  50% { transform: translateY(10px); }
+}
+.float-anim {
+  animation: float 6s ease-in-out infinite;
 }
 
-a {
-  transition:
-    color var(--dur-fast) var(--ease-standard),
-    opacity var(--dur-fast) var(--ease-standard);
+/* Reveal animation (Intersection Observer) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--dur-normal) var(--ease-standard),
+              transform var(--dur-normal) var(--ease-standard);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-[data-reveal], [data-card], .motion-gpu {
+/* GPU acceleration for animations */
+.animate-gpu {
   will-change: transform, opacity;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all var(--dur-normal) var(--ease-standard);
+}
+

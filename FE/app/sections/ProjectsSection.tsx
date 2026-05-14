@@ -1,61 +1,59 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { memo } from "react";
+import Image from "next/image";
+import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { PROJECTS } from "@/app/lib/data";
 
-export default function ProjectsSection() {
+export default memo(function ProjectsSection() {
+  const { ref: sectionRef, isVisible } = useIntersectionObserver();
+
   return (
-    <section id="projects" className="relative py-20 md:py-28">
+    <section id="projects" ref={sectionRef} className="relative py-20 md:py-28">
       <div className="mx-auto w-full max-w-[1920px] px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-          className="text-center text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#d5af34] uppercase mb-4"
+        {/* Section Title */}
+        <p
+          className={`reveal text-center text-xs sm:text-sm font-semibold tracking-wide text-[var(--accent)] uppercase mb-4 ${isVisible ? 'is-visible' : ''}`}
         >
           Dự án
-        </motion.p>
+        </p>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
+        <h2
+          className={`reveal text-center font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16 ${isVisible ? 'is-visible' : ''}`}
+          style={isVisible ? { transitionDelay: '0.1s' } : undefined}
         >
           Sản phẩm nổi bật
-        </motion.h2>
+        </h2>
 
         <div className="space-y-12">
           {PROJECTS.map((project, i) => (
-            <motion.div
+            <div
               key={project.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] as const }}
-              className="group relative overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)]"
+              className={`reveal group relative overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] ${isVisible ? 'is-visible' : ''}`}
+              style={isVisible ? { transitionDelay: `${0.1 * i + 0.2}s` } : undefined}
             >
-              <div className="aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
-                <img
+              <div className="relative aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
+                <Image
                   src={project.image}
                   alt={project.title}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  loading="lazy"
                 />
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 sm:p-10">
-                <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#d5af34] uppercase mb-2">
+                <p className="text-xs sm:text-sm font-semibold tracking-widest text-[var(--accent)] uppercase mb-2">
                   {project.category}
                 </p>
-                <h3 className="font-(family-name:--font-display) text-2xl sm:text-3xl lg:text-4xl font-bold text-white shadow-sm">
+                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white shadow-sm">
                   {project.title}
                 </h3>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
-}
+});

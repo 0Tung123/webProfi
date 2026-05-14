@@ -1,4 +1,3 @@
-import ScrollReveal from "@/app/components/common/ScrollReveal";
 import Navbar from "@/app/components/layout/Navbar";
 import HeroSection from "@/app/sections/HeroSection";
 import AboutSection from "@/app/sections/AboutSection";
@@ -14,7 +13,6 @@ import Footer from "@/app/components/layout/Footer";
 export default function Home() {
   return (
     <main className="relative">
-      <ScrollReveal />
       <Navbar />
 
       {/* 1. Hero */}

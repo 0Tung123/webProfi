@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Manrope, Sora, Playfair_Display } from "next/font/google";
 
 import SmoothScroll from "@/app/components/common/SmoothScroll";
-import Scene from "@/app/components/canvas/Scene";
 
 import "./globals.css";
 

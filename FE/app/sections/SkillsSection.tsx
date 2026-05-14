@@ -1,37 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { memo } from "react";
+import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { SKILLS } from "@/app/lib/data";
 
-export default function SkillsSection() {
+export default memo(function SkillsSection() {
+  const { ref: sectionRef, isVisible } = useIntersectionObserver();
+
   return (
-    <section id="skills" className="relative py-16 md:py-20">
+    <section id="skills" ref={sectionRef} className="relative py-16 md:py-20">
       <div className="mx-auto w-full max-w-[1920px] px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#d5af34] uppercase mb-10"
+        <p
+          className={`reveal text-center text-xs sm:text-sm font-semibold tracking-wide text-accent uppercase mb-10 ${isVisible ? 'is-visible' : ''}`}
         >
           Công nghệ & Kỹ năng
-        </motion.p>
+        </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           {SKILLS.map((skill, i) => (
-            <motion.span
+            <span
               key={skill}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] as const }}
-              className="rounded-full border border-[var(--surface-border)] bg-[var(--surface)] px-6 py-3 text-sm font-medium text-[var(--text-1)] transition-colors duration-300 hover:border-[#d5af34] hover:text-[#d5af34]"
+              className={`reveal rounded-full border border-surface bg-surface px-6 py-3 text-sm font-medium text-[var(--text-1)] hover:border-accent hover:text-accent transition-all duration-300 ${isVisible ? 'is-visible' : ''}`}
+              style={{ transitionDelay: `${0.08 * i + 0.1}s` }}
             >
               {skill}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
     </section>
   );
-}
+});
