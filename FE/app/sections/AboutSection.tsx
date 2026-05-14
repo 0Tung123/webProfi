@@ -5,7 +5,7 @@ import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 
 export default memo(function AboutSection() {
-  const { ref, isVisible } = useIntersectionObserver();
+  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
     <section id="about" className="relative py-12 md:py-16 overflow-hidden bg-[var(--bg-0)]">
@@ -43,7 +43,7 @@ export default memo(function AboutSection() {
             <div className="text-[12px] font-bold uppercase tracking-widest text-[var(--text-2)]">
               Dẫn đầu xu hướng từ
             </div>
-            <div className="text-[24px] font-display font-light text-[var(--text-0)]">2024</div>
+            <div className="text-[24px] font-display font-light text-[var(--text-0)]">2026</div>
           </div>
         </div>
       </div>

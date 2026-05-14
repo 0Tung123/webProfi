@@ -5,7 +5,8 @@ import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { PROCESS_STEPS, CLIENTS } from "@/app/lib/data";
 
 export default memo(function ProcessSection() {
-  const { ref, isVisible } = useIntersectionObserver();
+  const { ref: stepsRef, isVisible: stepsVisible } = useIntersectionObserver({ threshold: 0.1 });
+  const { ref: partnersRef, isVisible: partnersVisible } = useIntersectionObserver({ threshold: 0.2 });
 
   return (
     <section id="process" className="relative py-16 md:py-24 overflow-hidden bg-[var(--bg-0)]">
@@ -16,9 +17,9 @@ export default memo(function ProcessSection() {
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10">
         
         {/* 1. Process Header & Steps */}
-        <div ref={ref} className="mb-32">
+        <div ref={stepsRef} className="mb-32">
           <div
-            className={`reveal flex items-center gap-4 mb-10 ${isVisible ? 'is-visible' : ''}`}
+            className={`reveal flex items-center gap-4 mb-10 ${stepsVisible ? 'is-visible' : ''}`}
           >
             <span className="w-8 h-px bg-[var(--accent)]" />
             <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
@@ -27,7 +28,7 @@ export default memo(function ProcessSection() {
           </div>
 
           <h2
-            className={`reveal font-display text-[36px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight mb-16 ${isVisible ? 'is-visible' : ''}`}
+            className={`reveal font-display text-[36px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight mb-16 ${stepsVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.1s' }}
           >
             Cách chúng tôi <br className="hidden lg:block" /> kiến tạo giá trị
@@ -37,7 +38,7 @@ export default memo(function ProcessSection() {
             {PROCESS_STEPS.map((item, i) => (
               <div
                 key={item.step}
-                className={`reveal group relative p-8 rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-500 hover:border-[var(--accent)] hover:shadow-xl ${isVisible ? 'is-visible' : ''}`}
+                className={`reveal group relative p-8 rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-500 hover:border-[var(--accent)] hover:shadow-xl ${stepsVisible ? 'is-visible' : ''}`}
                 style={{
                   transitionDelay: `${0.1 * i + 0.2}s`,
                 }}
@@ -57,9 +58,9 @@ export default memo(function ProcessSection() {
         </div>
 
         {/* 2. Trusted Partners - Infinite Scroll Marquee */}
-        <div className="pt-24 border-t border-[var(--surface-border)] relative">
+        <div ref={partnersRef} className="pt-24 border-t border-[var(--surface-border)] relative">
           
-          <div className={`reveal mb-20 max-w-3xl ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.4s' }}>
+          <div className={`reveal mb-20 max-w-3xl ${partnersVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
             <h3 className="text-[32px] md:text-[42px] font-display font-bold text-[var(--text-0)] mb-6">
               Mạng lưới đối tác chiến lược
             </h3>
@@ -69,7 +70,7 @@ export default memo(function ProcessSection() {
           </div>
 
           {/* Marquee Rows */}
-          <div className="flex flex-col gap-12 overflow-hidden py-10 -mx-6 lg:-mx-16 relative">
+          <div className={`reveal flex flex-col gap-12 overflow-hidden py-10 -mx-6 lg:-mx-16 relative ${partnersVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             
             {/* Gradient Fades for edges */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--bg-0)] to-transparent z-10" />
@@ -108,7 +109,11 @@ export default memo(function ProcessSection() {
               { label: "Năm kinh nghiệm", value: "05+" },
               { label: "Lĩnh vực chuyên sâu", value: "08+" }
             ].map((stat, i) => (
-              <div key={stat.label} className="flex flex-col border-l border-[var(--surface-border)] pl-6">
+              <div 
+                key={stat.label} 
+                className={`reveal flex flex-col border-l border-[var(--surface-border)] pl-6 ${partnersVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: `${0.5 + i * 0.1}s` }}
+              >
                 <span className="text-[32px] font-display font-bold text-[var(--accent)]">{stat.value}</span>
                 <span className="text-[12px] uppercase tracking-widest text-[var(--text-2)] font-bold">{stat.label}</span>
               </div>

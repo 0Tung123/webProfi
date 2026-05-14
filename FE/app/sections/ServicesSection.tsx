@@ -6,32 +6,27 @@ import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { SERVICES } from "@/app/lib/data";
 
 export default function ServicesSection() {
-  const { ref: gridRef, isVisible } = useIntersectionObserver();
+  const { ref: sectionRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="services" className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+    <section id="services" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
           <div className="max-w-2xl">
-            <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)] mb-4 block">
+            <span className={`reveal text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)] mb-4 block ${isVisible ? 'is-visible' : ''}`}>
               Chuyên môn của chúng tôi
             </span>
-            <h2 className="text-[36px] md:text-[56px] font-display font-bold text-[var(--text-0)] leading-[1.1] tracking-tight">
+            <h2 className={`reveal text-[36px] md:text-[56px] font-display font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
               Giải pháp toàn diện cho <br /> kỷ nguyên kỹ thuật số
             </h2>
-          </div>
-          <div className="text-left md:text-right">
-            <div className="text-[64px] font-display font-light text-[var(--surface-border)] leading-none mb-2">04</div>
-            <div className="text-[12px] font-bold uppercase tracking-widest text-[var(--text-2)]">Dịch vụ cốt lõi</div>
           </div>
         </div>
 
         {/* Services Grid with Full Background Interaction */}
         <div 
-          ref={gridRef}
           onMouseLeave={() => setHoveredIndex(null)}
           className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-[var(--surface-border)]"
         >

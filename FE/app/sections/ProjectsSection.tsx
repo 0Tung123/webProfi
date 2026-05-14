@@ -6,7 +6,7 @@ import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { PROJECTS } from "@/app/lib/data";
 
 export default memo(function ProjectsSection() {
-  const { ref: sectionRef, isVisible } = useIntersectionObserver();
+  const { ref: sectionRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
     <section id="projects" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
@@ -15,16 +15,12 @@ export default memo(function ProjectsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
           <div className="max-w-2xl">
-            <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)] mb-4 block">
+            <span className={`reveal text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)] mb-4 block ${isVisible ? 'is-visible' : ''}`}>
               Sản phẩm chúng tôi đã thực hiện
             </span>
-            <h2 className="text-[36px] md:text-[56px] font-display font-bold text-[var(--text-0)] leading-[1.1] tracking-tight">
+            <h2 className={`reveal text-[36px] md:text-[56px] font-display font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
               Dự án nổi bật
             </h2>
-          </div>
-          <div className="text-left md:text-right">
-            <div className="text-[64px] font-display font-light text-[var(--surface-border)] leading-none mb-2">08</div>
-            <div className="text-[12px] font-bold uppercase tracking-widest text-[var(--text-2)]">Dự án chọn lọc</div>
           </div>
         </div>
 

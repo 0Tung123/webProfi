@@ -5,7 +5,7 @@ import { SERVICES } from "@/app/lib/data";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 
 export default memo(function Footer() {
-  const { ref: footerRef, isVisible } = useIntersectionObserver();
+  const { ref: footerRef, isVisible } = useIntersectionObserver({ threshold: 0 });
 
   return (
     <footer ref={footerRef} className="relative bg-white pt-24 pb-8 overflow-hidden">
@@ -13,13 +13,13 @@ export default memo(function Footer() {
       {/* 1. Large High-Impact CTA */}
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-24 md:mb-32 relative">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-12">
-          <h2 className="font-display text-[36px] sm:text-[52px] md:text-[80px] font-bold text-[var(--text-0)] leading-[1] tracking-tight max-w-3xl">
+          <h2 className={`reveal font-display text-[36px] sm:text-[52px] md:text-[80px] font-bold text-[var(--text-0)] leading-[1] tracking-tight max-w-3xl ${isVisible ? 'is-visible' : ''}`}>
             Hiện thực hoá <br /> 
             <span className="font-serif italic font-medium text-[var(--accent)] lowercase">ý tưởng của bạn</span>
           </h2>
 
           {/* Massive Branding Circle with Arrow */}
-          <div className="relative group cursor-pointer self-end md:self-auto">
+          <div className={`reveal relative group cursor-pointer self-end md:self-auto ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
             <div className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] bg-[var(--accent)] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 shadow-[0_20px_60px_rgba(213,175,52,0.2)] group-hover:shadow-[0_30px_80px_rgba(213,175,52,0.4)]">
               <svg 
                 viewBox="0 0 24 24" 
@@ -49,7 +49,7 @@ export default memo(function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-24">
           
           {/* Column 1: Trụ sở */}
-          <div className="flex flex-col gap-6">
+          <div className={`reveal flex flex-col gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Trụ sở</h4>
             <div className="flex flex-col gap-6 text-[13px] leading-relaxed text-black/60">
               <div>
@@ -64,7 +64,7 @@ export default memo(function Footer() {
           </div>
 
           {/* Column 2: Liên hệ */}
-          <div className="flex flex-col gap-6">
+          <div className={`reveal flex flex-col gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.4s' }}>
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Liên hệ</h4>
             <div className="flex flex-col gap-4 text-[13px] text-black/60">
               <div className="flex gap-4">
@@ -83,7 +83,7 @@ export default memo(function Footer() {
           </div>
 
           {/* Column 3: Dịch vụ */}
-          <div className="flex flex-col gap-6">
+          <div className={`reveal flex flex-col gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.5s' }}>
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Dịch vụ</h4>
             <div className="flex flex-col gap-3 text-[13px] text-black/60">
               {SERVICES.map(s => (
@@ -93,7 +93,7 @@ export default memo(function Footer() {
           </div>
 
           {/* Column 4: Newsletter */}
-          <div className="flex flex-col gap-6">
+          <div className={`reveal flex flex-col gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.6s' }}>
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Đăng Ký Nhận Thông Tin</h4>
             <div className="relative mt-2">
               <input 
@@ -110,7 +110,7 @@ export default memo(function Footer() {
         </div>
 
         {/* 3. Bottom Bar */}
-        <div className="pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className={`reveal pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.7s' }}>
           <p className="text-[10px] text-black/30 uppercase tracking-[0.2em]">
             Copyright &copy; {new Date().getFullYear()} HATMedia Agency. All Rights Reserved.
           </p>

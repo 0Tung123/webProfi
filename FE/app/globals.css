@@ -20,9 +20,9 @@
   --radius-lg: 1.4rem;
 
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 180ms;
-  --dur-normal: 420ms;
-  --dur-slow: 900ms;
+  --dur-fast: 250ms;
+  --dur-normal: 1000ms;
+  --dur-slow: 1500ms;
 }
 
 html.lenis,
@@ -110,7 +110,7 @@ body::before {
 /* Reveal animation (Intersection Observer) */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px);
   transition: opacity var(--dur-normal) var(--ease-standard),
               transform var(--dur-normal) var(--ease-standard);
 }
