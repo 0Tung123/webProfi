@@ -11,20 +11,20 @@ export default memo(function Footer() {
     <footer ref={footerRef} className="relative bg-white pt-24 pb-8 overflow-hidden">
       
       {/* 1. Large High-Impact CTA */}
-      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-24 md:mb-32 relative">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-12">
-          <h2 className={`reveal font-display text-[36px] sm:text-[52px] md:text-[80px] font-bold text-[var(--text-0)] leading-[1] tracking-tight max-w-3xl ${isVisible ? 'is-visible' : ''}`}>
+      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-16 md:mb-32 relative">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left gap-10 md:gap-12">
+          <h2 className={`reveal font-display text-[36px] sm:text-[52px] md:text-[80px] font-bold text-[var(--text-0)] leading-[1.1] md:leading-[1] tracking-tight max-w-3xl ${isVisible ? 'is-visible' : ''}`}>
             Hiện thực hoá <br /> 
             <span className="font-serif italic font-medium text-[var(--accent)] lowercase">ý tưởng của bạn</span>
           </h2>
 
           {/* Massive Branding Circle with Arrow */}
-          <div className={`reveal relative group cursor-pointer self-end md:self-auto ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
-            <div className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] bg-[var(--accent)] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 shadow-[0_20px_60px_rgba(213,175,52,0.2)] group-hover:shadow-[0_30px_80px_rgba(213,175,52,0.4)]">
+          <div className={`reveal relative group cursor-pointer self-center md:self-auto ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
+            <div className="w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] md:w-[260px] md:h-[260px] bg-[var(--accent)] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 shadow-[0_20px_60px_rgba(213,175,52,0.2)] group-hover:shadow-[0_30px_80px_rgba(213,175,52,0.4)]">
               <svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
-                className="w-10 h-10 sm:w-16 sm:h-16 md:w-24 md:h-24 text-black transform transition-all duration-500 group-hover:translate-x-3"
+                className="w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 text-black transform transition-all duration-500 group-hover:translate-x-3"
                 stroke="currentColor" 
                 strokeWidth="1.5" 
                 strokeLinecap="round" 
@@ -108,12 +108,12 @@ export default memo(function Footer() {
         </div>
 
         {/* 3. Bottom Bar */}
-        <div className={`reveal pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.7s' }}>
+        <div className={`reveal pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.7s' }}>
           <p className="text-[10px] text-black/30 uppercase tracking-[0.2em]">
             Copyright &copy; {new Date().getFullYear()} HATMedia Agency. All Rights Reserved.
           </p>
           
-          <div className="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-black/50">
+          <div className="flex flex-wrap justify-center gap-x-6 md:gap-8 gap-y-3 text-[11px] font-bold uppercase tracking-widest text-black/50">
             {SOCIAL_LINKS.map(social => (
               <a key={social.label} href={social.href} className="hover:text-[var(--accent)] transition-colors">{social.label}</a>
             ))}

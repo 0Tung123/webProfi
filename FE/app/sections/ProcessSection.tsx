@@ -68,18 +68,18 @@ export default memo(function ProcessSection() {
             {PROCESS_BY_FIELD[activeField].steps.map((item, i) => (
               <div
                 key={`${activeField}-${item.step}`}
-                className={`reveal group relative p-8 rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-700 hover:border-[var(--accent)] hover:shadow-xl ${stepsVisible ? 'is-visible' : ''}`}
+                className={`reveal group relative p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[var(--surface-border)] bg-[var(--bg-0)] transition-all duration-700 hover:border-[var(--accent)] hover:shadow-xl ${stepsVisible ? 'is-visible' : ''}`}
                 style={{
                   transitionDelay: `${0.1 * i + 0.3}s`,
                 }}
               >
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--bg-1)] text-[var(--accent)] font-display text-2xl font-bold group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-500">
+                <div className="mb-4 md:mb-6 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-[var(--bg-1)] text-[var(--accent)] font-display text-xl md:text-2xl font-bold group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-500">
                   {item.step}
                 </div>
-                <h3 className="font-display text-[20px] font-bold text-[var(--text-0)] mb-4">
+                <h3 className="font-display text-[18px] md:text-[20px] font-bold text-[var(--text-0)] mb-3 md:mb-4">
                   {item.title}
                 </h3>
-                <p className="text-[14px] text-[var(--text-2)] leading-relaxed font-light">
+                <p className="text-[13px] md:text-[14px] text-[var(--text-2)] leading-relaxed font-light">
                   {item.desc}
                 </p>
 
