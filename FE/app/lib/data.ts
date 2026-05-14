@@ -174,7 +174,7 @@ export const OFFICE_LOCATIONS = [
   },
   {
     name: "Studio",
-    address: "Số 2, lộc dư, thượng phúc, hà nội"
+    address: "Số 2, Lộc Dư, Thượng Phúc, Hà Nội"
   }
 ];
 
