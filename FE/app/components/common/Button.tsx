@@ -1,34 +1,49 @@
+"use client";
+
 import type { AnchorHTMLAttributes, ReactNode } from "react";
+import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 
 type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode;
+  reveal?: boolean;
 };
 
 export default function Button({
   children,
   className = "",
+  reveal = false,
   ...props
 }: ButtonProps) {
+  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.1, once: true });
+
   return (
     <a
-      className={`group inline-flex w-fit items-center gap-4 rounded-full border border-[var(--accent)] bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--accent-soft)] shadow-[0_0_0_1px_rgba(213,175,52,0.08),0_18px_48px_rgba(213,175,52,0.08)] transition duration-500 ease-[var(--ease-standard)] hover:bg-[linear-gradient(135deg,#ffe1a2_0%,#d5aa4f_48%,#b98a27_100%)] hover:text-black hover:shadow-[0_18px_54px_rgba(213,175,52,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-soft)] ${className}`}
+      ref={reveal ? ref : undefined}
+      className={`group relative inline-flex w-fit items-center gap-4 rounded-full border border-[var(--accent)] bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--text-0)] overflow-hidden transition-all duration-500 shadow-[0_18px_48px_rgba(213,175,52,0.05)] ${reveal ? `reveal ${isVisible ? 'is-visible' : ''}` : ''} ${className}`}
       {...props}
     >
-      <span>{children}</span>
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        className="size-4 transition duration-500 ease-[var(--ease-standard)] group-hover:translate-x-1"
-        fill="none"
-      >
-        <path
-          d="M4 12h14M13 6l6 6-6 6"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.25"
-        />
-      </svg>
+      {/* Background Fill (Bottom to Top) */}
+      <div className="absolute bottom-0 left-0 right-0 h-0 bg-[var(--accent)] transition-all duration-500 ease-in-out group-hover:h-full" />
+      
+      {/* Content */}
+      <span className="relative z-10 group-hover:text-white transition-colors duration-500">{children}</span>
+      
+      <div className="relative z-10 w-6 h-6 rounded-full bg-[var(--bg-1)] flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-all duration-500">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="size-3.5 transition duration-500 ease-[var(--ease-standard)] text-[var(--text-0)] group-hover:text-white"
+          fill="none"
+        >
+          <path
+            d="M4 12h14M13 6l6 6-6 6"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />
+        </svg>
+      </div>
     </a>
   );
 }

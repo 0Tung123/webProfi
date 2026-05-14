@@ -4,6 +4,7 @@ import { memo } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { HERO_CARDS as cards } from "@/app/lib/data";
+import Button from "@/app/components/common/Button";
 
 export default memo(function HeroSection() {
   const { ref: heroRef, isVisible } = useIntersectionObserver({
@@ -57,14 +58,9 @@ export default memo(function HeroSection() {
             className={`reveal mt-10 ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.4s' }}
           >
-            <a
-              href="#contact"
-              className="group inline-flex items-center justify-center gap-3 rounded-full border border-[var(--surface-border)] bg-[var(--surface)] px-10 py-5 text-sm font-semibold uppercase tracking-widest text-[var(--text-0)] transition-all hover:bg-black-5 hover:border-black-10 backdrop-blur-sm"
-              suppressHydrationWarning
-            >
+            <Button href="#contact">
               KHÁM PHÁ SỰ TINH TẾ
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
+            </Button>
           </div>
         </div>
 
