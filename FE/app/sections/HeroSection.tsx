@@ -34,14 +34,14 @@ export default memo(function HeroSection() {
 
           {/* Heading */}
           <h1
-            className={`reveal font-display text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.05] tracking-tight text-[var(--text-0)] uppercase ${isVisible ? 'is-visible' : ''}`}
+            className={`reveal font-display text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.15] tracking-tight text-[var(--text-0)] uppercase ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.2s' }}
           >
             ĐỊNH HÌNH <br />
-            <span className="font-serif italic font-medium text-[var(--accent)] lowercase block -mt-2 sm:-mt-3">
+            <span className="font-serif italic font-medium text-[var(--accent)] lowercase block mt-2">
               nghệ thuật
             </span>
-            <span className="-mt-2 sm:-mt-3 block">NGUYÊN BẢN</span>
+            <span className="mt-2 block">NGUYÊN BẢN</span>
           </h1>
 
           {/* Paragraph */}

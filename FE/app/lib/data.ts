@@ -174,7 +174,7 @@ export const OFFICE_LOCATIONS = [
   },
   {
     name: "Studio",
-    address: "số 2, lộc dư, thượng phúc, hà nội"
+    address: "Số 2, lộc dư, thượng phúc, hà nội"
   }
 ];
 
@@ -189,7 +189,7 @@ export const BENEFITS_CONTENT = {
   philosophy: "Our Philosophy",
   statement: "Chúng tôi không chỉ kiến tạo sản phẩm số, HATMedia đồng hành cùng thương hiệu để định hình giá trị và tạo ra những trải nghiệm chạm tới cảm xúc.",
   founder: {
-    name: "Anh Lê Xuân Hải",
+    name: "Lê Xuân Hải",
     role: "Founder of HATMedia",
     initial: "H"
   },

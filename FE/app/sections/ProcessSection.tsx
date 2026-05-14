@@ -18,27 +18,27 @@ export default memo(function ProcessSection() {
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10">
         
         {/* 1. Process Header & Category Selection */}
-        <div ref={stepsRef} className="mb-32">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-10">
+        <div ref={stepsRef} className="mb-20 md:mb-32">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 md:mb-16 gap-8 md:gap-10">
             <div className="max-w-2xl">
               <div
-                className={`reveal flex items-center gap-4 mb-10 ${stepsVisible ? 'is-visible' : ''}`}
+                className={`reveal flex items-center gap-4 mb-6 md:mb-10 ${stepsVisible ? 'is-visible' : ''}`}
               >
                 <span className="w-8 h-px bg-[var(--accent)]" />
-                <span className="text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
+                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)]">
                   Lộ trình triển khai
                 </span>
               </div>
 
               <h2
-                className={`reveal font-display text-[36px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${stepsVisible ? 'is-visible' : ''}`}
+                className={`reveal font-display text-[32px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${stepsVisible ? 'is-visible' : ''}`}
                 style={{ transitionDelay: '0.1s' }}
               >
                 Quy trình tối ưu <br className="hidden lg:block" /> cho từng mục tiêu
               </h2>
 
               <p 
-                className={`reveal mt-6 text-[16px] text-[var(--text-2)] font-light leading-relaxed max-w-xl transition-all duration-700 ${stepsVisible ? 'is-visible' : ''}`}
+                className={`reveal mt-6 text-[15px] md:text-[16px] text-[var(--text-2)] font-light leading-relaxed max-w-xl transition-all duration-700 ${stepsVisible ? 'is-visible' : ''}`}
                 style={{ transitionDelay: '0.2s' }}
               >
                 {PROCESS_BY_FIELD[activeField].desc}

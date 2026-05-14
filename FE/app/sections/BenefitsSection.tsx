@@ -37,13 +37,13 @@ export default memo(function BenefitsSection() {
                 "{BENEFITS_CONTENT.statement}"
               </h2>
               
-              <div className={`reveal mt-16 flex items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
-                <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-bold text-xl">
+              <div className={`reveal mt-12 md:mt-16 flex items-center gap-6 md:gap-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+                <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-bold text-xl shrink-0">
                   {BENEFITS_CONTENT.founder.initial}
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[20px] font-bold text-[var(--text-0)]">{BENEFITS_CONTENT.founder.name}</span>
-                  <span className="text-[14px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">{BENEFITS_CONTENT.founder.role}</span>
+                  <span className="text-[18px] md:text-[20px] font-bold text-[var(--text-0)]">{BENEFITS_CONTENT.founder.name}</span>
+                  <span className="text-[12px] md:text-[14px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">{BENEFITS_CONTENT.founder.role}</span>
                 </div>
               </div>
             </div>
@@ -53,9 +53,9 @@ export default memo(function BenefitsSection() {
       </div>
 
       {/* Modern Watermark - Restored without rising animation */}
-      <div className="absolute -bottom-8 right-12 flex flex-col items-end opacity-[0.03] select-none pointer-events-none">
-        <span className="text-[120px] lg:text-[180px] font-display font-black leading-none uppercase">{BENEFITS_CONTENT.watermark}</span>
-        <span className="text-[40px] font-serif italic -mt-4">Since {ABOUT_CONTENT.since}</span>
+      <div className="absolute bottom-8 lg:bottom-12 right-6 lg:right-12 flex flex-col items-end opacity-[0.02] select-none pointer-events-none">
+        <span className="text-[42px] sm:text-[80px] lg:text-[180px] font-display font-black leading-none uppercase text-black">{BENEFITS_CONTENT.watermark}</span>
+        <span className="text-[20px] sm:text-[40px] font-serif italic -mt-1 lg:-mt-4 text-gray-500">Since {ABOUT_CONTENT.since}</span>
       </div>
 
       <style jsx>{`
