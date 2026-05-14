@@ -12,20 +12,21 @@ export default memo(function Footer() {
       
       {/* 1. Large High-Impact CTA */}
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 mb-24 md:mb-32 relative">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-12">
-          <h2 className="font-display text-[32px] sm:text-[48px] md:text-[72px] font-bold text-black leading-[1.1] tracking-tight max-w-2xl">
-            Hiện thực hoá <br /> ý tưởng của bạn
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-12">
+          <h2 className="font-display text-[36px] sm:text-[52px] md:text-[80px] font-bold text-[var(--text-0)] leading-[1] tracking-tight max-w-3xl">
+            Hiện thực hoá <br /> 
+            <span className="font-serif italic font-medium text-[var(--accent)] lowercase">ý tưởng của bạn</span>
           </h2>
 
-          {/* Massive Red Circle with Arrow */}
+          {/* Massive Branding Circle with Arrow */}
           <div className="relative group cursor-pointer self-end md:self-auto">
-            <div className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] bg-[#ff334b] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_0_50px_rgba(255,51,75,0.3)]">
+            <div className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] bg-[var(--accent)] rounded-full flex items-center justify-center transform transition-all duration-700 group-hover:scale-105 shadow-[0_20px_60px_rgba(213,175,52,0.2)] group-hover:shadow-[0_30px_80px_rgba(213,175,52,0.4)]">
               <svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
-                className="w-8 h-8 sm:w-12 sm:h-12 md:w-20 md:h-20 text-black transform transition-transform duration-500 group-hover:translate-x-2"
+                className="w-10 h-10 sm:w-16 sm:h-16 md:w-24 md:h-24 text-black transform transition-all duration-500 group-hover:translate-x-3"
                 stroke="currentColor" 
-                strokeWidth="2.5" 
+                strokeWidth="1.5" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
               >
@@ -33,8 +34,10 @@ export default memo(function Footer() {
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </div>
-            {/* Background decoration */}
-            <div className="absolute -top-10 -right-10 w-[200px] h-[200px] bg-[#ff334b] rounded-full opacity-[0.03] blur-3xl -z-10" />
+            
+            {/* Animated Halo Rings */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-full border border-[var(--accent)] opacity-20 group-hover:scale-125 transition-transform duration-1000 ease-out" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full border border-[var(--accent)] opacity-10 group-hover:scale-150 transition-transform duration-1000 ease-out" />
           </div>
         </div>
       </div>
@@ -84,7 +87,7 @@ export default memo(function Footer() {
             <h4 className="text-[13px] font-bold uppercase tracking-widest text-black">Dịch vụ</h4>
             <div className="flex flex-col gap-3 text-[13px] text-black/60">
               {SERVICES.map(s => (
-                <p key={s.title} className="hover:text-[#ff334b] transition-colors cursor-pointer">{s.title}</p>
+                <p key={s.title} className="hover:text-[var(--accent)] transition-colors cursor-pointer">{s.title}</p>
               ))}
             </div>
           </div>
@@ -98,7 +101,7 @@ export default memo(function Footer() {
                 placeholder="Nhập email tại đây" 
                 className="w-full bg-transparent border-b border-black/10 pb-4 pr-20 text-[13px] focus:outline-none focus:border-black transition-colors"
               />
-              <button className="absolute right-0 bottom-4 text-[13px] font-bold uppercase tracking-widest hover:text-[#ff334b] transition-colors">
+              <button className="absolute right-0 bottom-4 text-[13px] font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">
                 Đăng ký
               </button>
             </div>
@@ -114,7 +117,7 @@ export default memo(function Footer() {
           
           <div className="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-black/50">
             {["Facebook", "Behance", "Dribbble", "LinkedIn"].map(social => (
-              <a key={social} href="#" className="hover:text-[#ff334b] transition-colors">{social}</a>
+              <a key={social} href="#" className="hover:text-[var(--accent)] transition-colors">{social}</a>
             ))}
           </div>
         </div>
