@@ -25,7 +25,7 @@ export default function BenefitsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-16"
+          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
         >
           Tại sao chọn HATMedia?
         </motion.h2>
@@ -37,13 +37,13 @@ export default function BenefitsSection() {
               initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-start gap-4 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6"
+              transition={{ duration: 0.8, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] as const }}
+              className="flex items-start gap-4 rounded-xl border border-[var(--surface-border)] bg-[var(--surface)] p-6"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(213,175,52,0.15)] text-[#d5af34] text-lg font-bold">
                 ✓
               </div>
-              <p className="text-lg text-white font-light leading-relaxed">
+              <p className="text-lg text-[var(--text-0)] font-light leading-relaxed">
                 {benefit}
               </p>
             </motion.div>

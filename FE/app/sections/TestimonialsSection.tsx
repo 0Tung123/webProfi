@@ -22,7 +22,7 @@ export default function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-16"
+          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
         >
           Khách hàng nói gì?
         </motion.h2>
@@ -34,8 +34,8 @@ export default function TestimonialsSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-8"
+              transition={{ duration: 0.8, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-8"
             >
               <p className="text-lg text-[var(--text-1)] font-light leading-relaxed italic mb-6">
                 &ldquo;{item.quote}&rdquo;
@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
                   {item.author[0]}
                 </div>
                 <div>
-                  <p className="text-white font-medium text-sm">{item.author}</p>
+                  <p className="text-[var(--text-0)] font-medium text-sm">{item.author}</p>
                   <p className="text-[var(--text-2)] text-xs">{item.role}</p>
                 </div>
               </div>

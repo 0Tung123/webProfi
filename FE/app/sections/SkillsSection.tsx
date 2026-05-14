@@ -24,8 +24,8 @@ export default function SkillsSection() {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-full border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] px-6 py-3 text-sm font-medium text-[var(--text-1)] transition-colors duration-300 hover:border-[#d5af34] hover:text-[#d5af34]"
+              transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-full border border-[var(--surface-border)] bg-[var(--surface)] px-6 py-3 text-sm font-medium text-[var(--text-1)] transition-colors duration-300 hover:border-[#d5af34] hover:text-[#d5af34]"
             >
               {skill}
             </motion.span>

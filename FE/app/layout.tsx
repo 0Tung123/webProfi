@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${sora.variable} ${playfair.variable} antialiased`}>
-        <Scene />
+        {/* <Scene /> */}
         <SmoothScroll />
         {children}
       </body>

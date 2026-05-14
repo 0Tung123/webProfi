@@ -9,17 +9,17 @@ export const NAV_ITEMS = [
 export const HERO_CARDS = [
   { 
     id: "design", 
-    src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop",
+    src: "/images/tk.png",
     alt: "Design"
   },
   { 
     id: "code", 
-    src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
+    src: "/images/code.png",
     alt: "Code"
   },
   { 
     id: "photo", 
-    src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop",
+    src: "/images/camera.png",
     alt: "Photography"
   },
 ];
@@ -28,22 +28,22 @@ export const SERVICES = [
   {
     title: "Thiết kế",
     desc: "Khám phá cách chúng tôi thiết kế website chuyên nghiệp giúp khách hàng bán hàng trực tuyến hiệu quả và tạo ấn tượng thương hiệu tốt hơn.",
-    image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/tk.png",
   },
   {
     title: "Brand",
     desc: "Xây dựng bản sắc thương hiệu độc đáo, từ logo đến chiến lược truyền thông toàn diện.",
-    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/tk.png",
   },
   {
     title: "Lập trình",
     desc: "Phát triển website và ứng dụng di động với công nghệ tiên tiến nhất, đảm bảo tốc độ và bảo mật.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/code.png",
   },
   {
     title: "Chụp ảnh",
     desc: "Ghi lại những khoảnh khắc đắt giá và sản xuất nội dung hình ảnh/video chất lượng cao cho thương hiệu.",
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/camera.png",
   },
 ];
 
@@ -51,17 +51,17 @@ export const PROJECTS = [
   {
     title: "Olinycallr Dashboard",
     category: "Web App",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+    image: "/images/code.png",
   },
   {
     title: "Brand Identity — Sendesign",
     category: "Branding",
-    image: "https://images.unsplash.com/photo-1634942537034-2531766767d1?q=80&w=800&auto=format&fit=crop",
+    image: "/images/tk.png",
   },
   {
     title: "E-Commerce Platform",
     category: "Development",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=800&auto=format&fit=crop",
+    image: "/images/code.png",
   },
 ];
 

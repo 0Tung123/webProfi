@@ -34,7 +34,7 @@ function Particles() {
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#ffd700" transparent opacity={0.6} sizeAttenuation />
+      <pointsMaterial size={0.03} color="#b58d1d" transparent opacity={0.6} sizeAttenuation />
     </points>
   );
 }
@@ -42,7 +42,7 @@ function Particles() {
 export default function Scene() {
   return (
     <div
-      className="fixed inset-0 -z-10 bg-black"
+      className="fixed inset-0 -z-10 bg-[var(--bg-0)]"
       style={{ willChange: "transform", transform: "translateZ(0)" }}
     >
       <Canvas

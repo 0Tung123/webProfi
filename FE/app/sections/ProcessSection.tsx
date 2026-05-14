@@ -22,7 +22,7 @@ export default function ProcessSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-16"
+          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
         >
           Cách hoạt động
         </motion.h2>
@@ -34,13 +34,13 @@ export default function ProcessSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.8, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] as const }}
               className="text-center"
             >
               <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#d5af34] text-[#d5af34] font-(family-name:--font-display) text-xl font-bold">
                 {item.step}
               </div>
-              <h3 className="font-(family-name:--font-display) text-lg font-semibold text-white mb-2">
+              <h3 className="font-(family-name:--font-display) text-lg font-semibold text-[var(--text-0)] mb-2">
                 {item.title}
               </h3>
               <p className="text-sm text-[var(--text-2)] leading-relaxed">

@@ -33,7 +33,7 @@ export default function Navbar() {
       }}
       className="fixed left-0 top-0 z-50 w-screen"
     >
-      <div className="flex h-[88px] w-screen items-center justify-between border-b border-white/10 bg-[rgba(5,6,10,0.94)] px-6 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-xl md:h-[100px] md:px-16">
+      <div className="flex h-[88px] w-screen items-center justify-between border-b border-[var(--surface-border)] bg-[rgba(252,251,248,0.85)] px-6 shadow-[0_18px_60px_rgba(0,0,0,0.06)] backdrop-blur-xl md:h-[100px] md:px-16">
         <a
           href="#top"
           className="font-(family-name:--font-display) text-2xl font-semibold text-[var(--text-0)] md:text-[28px]"

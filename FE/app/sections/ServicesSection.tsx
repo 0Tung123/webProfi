@@ -8,7 +8,7 @@ export default function ServicesSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
 
   return (
-    <section id="services" className="relative py-20 md:py-28 bg-black">
+    <section id="services" className="relative py-20 md:py-28 bg-[var(--bg-1)]">
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -20,7 +20,7 @@ export default function ServicesSection() {
           Dịch vụ
         </motion.p>
 
-        <div className="flex flex-col lg:flex-row h-[600px] lg:h-[700px] gap-0 overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.1)]">
+        <div className="flex flex-col lg:flex-row h-[600px] lg:h-[700px] gap-0 overflow-hidden rounded-2xl border border-[var(--surface-border)]">
           {SERVICES.map((service, i) => (
             <motion.div
               key={service.title}

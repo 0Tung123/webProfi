@@ -11,7 +11,7 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           className="text-center text-xs sm:text-sm font-semibold tracking-[0.3em] text-[#d5af34] uppercase mb-4"
         >
           Dự án
@@ -21,8 +21,8 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-16"
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
+          className="text-center font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16"
         >
           Sản phẩm nổi bật
         </motion.h2>
@@ -34,10 +34,10 @@ export default function ProjectsSection() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
+              transition={{ duration: 0.9, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] as const }}
+              className="group relative overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)]"
             >
-              <div className="aspect-[16/7] w-full overflow-hidden">
+              <div className="aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -48,7 +48,7 @@ export default function ProjectsSection() {
                 <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#d5af34] uppercase mb-2">
                   {project.category}
                 </p>
-                <h3 className="font-(family-name:--font-display) text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+                <h3 className="font-(family-name:--font-display) text-2xl sm:text-3xl lg:text-4xl font-bold text-white shadow-sm">
                   {project.title}
                 </h3>
               </div>

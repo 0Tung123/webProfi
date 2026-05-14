@@ -10,8 +10,8 @@ export default function CtaSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase leading-tight mb-6"
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
+          className="font-(family-name:--font-display) text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase leading-tight mb-6"
         >
           Bắt đầu dự án tiếp theo <br className="hidden sm:block" />
           cùng HATMedia
@@ -43,7 +43,7 @@ export default function CtaSection() {
           </a>
           <a
             href="#projects"
-            className="inline-flex items-center justify-center rounded-full border border-[rgba(255,255,255,0.15)] px-10 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[rgba(255,255,255,0.05)]"
+            className="inline-flex items-center justify-center rounded-full border border-[var(--surface-border)] px-10 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--text-0)] transition-all duration-300 hover:bg-[rgba(0,0,0,0.03)]"
             suppressHydrationWarning
           >
             Xem dự án

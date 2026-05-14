@@ -14,11 +14,11 @@ export default function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      lerp: 0.08,
-      wheelMultiplier: 1,
+      lerp: 0.05, // Chậm hơn một chút để tạo cảm giác sang trọng
+      wheelMultiplier: 1.1,
       smoothWheel: true,
       syncTouch: true,
-      touchMultiplier: 1.2,
+      touchMultiplier: 1.5,
     });
 
     // Lenis chạy requestAnimationFrame RIÊNG, không phụ thuộc R3F
@@ -29,30 +29,13 @@ export default function SmoothScroll() {
     }
     rafId = requestAnimationFrame(raf);
 
-    // Class toggling cho pointer-events performance hack
+    // Class toggling cho pointer-events performance hack (Removed as 3D Scene is gone)
     document.documentElement.classList.add("lenis", "lenis-smooth");
-    let isScrolling = false;
-    let scrollTimeout: ReturnType<typeof setTimeout>;
 
-    lenis.on("scroll", () => {
-      if (!isScrolling) {
-        isScrolling = true;
-        document.documentElement.classList.add("lenis-scrolling");
-        document.documentElement.classList.remove("lenis-stopped");
-      }
-
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-        document.documentElement.classList.remove("lenis-scrolling");
-        document.documentElement.classList.add("lenis-stopped");
-      }, 50);
-    });
 
     return () => {
       cancelAnimationFrame(rafId);
-      clearTimeout(scrollTimeout);
-      document.documentElement.classList.remove("lenis", "lenis-smooth", "lenis-scrolling", "lenis-stopped");
+      document.documentElement.classList.remove("lenis", "lenis-smooth");
       lenis.destroy();
     };
   }, []);
