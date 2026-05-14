@@ -119,12 +119,8 @@ export const SKILLS: Skill[] = [
 ];
 
 export const CLIENTS: Client[] = [
-  "EXIMBANK",
-  "PETROLIMEX",
-  "BAOVIET",
-  "MB",
-  "LPBANK",
-  "LOTTE",
-  "DEWEY",
-  "SENDESIGN",
+  "MSB", "NCB", "VietinBank", "Thang Long University", "BTEC", "British Council",
+  "MSIG", "EVN FINANCE", "TMC", "The Olympia Schools", "MB", "VNPAY",
+  "PVcomBank", "BAOVIET", "PETROLIMEX", "LUXURY TRAVEL", "toong", "interloka",
+  "FPT", "Viettel", "PICENZA", "STARLAKE", "TECHCOMBANK", "Journey On Air"
 ];

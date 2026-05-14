@@ -5,9 +5,6 @@ import ServicesSection from "@/app/sections/ServicesSection";
 import ProjectsSection from "@/app/sections/ProjectsSection";
 import BenefitsSection from "@/app/sections/BenefitsSection";
 import ProcessSection from "@/app/sections/ProcessSection";
-import TestimonialsSection from "@/app/sections/TestimonialsSection";
-import SkillsSection from "@/app/sections/SkillsSection";
-import CtaSection from "@/app/sections/CtaSection";
 import Footer from "@/app/components/layout/Footer";
 
 export default function Home() {
@@ -30,19 +27,10 @@ export default function Home() {
       {/* 5. Lợi ích */}
       <BenefitsSection />
 
-      {/* 6. Cách hoạt động */}
+      {/* 6. Cách hoạt động & Đối tác */}
       <ProcessSection />
 
-      {/* 7. Đánh giá */}
-      <TestimonialsSection />
-
-      {/* 8. Danh sách nghề */}
-      <SkillsSection />
-
-      {/* 9. Kêu gọi hành động */}
-      <CtaSection />
-
-      {/* 10. Footer */}
+      {/* 7. New Integrated Footer */}
       <Footer />
     </main>
   );
