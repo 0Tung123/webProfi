@@ -19,7 +19,7 @@ export default function Button({
   return (
     <a
       ref={reveal ? ref : undefined}
-      className={`group relative inline-flex w-fit items-center gap-4 rounded-full border border-[var(--accent)] bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--text-0)] overflow-hidden transition-all duration-500 shadow-[0_18px_48px_rgba(213,175,52,0.05)] ${reveal ? `reveal ${isVisible ? 'is-visible' : ''}` : ''} ${className}`}
+      className={`group relative inline-flex w-fit items-center gap-3 md:gap-4 rounded-full border border-[var(--accent)] bg-transparent px-5 py-3 md:px-7 md:py-4 text-[10px] md:text-xs font-semibold uppercase tracking-[0.15em] md:tracking-[0.22em] text-[var(--text-0)] overflow-hidden transition-all duration-500 shadow-[0_18px_48px_rgba(213,175,52,0.05)] ${reveal ? `reveal ${isVisible ? 'is-visible' : ''}` : ''} ${className}`}
       {...props}
     >
       {/* Background Fill (Bottom to Top) */}
