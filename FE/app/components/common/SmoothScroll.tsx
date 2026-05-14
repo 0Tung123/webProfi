@@ -14,14 +14,13 @@ export default function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      lerp: 0.05, // Chậm hơn một chút để tạo cảm giác sang trọng
+      lerp: 0.05,
       wheelMultiplier: 1.1,
       smoothWheel: true,
       syncTouch: true,
       touchMultiplier: 1.5,
     });
 
-    // Lenis chạy requestAnimationFrame RIÊNG, không phụ thuộc R3F
     let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -29,7 +28,6 @@ export default function SmoothScroll() {
     }
     rafId = requestAnimationFrame(raf);
 
-    // Class toggling cho pointer-events performance hack (Removed as 3D Scene is gone)
     document.documentElement.classList.add("lenis", "lenis-smooth");
 
 

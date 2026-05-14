@@ -18,7 +18,7 @@ export default function Home() {
       {/* 2. Giới thiệu */}
       <AboutSection />
 
-      {/* 3. Dịch vụ (3 cột) */}
+      {/* 3. Dịch vụ */}
       <ServicesSection />
 
       {/* 4. Dự án */}
