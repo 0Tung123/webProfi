@@ -8,7 +8,7 @@ import { HERO_CARDS as cards } from "@/app/lib/data";
 export default memo(function HeroSection() {
   const { ref: heroRef, isVisible } = useIntersectionObserver({
     once: true,
-    threshold: 0.1,
+    threshold: 0,
   });
 
   return (
@@ -23,7 +23,7 @@ export default memo(function HeroSection() {
         <div className="w-full lg:w-[50%] flex flex-col justify-center">
           {/* Tagline */}
           <div
-            className={`flex items-center gap-4 mb-6 transition-all duration-[var(--dur-normal)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}`}
+            className={`reveal flex items-center gap-4 mb-6 ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.1s' }}
           >
             <div className="h-[1px] w-12 bg-[var(--accent)]" />
@@ -34,7 +34,7 @@ export default memo(function HeroSection() {
 
           {/* Heading */}
           <h1
-            className={`font-display text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.05] tracking-tight text-[var(--text-0)] uppercase transition-all duration-[var(--dur-normal)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}`}
+            className={`reveal font-display text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.05] tracking-tight text-[var(--text-0)] uppercase ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.2s' }}
           >
             ĐỊNH HÌNH <br />
@@ -46,7 +46,7 @@ export default memo(function HeroSection() {
 
           {/* Paragraph */}
           <p
-            className={`mt-6 max-w-2xl text-[15px] sm:text-[18px] text-[var(--text-1)] font-light leading-relaxed transition-all duration-[var(--dur-normal)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}`}
+            className={`reveal mt-6 max-w-2xl text-[15px] sm:text-[18px] text-[var(--text-1)] font-light leading-relaxed ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.3s' }}
           >
             Tại <strong className="font-semibold text-[var(--text-0)]">HATMedia</strong>, chúng tôi xem mỗi dự án như một bản phác thảo đầy tinh tế — nơi ánh sáng của nghệ thuật gặp gỡ sự chuẩn xác của công nghệ.
@@ -54,7 +54,7 @@ export default memo(function HeroSection() {
 
           {/* CTA Button */}
           <div
-            className={`mt-10 transition-all duration-[var(--dur-normal)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}`}
+            className={`reveal mt-10 ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.4s' }}
           >
             <a
@@ -73,7 +73,7 @@ export default memo(function HeroSection() {
 
           {/* Center Large Image (Monitor/Design) */}
           <div
-            className={`relative z-10 w-full max-w-[650px] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-2xl bg-[var(--surface)] transition-all duration-[var(--dur-slow)] ease-[var(--ease-standard)] ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+            className={`reveal relative z-10 w-full max-w-[650px] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-2xl bg-[var(--surface)] ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.2s' }}
           >
             <Image
@@ -88,7 +88,8 @@ export default memo(function HeroSection() {
 
           {/* Top Right Small Image (Team/Photo) */}
           <div
-            className="absolute z-20 -right-2 top-0 sm:right-0 sm:top-10 lg:-right-8 lg:top-16 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
+            className={`reveal absolute z-20 -right-2 top-0 sm:right-0 sm:top-10 lg:-right-8 lg:top-16 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim ${isVisible ? 'is-visible' : ''}`}
+            style={{ transitionDelay: '0.5s' }}
           >
             <Image
               src={cards[2].src}
@@ -102,8 +103,11 @@ export default memo(function HeroSection() {
 
           {/* Bottom Left Small Image (Interior/Code) */}
           <div
-            className="absolute z-20 -left-2 bottom-0 sm:left-4 sm:bottom-12 lg:-left-12 lg:bottom-24 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim"
-            style={{ animationDelay: '1s' }}
+            className={`reveal absolute z-20 -left-2 bottom-0 sm:left-4 sm:bottom-12 lg:-left-12 lg:bottom-24 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim ${isVisible ? 'is-visible' : ''}`}
+            style={{ 
+              transitionDelay: '0.6s',
+              animationDelay: '1.6s' 
+            }}
           >
             <Image
               src={cards[1].src}
