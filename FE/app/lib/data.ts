@@ -51,19 +51,34 @@ export const SERVICES: Service[] = [
 
 export const PROJECTS: Project[] = [
   {
-    title: "Olinycallr Dashboard",
+    title: "BAOVIET Insurance",
+    category: "Digital Platform",
+    image: "/images/code.png",
+  },
+  {
+    title: "Creative Studio",
+    category: "Photography",
+    image: "/images/camera.png",
+  },
+  {
+    title: "Logistics Solution",
     category: "Web App",
     image: "/images/code.png",
   },
   {
-    title: "Brand Identity — Sendesign",
-    category: "Branding",
+    title: "Modern UI/UX Design",
+    category: "Product Design",
     image: "/images/tk.png",
   },
   {
-    title: "E-Commerce Platform",
-    category: "Development",
+    title: "E-Commerce Experience",
+    category: "Digital Retail",
     image: "/images/code.png",
+  },
+  {
+    title: "Financial Dashboard",
+    category: "Data Visualization",
+    image: "/images/tk.png",
   },
 ];
 

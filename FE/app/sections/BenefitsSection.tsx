@@ -8,47 +8,63 @@ export default memo(function BenefitsSection() {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
-    <section id="benefits" className="relative py-20 md:py-28 overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-accent opacity-[0.02] blur-[120px] rounded-full pointer-events-none" />
+    <section id="benefits" className="relative py-32 md:py-48 overflow-hidden bg-[var(--bg-1)]">
+      
+      {/* Decorative Large Background Quote */}
+      <div className="absolute top-0 left-10 text-[400px] font-serif text-black/[0.03] select-none pointer-events-none leading-none">
+        “
+      </div>
 
-      <div className="mx-auto w-full max-w-[1920px] px-6 relative z-10">
-        {/* Section Title */}
-        <div
-          ref={ref}
-          className={`reveal text-center text-xs sm:text-sm font-semibold tracking-wide text-accent uppercase mb-4 ${isVisible ? 'is-visible' : ''}`}
-        >
-          Lợi ích
-        </div>
-
-        <h2
-          className={`reveal text-center font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase mb-16 ${isVisible ? 'is-visible' : ''}`}
-          style={{ transitionDelay: '0.1s' }}
-        >
-          Tại sao chọn HATMedia?
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {BENEFITS.map((benefit, i) => (
-            <div
-              key={benefit}
-              className={`reveal flex items-start gap-4 rounded-xl border border-surface bg-surface p-6 ${isVisible ? 'is-visible' : ''}`}
-              style={{
-                transitionDelay: `${0.1 * i + 0.2}s`,
-                transitionDuration: 'var(--dur-normal)',
-                transitionTimingFunction: 'var(--ease-standard)'
-              }}
-            >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-15 text-accent text-lg font-bold">
-                ✓
-              </div>
-              <p className="text-lg text-[var(--text-0)] font-light leading-relaxed">
-                {benefit}
-              </p>
+      <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16 relative z-10">
+        <div ref={ref} className="max-w-6xl">
+          
+          <div className="flex flex-col md:flex-row gap-16 items-start">
+            
+            {/* Left Accent Column */}
+            <div className={`reveal hidden md:flex flex-col gap-8 pt-4 ${isVisible ? 'is-visible' : ''}`}>
+              <div className="w-px h-32 bg-[var(--accent)]" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.5em] vertical-text text-[var(--accent)]">
+                Our Philosophy
+              </span>
             </div>
-          ))}
+
+            {/* Main Statement */}
+            <div className="flex-1">
+              <h2 
+                className={`reveal font-serif italic text-[36px] sm:text-[54px] lg:text-[72px] font-medium text-[var(--text-0)] leading-[1.1] tracking-tight ${isVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: '0.1s' }}
+              >
+                "Chúng tôi không chỉ kiến tạo sản phẩm số, HATMedia đồng hành cùng thương hiệu để định hình giá trị và tạo ra những trải nghiệm chạm tới cảm xúc."
+              </h2>
+              
+              <div className={`reveal mt-16 flex items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+                <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-bold text-xl">
+                  H
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[20px] font-bold text-[var(--text-0)]">Anh Lê Xuân Hải</span>
+                  <span className="text-[14px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">Founder of HATMedia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
+
+      {/* Modern Watermark */}
+      <div className="absolute -bottom-8 right-12 flex flex-col items-end opacity-[0.03] select-none pointer-events-none">
+        <span className="text-[120px] lg:text-[180px] font-display font-black leading-none uppercase">Manifesto</span>
+        <span className="text-[40px] font-serif italic -mt-4">Since 2024</span>
+      </div>
+
+      <style jsx>{`
+        .vertical-text {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          transform: rotate(180deg);
+        }
+      `}</style>
     </section>
   );
 });

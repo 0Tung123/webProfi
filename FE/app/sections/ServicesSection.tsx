@@ -48,7 +48,7 @@ export default function ServicesSection() {
                   src={service.image}
                   alt={service.title}
                   fill
-                  className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'grayscale-0 scale-110' : 'grayscale opacity-5'}`}
+                  className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
                   sizes="(max-width: 768px) 100vw, 25vw"
                 />
                 {/* Dark overlay that intensifies on hover */}
