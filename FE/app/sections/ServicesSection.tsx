@@ -48,11 +48,11 @@ export default function ServicesSection() {
                   src={service.image}
                   alt={service.title}
                   fill
-                  className={`object-cover transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'grayscale-0 scale-110' : 'grayscale opacity-5'}`}
+                  className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'grayscale-0 scale-110' : 'grayscale opacity-5'}`}
                   sizes="(max-width: 768px) 100vw, 25vw"
                 />
                 {/* Dark overlay that intensifies on hover */}
-                <div className={`absolute inset-0 transition-opacity duration-700 ${hoveredIndex === i ? 'bg-black/60 opacity-100' : 'bg-transparent opacity-0'}`} />
+                <div className={`absolute inset-0 transition-opacity duration-[1000ms] ${hoveredIndex === i ? 'bg-black/60 opacity-100' : 'bg-transparent opacity-0'}`} />
                 
                 {/* Noise overlay for texture */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
@@ -62,24 +62,24 @@ export default function ServicesSection() {
               <div className="relative z-10 w-full h-full flex flex-col">
                 {/* Index & Line */}
                 <div className="flex items-center gap-4 mb-8">
-                  <span className={`text-[14px] font-bold tracking-widest transition-colors duration-500 ${hoveredIndex === i ? 'text-[var(--accent)]' : 'text-[var(--text-1)]'}`}>
+                  <span className={`text-[14px] font-bold tracking-widest transition-colors duration-[800ms] ${hoveredIndex === i ? 'text-[var(--accent)]' : 'text-[var(--text-1)]'}`}>
                     {String(i + 1).padStart(2, '0')}.
                   </span>
-                  <div className={`flex-1 h-px transition-all duration-700 ${hoveredIndex === i ? 'bg-[var(--accent)] scale-x-100' : 'bg-[var(--surface-border)] scale-x-50'}`} />
+                  <div className={`flex-1 h-px transition-all duration-[1000ms] ${hoveredIndex === i ? 'bg-[var(--accent)] scale-x-100' : 'bg-[var(--surface-border)] scale-x-50'}`} />
                 </div>
 
-                <h3 className={`font-display text-[28px] sm:text-[34px] font-bold mb-6 leading-tight transition-all duration-500 ${hoveredIndex === i ? 'text-white translate-x-2' : 'text-[var(--text-0)]'}`}>
+                <h3 className={`font-display text-[28px] sm:text-[34px] font-bold mb-6 leading-tight transition-all duration-[800ms] ${hoveredIndex === i ? 'text-white translate-x-2' : 'text-[var(--text-0)]'}`}>
                   {service.title}
                 </h3>
 
-                <p className={`text-[15px] sm:text-[16px] font-light leading-relaxed max-w-[280px] transition-colors duration-500 ${hoveredIndex === i ? 'text-white/80' : 'text-[var(--text-1)]'}`}>
+                <p className={`text-[15px] sm:text-[16px] font-light leading-relaxed max-w-[280px] transition-colors duration-[800ms] ${hoveredIndex === i ? 'text-white/80' : 'text-[var(--text-1)]'}`}>
                   {service.desc}
                 </p>
 
                 {/* Arrow Indicator */}
-                <div className="mt-auto opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                <div className="mt-auto opacity-0 group-hover:opacity-100 transition-all duration-[800ms] translate-y-4 group-hover:translate-y-0">
                   <div className="w-10 h-10 rounded-full border border-[var(--accent)] flex items-center justify-center text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition-all">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="transform group-hover:rotate-45 transition-transform duration-500">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="transform group-hover:rotate-45 transition-transform duration-[800ms]">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
