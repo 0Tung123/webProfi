@@ -50,7 +50,7 @@ router.post('/', authenticate, async (req: AuthRequest, res) => {
       return res.status(400).json({
         success: false,
         error: 'Invalid input',
-        details: error.errors
+        details: error.issues
       });
     }
     res.status(500).json({
@@ -88,7 +88,7 @@ router.put('/:clientId', authenticate, async (req: AuthRequest, res) => {
       return res.status(400).json({
         success: false,
         error: 'Invalid input',
-        details: error.errors
+        details: error.issues
       });
     }
     res.status(500).json({

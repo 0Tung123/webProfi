@@ -104,7 +104,7 @@ router.post('/', authenticate, async (req: AuthRequest, res) => {
       return res.status(400).json({
         success: false,
         error: 'Invalid input',
-        details: error.errors
+        details: error.issues
       });
     }
     res.status(500).json({
@@ -140,7 +140,7 @@ router.put('/:processId', authenticate, async (req: AuthRequest, res) => {
         ...data,
         steps: data.steps ? {
           upsert: data.steps.map(step => ({
-            where: { stepId: step.stepId! } || { step: step.step! },
+            where: step.stepId ? { stepId: step.stepId } : { step: step.step! },
             update: step,
             create: step
           }))
@@ -160,7 +160,7 @@ router.put('/:processId', authenticate, async (req: AuthRequest, res) => {
       return res.status(400).json({
         success: false,
         error: 'Invalid input',
-        details: error.errors
+        details: error.issues
       });
     }
     res.status(500).json({

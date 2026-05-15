@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({
         success: false,
         error: 'Invalid input',
-        details: error.errors
+        details: error.issues
       });
     }
     res.status(500).json({
