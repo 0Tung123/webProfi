@@ -79,7 +79,7 @@ export default function AdminClientsPage() {
         title={editingItem ? 'Edit Client' : 'Create Client'}
         schema={[
           { name: 'name', label: 'Name', type: 'text', required: true },
-          { name: 'logo', label: 'Logo Path', type: 'text', required: false },
+          { name: 'logo', label: 'Logo', type: 'image', required: false },
           { name: 'website', label: 'Website', type: 'text', required: false },
           { name: 'order', label: 'Order', type: 'number', required: false },
         ]}

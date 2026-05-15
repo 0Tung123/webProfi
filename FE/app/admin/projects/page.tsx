@@ -86,7 +86,7 @@ export default function AdminProjectsPage() {
           { name: 'title', label: 'Title', type: 'text', required: true },
           { name: 'category', label: 'Category', type: 'text', required: true },
           { name: 'description', label: 'Description', type: 'textarea', required: false },
-          { name: 'image', label: 'Image Path', type: 'text', required: true },
+          { name: 'image', label: 'Image', type: 'image', required: true },
           { name: 'order', label: 'Order', type: 'number', required: false },
         ]}
         initialValues={editingItem || { title: '', category: '', description: '', image: '', order: 0 }}

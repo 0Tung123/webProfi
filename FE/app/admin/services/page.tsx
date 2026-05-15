@@ -82,7 +82,7 @@ export default function AdminServicesPage() {
         schema={[
           { name: 'title', label: 'Title', type: 'text', required: true },
           { name: 'description', label: 'Description', type: 'textarea', required: true },
-          { name: 'image', label: 'Image Path', type: 'text', required: true },
+          { name: 'image', label: 'Image', type: 'image', required: true },
           { name: 'order', label: 'Order', type: 'number', required: false },
         ]}
         initialValues={editingItem || { title: '', description: '', image: '', order: 0 }}

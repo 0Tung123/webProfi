@@ -62,15 +62,26 @@ export default function ServicesSection() {
               className={`service-item reveal group relative flex flex-col items-start p-10 lg:p-14 border-r border-b border-[var(--surface-border)] overflow-hidden transition-all duration-700 min-h-[350px] lg:min-h-[420px] ${isVisible ? 'is-visible' : ''}`}
               style={{ transitionDelay: isVisible ? `${0.1 * i}s` : '0s' } as React.CSSProperties}
             >
-              {/* Background Image Layer */}
+              {/* Background Image/Video Layer */}
               <div className="absolute inset-0 z-0 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                />
+                {service.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i) ? (
+                  <video
+                    src={service.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
+                  />
+                ) : (
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                  />
+                )}
                 {/* Dark overlay that intensifies on hover */}
                 <div className={`absolute inset-0 transition-opacity duration-[1000ms] ${hoveredIndex === i ? 'bg-black/60 opacity-100' : 'bg-transparent opacity-0'}`} />
 

@@ -28,14 +28,25 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
         transitionDelay: `${(index % 3) * 0.1}s`
       }}
     >
-      {/* Background Image */}
-      <Image
-        src={project.image}
-        alt={project.title}
-        fill
-        className="object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-        sizes="(max-width: 768px) 100vw, 50vw"
-      />
+      {/* Background Image/Video */}
+      {project.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i) ? (
+        <video
+          src={project.image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+        />
+      ) : (
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      )}
 
       {/* Hover Overlay */}
       <div className="absolute inset-0 bg-black/40 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 ease-in-out" />

@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import ImageUploader from './ImageUploader';
 
 interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'number' | 'textarea' | 'select';
+  type: 'text' | 'email' | 'number' | 'textarea' | 'select' | 'image';
   required?: boolean;
   options?: Array<{ value: string; label: string }>;
 }
@@ -27,14 +28,23 @@ export default function DataForm<T extends object>({
 }: DataFormProps<T>) {
   const [values, setValues] = useState<T>(initialValues);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFileUploading, setIsFileUploading] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = <K extends keyof T>(name: K, value: string) => {
     setValues((prev) => ({ ...prev, [name]: value }) as T);
   };
 
+  const handleImageUpload = <K extends keyof T>(name: K, url: string) => {
+    setValues((prev) => ({ ...prev, [name]: url }) as T);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isFileUploading) {
+      setError('Please wait for the file to finish uploading');
+      return;
+    }
     setError('');
     setIsLoading(true);
 
@@ -69,15 +79,14 @@ export default function DataForm<T extends object>({
         <div className="space-y-6">
           {schema.map((field) => (
             <div key={field.name}>
-              <label
-                htmlFor={field.name}
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                {field.label}
-                {field.required && <span className="text-red-500 ml-1">*</span>}
-              </label>
-
-              {field.type === 'textarea' ? (
+              {field.type === 'image' ? (
+                <ImageUploader
+                  label={field.label}
+                  initialValue={getValue(field.name as keyof T)}
+                  onUploadComplete={(url) => handleImageUpload(field.name as keyof T, url)}
+                  onUploading={setIsFileUploading}
+                />
+              ) : field.type === 'textarea' ? (
                 <textarea
                   id={field.name}
                   rows={4}
@@ -125,10 +134,10 @@ export default function DataForm<T extends object>({
           </button>
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isFileUploading}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
           >
-            {isLoading ? 'Saving...' : 'Save'}
+            {isLoading ? 'Saving...' : isFileUploading ? 'Uploading...' : 'Save'}
           </button>
         </div>
       </form>

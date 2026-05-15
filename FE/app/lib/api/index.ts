@@ -7,3 +7,4 @@ export * from './clients.service';
 export * from './process.service';
 export * from './contact.service';
 export * from './auth.service';
+export * from './upload.service';

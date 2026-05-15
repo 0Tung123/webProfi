@@ -13,7 +13,9 @@ export function setupMiddleware(app: Application, express: any): void {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
   // Body parser
@@ -35,6 +37,7 @@ export function setupRoutes(app: Application): void {
   const clientRoutes = require('../modules/client/client.routes').default;
   const contactRoutes = require('../modules/contact/contact.routes').default;
   const processRoutes = require('../modules/process/process.routes').default;
+  const uploadRoutes = require('../modules/upload/upload.routes').default;
 
   // Register routes
   app.use('/api/auth', authRoutes);
@@ -44,6 +47,7 @@ export function setupRoutes(app: Application): void {
   app.use('/api/clients', clientRoutes);
   app.use('/api/contact', contactRoutes);
   app.use('/api/process', processRoutes);
+  app.use('/api/upload', uploadRoutes);
 }
 
 export function setupErrorHandler(app: Application): void {
