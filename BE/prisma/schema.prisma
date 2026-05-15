@@ -110,3 +110,15 @@ model ProcessStep {
 
   @@map("process_steps")
 }
+
+model HeroConfig {
+  id          String   @id @default("hero-main")
+  title1      String   @default("WE COMPLETE")
+  title2      String   @default("YOUR CREATIVE IDEAS")
+  subtext     String   @default("HAT Studio is a visionary design agency that breathes life into ideas and transforms them into extraordinary realities.")
+  mediaUrl    String   @default("https://res.cloudinary.com/dykmrgu8e/image/upload/v1778861498/hat-studio/blq1qtdlokrit4cbmhvp.jpg")
+  mediaType   String   @default("image") // image or video
+  updatedAt   DateTime @updatedAt
+
+  @@map("hero_config")
+}

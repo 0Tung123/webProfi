@@ -38,6 +38,7 @@ export function setupRoutes(app: Application): void {
   const contactRoutes = require('../modules/contact/contact.routes').default;
   const processRoutes = require('../modules/process/process.routes').default;
   const uploadRoutes = require('../modules/upload/upload.routes').default;
+  const heroRoutes = require('../modules/hero/hero.routes').default;
 
   // Register routes
   app.use('/api/auth', authRoutes);
@@ -48,6 +49,7 @@ export function setupRoutes(app: Application): void {
   app.use('/api/contact', contactRoutes);
   app.use('/api/process', processRoutes);
   app.use('/api/upload', uploadRoutes);
+  app.use('/api/hero', heroRoutes);
 }
 
 export function setupErrorHandler(app: Application): void {

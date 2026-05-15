@@ -53,16 +53,15 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <button
-            type="button"
-            aria-label="Open menu"
-            className="grid size-[52px] place-items-center rounded-full bg-accent text-black shadow-[0_14px_35px_rgba(213,175,52,0.28)] transition duration-300 hover:scale-105 hover:bg-accent-soft md:size-[56px]"
+          <a
+            href="#contact"
+            className="flex h-[44px] md:h-[50px] items-center gap-2 rounded-full bg-[var(--accent)] px-6 text-[11px] md:text-xs font-bold uppercase tracking-widest text-white shadow-[0_10px_30px_rgba(213,175,52,0.3)] transition-all duration-300 hover:scale-105 hover:bg-[var(--accent-deep)]"
           >
-            <span className="flex w-5 flex-col gap-1.5">
-              <span className="h-px w-full bg-current" />
-              <span className="h-px w-full bg-current" />
-            </span>
-          </button>
+            Contact
+            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </div>
       </div>
     </header>

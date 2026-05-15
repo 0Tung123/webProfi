@@ -1,10 +1,9 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { HERO_CARDS as cards } from "@/app/lib/data";
-import Button from "@/app/components/common/Button";
+import { heroService, HeroConfig } from "@/app/lib/api/hero.service";
 
 export default memo(function HeroSection() {
   const { ref: heroRef, isVisible } = useIntersectionObserver({
@@ -12,108 +11,118 @@ export default memo(function HeroSection() {
     threshold: 0,
   });
 
+  const [config, setConfig] = useState<HeroConfig | null>(null);
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const data = await heroService.get();
+        setConfig(data);
+      } catch (error) {
+        console.error("Failed to fetch hero config:", error);
+      }
+    };
+    fetchConfig();
+  }, []);
+
+  // Use config data or fallback to defaults
+  const heroData = {
+    title1: config?.title1 || "WE COMPLETE",
+    title2: config?.title2 || "YOUR CREATIVE IDEAS",
+    subtext: config?.subtext || "HAT Studio is a visionary design agency that breathes life into ideas and transforms them into extraordinary realities.",
+    mediaUrl: config?.mediaUrl || "https://res.cloudinary.com/dykmrgu8e/image/upload/v1778861498/hat-studio/blq1qtdlokrit4cbmhvp.jpg",
+    mediaType: config?.mediaType || "image",
+  };
+
   return (
     <section
       id="top"
       ref={heroRef}
-      className="relative w-full overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 flex items-center"
+      className="relative w-full bg-[var(--bg-0)] pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden"
     >
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col lg:flex-row items-center justify-between px-6 lg:px-12 xl:px-16 relative z-10">
+      {/* Scroll Down Indicator (Left Side) */}
+      <div className="absolute left-6 md:left-10 top-[450px] flex flex-col items-center gap-6 z-20">
+        <div className="flex flex-col items-center gap-4">
+          <span className="[writing-mode:vertical-lr] text-[10px] font-bold tracking-[0.4em] text-[#c5a12e] uppercase rotate-180">
+            Scroll Down
+          </span>
+          <div className="w-[1.5px] h-20 bg-[#c5a12e]" />
+          <svg viewBox="0 0 24 24" className="w-3 h-3 text-[#c5a12e]" fill="none" stroke="currentColor" strokeWidth="3">
+            <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
 
-        {/* Left: Text Content */}
-        <div className="w-full lg:w-[50%] flex flex-col justify-center">
-          {/* Tagline */}
-          <div
-            className={`reveal flex items-center gap-4 mb-6 ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.1s' }}
-          >
-            <div className="h-[1px] w-12 bg-[var(--accent)]" />
-            <p className="text-xs sm:text-sm font-semibold tracking-wide text-[var(--accent)] uppercase">
-              DESIGN • PHOTO • CODE
-            </p>
+      <div className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40 relative z-10">
+        
+        {/* Main Content Block - STAGGERED ALIGNMENT */}
+        <div className="w-full flex flex-col items-start mb-20">
+          
+          {/* Line 1: WE COMPLETE (Aligned Left) */}
+          <div className={`reveal flex items-center gap-6 md:gap-12 mb-4 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
+            <h1 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
+              {heroData.title1}
+            </h1>
+            
+            {/* Integrated Let's Talk Button */}
+            <a 
+              href="#contact" 
+              className="group flex items-center gap-4 bg-transparent mt-2 md:mt-4"
+            >
+              <div className="w-10 h-10 md:w-16 md:h-16 rounded-full border border-gray-200 p-1 flex items-center justify-center transition-all duration-500 group-hover:border-[var(--accent)]">
+                <div className="w-full h-full rounded-full bg-[var(--accent)] flex items-center justify-center transition-transform duration-500 group-hover:scale-95 shadow-[0_10px_25px_rgba(213,175,52,0.25)]">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </div>
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.15em] text-[var(--accent)] uppercase whitespace-nowrap">
+                Let's talk now
+              </span>
+            </a>
           </div>
 
-          {/* Heading */}
-          <h1
-            className={`reveal font-display text-[48px] sm:text-[64px] lg:text-[80px] xl:text-[96px] font-bold leading-[1.15] tracking-tight text-[var(--text-0)] uppercase ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.2s' }}
-          >
-            ĐỊNH HÌNH <br />
-            <span className="font-serif italic font-medium text-[var(--accent)] lowercase block mt-2">
-              nghệ thuật
-            </span>
-            <span className="mt-2 block">NGUYÊN BẢN</span>
-          </h1>
-
-          {/* Paragraph */}
-          <p
-            className={`reveal mt-6 max-w-2xl text-[15px] sm:text-[18px] text-[var(--text-1)] font-light leading-relaxed ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.3s' }}
-          >
-            Tại <strong className="font-semibold text-[var(--text-0)]">HATMedia</strong>, chúng tôi xem mỗi dự án như một bản phác thảo đầy tinh tế — nơi ánh sáng của nghệ thuật gặp gỡ sự chuẩn xác của công nghệ.
-          </p>
-
-          {/* CTA Button */}
-          <div
-            className={`reveal mt-10 ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.4s' }}
-          >
-            <Button href="#contact">
-              KHÁM PHÁ SỰ TINH TẾ
-            </Button>
+          {/* Line 2: YOUR CREATIVE IDEAS (Indented) */}
+          <div className={`reveal ml-[10%] md:ml-[15%] mb-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
+            <h2 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
+              {heroData.title2}
+            </h2>
+          </div>
+          
+          {/* Subtext (Further Indented) */}
+          <div className={`reveal ml-[25%] md:ml-[40%] max-w-lg ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+            <p className="text-[13px] md:text-[15px] text-gray-500 font-normal leading-relaxed tracking-normal">
+              {heroData.subtext}
+            </p>
           </div>
         </div>
 
-        {/* Right: Static/Floating Composition */}
-        <div className="w-full lg:w-[50%] mt-12 lg:mt-0 relative flex items-center justify-center min-h-[350px] sm:min-h-[450px] lg:min-h-[550px]">
-
-          {/* Center Large Image (Monitor/Design) */}
-          <div
-            className={`reveal relative z-10 w-full max-w-[650px] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl shadow-2xl bg-[var(--surface)] ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.2s' }}
-          >
+        {/* Large Media Box */}
+        <div 
+          className={`reveal relative w-full aspect-[21/9] rounded-[30px] md:rounded-[50px] overflow-hidden bg-[var(--bg-2)] shadow-[0_20px_60px_rgba(0,0,0,0.06)] group cursor-pointer ${isVisible ? 'is-visible' : ''}`} 
+          style={{ transitionDelay: '0.5s' }}
+        >
+          {heroData.mediaType === 'video' ? (
+            <video
+              key={heroData.mediaUrl}
+              src={heroData.mediaUrl}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            />
+          ) : (
             <Image
-              src={cards[0].src}
-              alt={cards[0].alt}
-              className="h-full w-full object-cover"
+              src={heroData.mediaUrl}
+              alt="Hero Media"
               fill
-              sizes="(max-width: 768px) 100vw, 650px"
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               priority
             />
-          </div>
+          )}
 
-          {/* Top Right Small Image (Team/Photo) */}
-          <div
-            className={`reveal absolute z-20 -right-2 top-0 sm:right-0 sm:top-10 lg:-right-8 lg:top-16 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim ${isVisible ? 'is-visible' : ''}`}
-            style={{ transitionDelay: '0.5s' }}
-          >
-            <Image
-              src={cards[2].src}
-              alt={cards[2].alt}
-              className="h-full w-full object-cover"
-              fill
-              sizes="(max-width: 768px) 40vw, 280px"
-              loading="lazy"
-            />
-          </div>
-
-          {/* Bottom Left Small Image (Interior/Code) */}
-          <div
-            className={`reveal absolute z-20 -left-2 bottom-0 sm:left-4 sm:bottom-12 lg:-left-12 lg:bottom-24 w-[40%] max-w-[280px] aspect-[4/3] overflow-hidden rounded-xl border-2 border-[var(--accent)] shadow-[0_20px_40px_rgba(0,0,0,0.5)] bg-[var(--surface)] float-anim ${isVisible ? 'is-visible' : ''}`}
-            style={{ 
-              transitionDelay: '0.6s',
-              animationDelay: '1.6s' 
-            }}
-          >
-            <Image
-              src={cards[1].src}
-              alt={cards[1].alt}
-              className="h-full w-full object-cover"
-              fill
-              sizes="(max-width: 768px) 40vw, 280px"
-              loading="lazy"
-            />
-          </div>
+          {/* Video / Image will show clearly without overlay */}
         </div>
       </div>
     </section>
