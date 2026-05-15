@@ -21,9 +21,6 @@ async function convertImages() {
 
       console.log(`Converted: ${file} -> ${file.replace('.png', '.webp')}`);
 
-      // Optionally delete original PNG
-      // await unlink(inputPath);
-      // console.log(`Deleted original: ${file}`);
     }
 
     console.log('Conversion complete!');

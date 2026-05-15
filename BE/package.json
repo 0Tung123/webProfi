@@ -8,13 +8,19 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
+    "prisma:seed": "tsx src/seed.ts",
     "lint": "eslint src --ext .ts",
-    "seed": "tsx src/seed.ts"
+    "test": "echo \"No tests configured yet\"",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:init": "docker-compose up -d && sleep 5 && npm run prisma:migrate:dev && npm run prisma:seed"
   },
   "dependencies": {
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^5.22.0",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -33,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
     "eslint": "^10.3.0",
-    "prisma": "^7.8.0",
+    "prisma": "^5.22.0",
     "tsx": "^4.22.0",
     "typescript": "^6.0.3"
   }

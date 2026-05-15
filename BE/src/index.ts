@@ -1,55 +1,21 @@
-import express, { Application, Request, Response } from 'express';
-import cors from 'cors';
+import express, { Application } from 'express';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.routes';
-import projectRoutes from './routes/project.routes';
-import serviceRoutes from './routes/service.routes';
-import testimonialRoutes from './routes/testimonial.routes';
-import clientRoutes from './routes/client.routes';
-import contactRoutes from './routes/contact.routes';
-import processRoutes from './routes/process.routes';
-import { errorHandler } from './middleware/errorHandler';
-
+import { setupMiddleware } from './config/app';
+import { setupRoutes } from './config/app';
+import { setupErrorHandler } from './config/app';
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 8080;
 
-// CORS configuration
-const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
+// Setup middleware
+setupMiddleware(app, express);
 
-// Body parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Setup routes
+setupRoutes(app);
 
-// Health check
-app.get('/health', (_req: Request, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/testimonials', testimonialRoutes);
-app.use('/api/clients', clientRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/process', processRoutes);
-
-// Error handling
-app.use(errorHandler);
+// Setup error handler
+setupErrorHandler(app);
 
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
