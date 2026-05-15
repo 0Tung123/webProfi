@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  adminId   String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Project {
+  projectId   String   @id @default(uuid())
+  title       String
+  category    String
+  description String?
+  image       String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Service {
+  serviceId   String   @id @default(uuid())
+  title       String
+  description String
+  image       String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Testimonial {
+  testimonialId String   @id @default(uuid())
+  quote         String
+  author        String
+  role          String
+  company       String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model Client {
+  clientId    String   @id @default(uuid())
+  name        String
+  logo        String?
+  website     String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("clients")
+}
+
+model ContactSubmission {
+  contactId   String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String?
+  message     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("contact_submissions")
+}
+
+model ProcessSection {
+  processId   String   @id @default(uuid())
+  category    String   @unique // design, brand, code, photo
+  title       String
+  description String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  steps       ProcessStep[]
+
+  @@map("process_sections")
+}
+
+model ProcessStep {
+  stepId      String   @id @default(uuid())
+  sectionId   String
+  step        String
+  title       String
+  description String
+  order       Int      @default(0)
+
+  section     ProcessSection @relation(fields: [sectionId], references: [processId], onDelete: Cascade)
+
+  @@map("process_steps")
+}
