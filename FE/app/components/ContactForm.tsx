@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { contactService, CreateContactSubmissionDto } from '@/app/lib/api/contact.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import useIntersectionObserver from '@/app/hooks/useIntersectionObserver';
 
 export default function ContactForm() {
@@ -30,8 +31,8 @@ export default function ContactForm() {
       await contactService.submit(formData);
       setSuccess(true);
       setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to submit form');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

@@ -10,7 +10,7 @@ export const projectController = {
     try {
       const projects = await projectService.getAll();
       res.json({ success: true, data: projects });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch projects' });
     }
   },
@@ -26,7 +26,7 @@ export const projectController = {
       }
 
       res.json({ success: true, data: project });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch project' });
     }
   },
@@ -37,16 +37,16 @@ export const projectController = {
       const project = await projectService.create(data);
 
       res.status(201).json({ success: true, data: project });
-    } catch (error) {
-      if (isZodError(error)) {
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
         res.status(400).json({
           success: false,
           error: 'Invalid input',
-          details: error.errors
+          details: (error as Error & { errors: unknown }).errors
         });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -57,16 +57,16 @@ export const projectController = {
       const project = await projectService.update(String(projectId), data);
 
       res.json({ success: true, data: project });
-    } catch (error) {
-      if (isZodError(error)) {
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
         res.status(400).json({
           success: false,
           error: 'Invalid input',
-          details: error.errors
+          details: (error as Error & { errors: unknown }).errors
         });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -76,7 +76,7 @@ export const projectController = {
       await projectService.delete(String(projectId));
 
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete project' });
     }
   }

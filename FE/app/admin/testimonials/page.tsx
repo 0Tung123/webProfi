@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { testimonialsService, Testimonial, CreateTestimonialDto, UpdateTestimonialDto } from '@/app/lib/api/testimonials.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
 
@@ -33,8 +34,8 @@ export default function AdminTestimonialsPage() {
       setSuccess('Testimonial created successfully');
       setIsEditing(false);
       fetchTestimonials();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to create testimonial');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -46,8 +47,8 @@ export default function AdminTestimonialsPage() {
       setIsEditing(false);
       setEditingItem(null);
       fetchTestimonials();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update testimonial');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -58,8 +59,8 @@ export default function AdminTestimonialsPage() {
       setSuccess('Testimonial deleted successfully');
       setShowDeleteConfirm(null);
       fetchTestimonials();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete testimonial');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -110,8 +111,16 @@ export default function AdminTestimonialsPage() {
         columns={[
           { key: 'author', header: 'Author' },
           { key: 'role', header: 'Role' },
-          { key: 'quote', header: 'Quote', render: (val) => <span className="truncate max-w-xs">"{val}"</span> },
-          { key: 'isActive', header: 'Active', render: (val) => val ? '✅' : '❌' },
+          {
+            key: 'quote',
+            header: 'Quote',
+            render: (val) => <span className="truncate max-w-xs">"{String(val)}"</span>,
+          },
+          {
+            key: 'isActive',
+            header: 'Active',
+            render: (val) => (val ? '✅' : '❌'),
+          },
         ]}
         onEdit={(item) => { setEditingItem(item); setIsEditing(true); }}
         onDelete={(item) => setShowDeleteConfirm(item)}

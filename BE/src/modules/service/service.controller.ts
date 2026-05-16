@@ -10,7 +10,7 @@ export const serviceController = {
     try {
       const services = await serviceService.getAll();
       res.json({ success: true, data: services });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch services' });
     }
   },
@@ -20,12 +20,12 @@ export const serviceController = {
       const data = createServiceSchema.parse(req.body);
       const service = await serviceService.create(data);
       res.status(201).json({ success: true, data: service });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -35,12 +35,12 @@ export const serviceController = {
       const data = updateServiceSchema.parse(req.body);
       const service = await serviceService.update(String(serviceId), data);
       res.json({ success: true, data: service });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -49,7 +49,7 @@ export const serviceController = {
       const { serviceId } = req.params;
       await serviceService.delete(String(serviceId));
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete service' });
     }
   }

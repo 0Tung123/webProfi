@@ -20,8 +20,8 @@ export default function AdminLoginPage() {
     try {
       await login({ email, password });
       router.push('/admin');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed. Please try again.');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

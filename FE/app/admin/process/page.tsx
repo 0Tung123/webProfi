@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { processService, ProcessSection, CreateProcessSectionDto, UpdateProcessSectionDto } from '@/app/lib/api/process.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
 
@@ -40,8 +41,8 @@ export default function AdminProcessPage() {
       setSuccess('Process section created successfully');
       setIsEditing(false);
       fetchSections();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to create section');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -53,8 +54,8 @@ export default function AdminProcessPage() {
       setIsEditing(false);
       setEditingItem(null);
       fetchSections();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update section');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -65,8 +66,8 @@ export default function AdminProcessPage() {
       setSuccess('Process section deleted successfully');
       setShowDeleteConfirm(null);
       fetchSections();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete section');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -115,12 +116,31 @@ export default function AdminProcessPage() {
       <DataTable
         data={sections}
         columns={[
-          { key: 'category', header: 'Category', render: (val) => <span className="uppercase font-medium">{val}</span> },
+          {
+            key: 'category',
+            header: 'Category',
+            render: (val) => <span className="uppercase font-medium">{String(val)}</span>,
+          },
           { key: 'title', header: 'Title' },
-          { key: 'description', header: 'Description', render: (val) => <span className="truncate max-w-xs">{val}</span> },
+          {
+            key: 'description',
+            header: 'Description',
+            render: (val) => <span className="truncate max-w-xs">{String(val)}</span>,
+          },
           { key: 'order', header: 'Order' },
-          { key: 'isActive', header: 'Active', render: (val) => val ? '✅' : '❌' },
-          { key: 'steps', header: 'Steps', render: (val) => val?.length || 0 },
+          {
+            key: 'isActive',
+            header: 'Active',
+            render: (val) => (val ? '✅' : '❌'),
+          },
+          {
+            key: 'steps',
+            header: 'Steps',
+            render: (val) => {
+              const steps = val as { length?: number } | undefined;
+              return steps?.length ?? 0;
+            },
+          },
         ]}
         onEdit={(item) => { setEditingItem(item); setIsEditing(true); }}
         onDelete={(item) => setShowDeleteConfirm(item)}

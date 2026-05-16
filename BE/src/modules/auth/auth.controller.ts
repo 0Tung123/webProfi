@@ -14,18 +14,18 @@ export const authController = {
         success: true,
         data: result
       });
-    } catch (error) {
-      if (isZodError(error)) {
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
         res.status(400).json({
           success: false,
           error: 'Invalid input',
-          details: error.errors
+          details: (error as Error & { errors: unknown }).errors
         });
         return;
       }
       res.status(401).json({
         success: false,
-        error: getErrorMessage(error)
+        error: getErrorMessage(error as Error)
       });
     }
   }

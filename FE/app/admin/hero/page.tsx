@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { heroService, HeroConfig, UpdateHeroDto } from '@/app/lib/api/hero.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataForm from '../components/DataForm';
 
 export default function AdminHeroPage() {
@@ -25,22 +26,13 @@ export default function AdminHeroPage() {
     fetchConfig();
   }, []);
 
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: UpdateHeroDto) => {
     try {
-      // Map form data to API DTO
-      const updateData: UpdateHeroDto = {
-        title1: data.title1,
-        title2: data.title2,
-        subtext: data.subtext,
-        mediaUrl: data.mediaUrl,
-        mediaType: data.mediaType,
-      };
-      
-      await heroService.update(updateData);
+      await heroService.update(data);
       setSuccess('Hero configuration updated successfully');
       fetchConfig();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update Hero configuration');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -73,16 +65,16 @@ export default function AdminHeroPage() {
       )}
 
       {config && (
-        <DataForm<any>
+        <DataForm<UpdateHeroDto>
           title="Edit Hero Content"
           schema={[
             { name: 'title1', label: 'Title Line 1', type: 'text', required: true },
             { name: 'title2', label: 'Title Line 2', type: 'text', required: true },
             { name: 'subtext', label: 'Subtext', type: 'textarea', required: true },
-            { 
-              name: 'mediaType', 
-              label: 'Media Type', 
-              type: 'select', 
+            {
+              name: 'mediaType',
+              label: 'Media Type',
+              type: 'select',
               required: true,
               options: [
                 { label: 'Image', value: 'image' },

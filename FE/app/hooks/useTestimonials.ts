@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { testimonialsService, Testimonial } from '@/app/lib/api/testimonials.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface UseTestimonialsReturn {
   testimonials: Testimonial[];
@@ -21,9 +22,9 @@ export function useTestimonials(): UseTestimonialsReturn {
       const data = await testimonialsService.getAll();
       setTestimonials(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch testimonials:', err);
-      setError(err.response?.data?.error || 'Failed to fetch testimonials');
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

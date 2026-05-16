@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { servicesService, Service } from '@/app/lib/api/services.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface UseServicesReturn {
   services: Service[];
@@ -21,9 +22,9 @@ export function useServices(): UseServicesReturn {
       const data = await servicesService.getAll();
       setServices(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch services:', err);
-      setError(err.response?.data?.error || 'Failed to fetch services');
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

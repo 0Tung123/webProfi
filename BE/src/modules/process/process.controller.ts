@@ -10,7 +10,7 @@ export const processController = {
     try {
       const sections = await processService.getAll();
       res.json({ success: true, data: sections });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch process sections' });
     }
   },
@@ -26,7 +26,7 @@ export const processController = {
       }
 
       res.json({ success: true, data: section });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch process section' });
     }
   },
@@ -36,9 +36,9 @@ export const processController = {
       const data = createProcessSchema.parse(req.body);
       const section = await processService.create(data);
       res.status(201).json({ success: true, data: section });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
       res.status(500).json({ success: false, error: 'Failed to create process section' });
@@ -51,9 +51,9 @@ export const processController = {
       const data = updateProcessSchema.parse(req.body);
       const section = await processService.update(String(processId), data);
       res.json({ success: true, data: section });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
       res.status(500).json({ success: false, error: 'Failed to update process section' });
@@ -65,7 +65,7 @@ export const processController = {
       const { processId } = req.params;
       await processService.delete(String(processId));
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete process section' });
     }
   }

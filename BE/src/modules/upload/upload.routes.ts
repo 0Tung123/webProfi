@@ -44,8 +44,8 @@ router.post('/upload', upload.single('file'), (req: Request, res: Response) => {
         publicId: result.fieldname,
       },
     });
-  } catch (error: any) {
-    console.error('Upload error:', error.message);
+  } catch (error: unknown) {
+    console.error('Upload error:', (error as Error).message);
     res.status(500).json({ success: false, error: 'Failed to upload file' });
   }
 });
@@ -63,8 +63,8 @@ router.post('/upload-multiple', upload.array('images', 10), (req: Request, res: 
     }));
     console.log('Multiple upload successful:', urls.length, 'files');
     res.json({ success: true, data: urls });
-  } catch (error: any) {
-    console.error('Multiple upload error:', error.message);
+  } catch (error: unknown) {
+    console.error('Multiple upload error:', (error as Error).message);
     res.status(500).json({ success: false, error: 'Failed to upload images' });
   }
 });

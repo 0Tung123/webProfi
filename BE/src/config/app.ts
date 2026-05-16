@@ -1,7 +1,7 @@
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 import cors from 'cors';
 
-export function setupMiddleware(app: Application, express: any): void {
+export function setupMiddleware(app: Application, express: typeof import('express')): void {
   // CORS
   const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
   app.use(cors({
@@ -23,7 +23,7 @@ export function setupMiddleware(app: Application, express: any): void {
   app.use(express.urlencoded({ extended: true }));
 
   // Health check
-  app.get('/health', (_req: any, res: any) => {
+  app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 }

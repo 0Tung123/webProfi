@@ -5,15 +5,15 @@ import { useState } from 'react';
 interface DataTableProps<T> {
   data: T[];
   columns: Array<{
-    key: string;
+    key: keyof T | string;
     header: string;
-    render?: (value: any, row: T) => React.ReactNode;
+    render?: (value: T[keyof T], row: T) => React.ReactNode;
   }>;
   onEdit?: (item: T) => void;
   onDelete?: (item: T) => void;
 }
 
-export default function DataTable<T extends { [key: string]: any }>({
+export default function DataTable<T>({
   data,
   columns,
   onEdit,
@@ -34,7 +34,7 @@ export default function DataTable<T extends { [key: string]: any }>({
           <tr>
             {columns.map((column) => (
               <th
-                key={column.key}
+                key={String(column.key)}
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 {column.header}
@@ -51,8 +51,8 @@ export default function DataTable<T extends { [key: string]: any }>({
           {data.map((row, rowIndex) => (
             <tr key={rowIndex} className="hover:bg-gray-50">
               {columns.map((column) => (
-                <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {column.render ? column.render(row[column.key], row) : row[column.key]}
+                <td key={String(column.key)} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {column.render ? column.render(row[column.key as keyof T], row) : (row[column.key as keyof T] as React.ReactNode)}
                 </td>
               ))}
               {(onEdit || onDelete) && (

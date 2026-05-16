@@ -7,8 +7,8 @@ export const heroController = {
     try {
       const config = await heroService.getConfig();
       res.json({ success: true, data: config });
-    } catch (error: any) {
-      res.status(500).json({ success: false, error: error.message });
+    } catch (error: unknown) {
+      res.status(500).json({ success: false, error: (error as Error).message });
     }
   },
 
@@ -17,8 +17,8 @@ export const heroController = {
       const data = updateHeroSchema.parse(req.body);
       const config = await heroService.updateConfig(data);
       res.json({ success: true, data: config });
-    } catch (error: any) {
-      res.status(400).json({ success: false, error: error.message });
+    } catch (error: unknown) {
+      res.status(400).json({ success: false, error: (error as Error).message });
     }
   },
 };

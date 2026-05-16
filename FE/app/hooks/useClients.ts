@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { clientsService, Client } from '@/app/lib/api/clients.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface UseClientsReturn {
   clients: Client[];
@@ -21,9 +22,9 @@ export function useClients(): UseClientsReturn {
       const data = await clientsService.getAll();
       setClients(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch clients:', err);
-      setError(err.response?.data?.error || 'Failed to fetch clients');
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

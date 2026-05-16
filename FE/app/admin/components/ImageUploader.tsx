@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { uploadService, UploadResponse } from '@/app/lib/api/upload.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface ImageUploaderProps {
   onUploadComplete: (url: string) => void;
@@ -71,8 +72,8 @@ export default function ImageUploader({
     try {
       const result = await uploadService.uploadFile(file);
       onUploadComplete(result.url);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to upload file');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
       setPreview('');
     } finally {
       setUploading(false);

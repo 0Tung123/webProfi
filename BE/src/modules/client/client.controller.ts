@@ -10,7 +10,7 @@ export const clientController = {
     try {
       const clients = await clientService.getAll();
       res.json({ success: true, data: clients });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch clients' });
     }
   },
@@ -20,12 +20,12 @@ export const clientController = {
       const data = createClientSchema.parse(req.body);
       const client = await clientService.create(data);
       res.status(201).json({ success: true, data: client });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -35,12 +35,12 @@ export const clientController = {
       const data = updateClientSchema.parse(req.body);
       const client = await clientService.update(String(clientId), data);
       res.json({ success: true, data: client });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -49,7 +49,7 @@ export const clientController = {
       const { clientId } = req.params;
       await clientService.delete(String(clientId));
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete client' });
     }
   }

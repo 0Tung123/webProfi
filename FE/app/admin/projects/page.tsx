@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { projectsService, Project, CreateProjectDto, UpdateProjectDto } from '@/app/lib/api/projects.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
 
@@ -35,8 +36,8 @@ export default function AdminProjectsPage() {
       setSuccess('Project created successfully');
       setIsEditing(false);
       fetchProjects();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to create project');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -48,8 +49,8 @@ export default function AdminProjectsPage() {
       setIsEditing(false);
       setEditingItem(null);
       fetchProjects();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update project');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -60,8 +61,8 @@ export default function AdminProjectsPage() {
       setSuccess('Project deleted successfully');
       setShowDeleteConfirm(null);
       fetchProjects();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete project');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -132,9 +133,17 @@ export default function AdminProjectsPage() {
         columns={[
           { key: 'title', header: 'Title' },
           { key: 'category', header: 'Category' },
-          { key: 'description', header: 'Description', render: (val) => <span className="truncate max-w-xs">{val || '-'}</span> },
+          {
+            key: 'description',
+            header: 'Description',
+            render: (val) => <span className="truncate max-w-xs">{String(val || '-')}</span>,
+          },
           { key: 'order', header: 'Order' },
-          { key: 'isActive', header: 'Active', render: (val) => val ? '✅' : '❌' },
+          {
+            key: 'isActive',
+            header: 'Active',
+            render: (val) => (val ? '✅' : '❌'),
+          },
         ]}
         onEdit={(item) => {
           setEditingItem(item);

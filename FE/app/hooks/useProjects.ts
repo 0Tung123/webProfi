@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { projectsService, Project } from '@/app/lib/api/projects.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface UseProjectsReturn {
   projects: Project[];
@@ -21,9 +22,9 @@ export function useProjects(): UseProjectsReturn {
       const data = await projectsService.getAll();
       setProjects(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch projects:', err);
-      setError(err.response?.data?.error || 'Failed to fetch projects');
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }
@@ -35,3 +36,5 @@ export function useProjects(): UseProjectsReturn {
 
   return { projects, isLoading, error, refetch: fetchProjects };
 }
+
+export type { Project };

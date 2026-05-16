@@ -1,26 +1,22 @@
 // Error types - strictly typed error interface
-export interface AppError {
-  message: string;
+export interface AppError extends Error {
   statusCode: number;
-  details?: unknown;
+  details?: Record<string, unknown>;
 }
 
 // Type guard to check if error is a ZodError
-export function isZodError(error: unknown): error is { errors: unknown; name: string } {
-  return typeof error === 'object' && error !== null && 'name' in error && (error as { name: unknown }).name === 'ZodError';
+export function isZodError(error: Error): error is Error & { errors: unknown } {
+  return error.name === 'ZodError';
 }
 
 // Helper to get error message
-export function getErrorMessage(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'An unexpected error occurred';
+export function getErrorMessage(error: Error): string {
+  return error.message || 'An unexpected error occurred';
 }
 
 // Helper to get status code from error
-export function getStatusCode(error: unknown): number {
-  if (error && typeof error === 'object' && 'statusCode' in error) {
+export function getStatusCode(error: Error): number {
+  if ('statusCode' in error) {
     return (error as { statusCode: number }).statusCode;
   }
   return 500;

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { clientsService, Client, CreateClientDto, UpdateClientDto } from '@/app/lib/api/clients.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
 
@@ -33,8 +34,8 @@ export default function AdminClientsPage() {
       setSuccess('Client created successfully');
       setIsEditing(false);
       fetchClients();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to create client');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -46,8 +47,8 @@ export default function AdminClientsPage() {
       setIsEditing(false);
       setEditingItem(null);
       fetchClients();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update client');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -58,8 +59,8 @@ export default function AdminClientsPage() {
       setSuccess('Client deleted successfully');
       setShowDeleteConfirm(null);
       fetchClients();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete client');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -109,9 +110,20 @@ export default function AdminClientsPage() {
         data={clients}
         columns={[
           { key: 'name', header: 'Name' },
-          { key: 'website', header: 'Website', render: (val) => val ? <a href={val} target="_blank" className="text-blue-600 hover:underline">{val}</a> : '-' },
+          {
+            key: 'website',
+            header: 'Website',
+            render: (val) => {
+              const website = val as string | undefined;
+              return website ? <a href={website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{website}</a> : '-';
+            },
+          },
           { key: 'order', header: 'Order' },
-          { key: 'isActive', header: 'Active', render: (val) => val ? '✅' : '❌' },
+          {
+            key: 'isActive',
+            header: 'Active',
+            render: (val) => (val ? '✅' : '❌'),
+          },
         ]}
         onEdit={(item) => { setEditingItem(item); setIsEditing(true); }}
         onDelete={(item) => setShowDeleteConfirm(item)}

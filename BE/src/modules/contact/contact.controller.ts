@@ -11,9 +11,9 @@ export const contactController = {
       const data = createContactSchema.parse(req.body);
       const submission = await contactService.create(data);
       res.status(201).json({ success: true, data: submission });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
       res.status(500).json({ success: false, error: 'Failed to submit contact form' });
@@ -24,7 +24,7 @@ export const contactController = {
     try {
       const submissions = await contactService.getAll();
       res.json({ success: true, data: submissions });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch submissions' });
     }
   },
@@ -35,9 +35,9 @@ export const contactController = {
       const data = updateContactSchema.parse(req.body);
       const submission = await contactService.update(String(contactId), data);
       res.json({ success: true, data: submission });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
       res.status(500).json({ success: false, error: 'Failed to update submission' });
@@ -49,7 +49,7 @@ export const contactController = {
       const { contactId } = req.params;
       await contactService.delete(String(contactId));
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete submission' });
     }
   }

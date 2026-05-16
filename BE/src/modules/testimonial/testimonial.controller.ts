@@ -10,7 +10,7 @@ export const testimonialController = {
     try {
       const testimonials = await testimonialService.getAll();
       res.json({ success: true, data: testimonials });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to fetch testimonials' });
     }
   },
@@ -20,12 +20,12 @@ export const testimonialController = {
       const data = createTestimonialSchema.parse(req.body);
       const testimonial = await testimonialService.create(data);
       res.status(201).json({ success: true, data: testimonial });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -35,12 +35,12 @@ export const testimonialController = {
       const data = updateTestimonialSchema.parse(req.body);
       const testimonial = await testimonialService.update(String(testimonialId), data);
       res.json({ success: true, data: testimonial });
-    } catch (error) {
-      if (isZodError(error)) {
-        res.status(400).json({ success: false, error: 'Invalid input', details: error.errors });
+    } catch (error: unknown) {
+      if (isZodError(error as Error)) {
+        res.status(400).json({ success: false, error: 'Invalid input', details: (error as Error & { errors: unknown }).errors });
         return;
       }
-      res.status(500).json({ success: false, error: getErrorMessage(error) });
+      res.status(500).json({ success: false, error: getErrorMessage(error as Error) });
     }
   },
 
@@ -49,7 +49,7 @@ export const testimonialController = {
       const { testimonialId } = req.params;
       await testimonialService.delete(String(testimonialId));
       res.json({ success: true, data: null });
-    } catch (_error) {
+    } catch (_error: unknown) {
       res.status(500).json({ success: false, error: 'Failed to delete testimonial' });
     }
   }

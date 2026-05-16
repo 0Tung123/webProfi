@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { processService, ProcessSection } from '@/app/lib/api/process.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface UseProcessReturn {
   sections: ProcessSection[];
@@ -21,9 +22,9 @@ export function useProcess(): UseProcessReturn {
       const data = await processService.getAll();
       setSections(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch process sections:', err);
-      setError(err.response?.data?.error || 'Failed to fetch process sections');
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

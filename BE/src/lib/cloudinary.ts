@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import type { Request } from 'express';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,7 +10,7 @@ cloudinary.config({
 
 export const storage = new CloudinaryStorage({
   cloudinary,
-  params: async (_req: unknown) => ({
+  params: async (_req: Request) => ({
     folder: 'hat-studio',
     resource_type: 'auto',
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'mp4', 'mov', 'avi', 'mkv'],

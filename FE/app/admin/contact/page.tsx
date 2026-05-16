@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { contactService, ContactSubmission } from '@/app/lib/api/contact.service';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 export default function AdminContactPage() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
@@ -28,8 +29,8 @@ export default function AdminContactPage() {
       await contactService.markAsRead(id);
       setSuccess('Marked as read');
       fetchSubmissions();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to mark as read');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 
@@ -39,8 +40,8 @@ export default function AdminContactPage() {
       await contactService.delete(id);
       setSuccess('Deleted successfully');
       fetchSubmissions();
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to delete');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     }
   };
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ImageUploader from './ImageUploader';
+import { getApiErrorMessage } from '@/app/lib/types/errors';
 
 interface FormField {
   name: string;
@@ -50,8 +51,8 @@ export default function DataForm<T extends object>({
 
     try {
       await onSubmit(values);
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err as Error));
     } finally {
       setIsLoading(false);
     }

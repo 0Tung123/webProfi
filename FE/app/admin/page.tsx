@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { servicesService, projectsService, testimonialsService, clientsService, contactService } from '@/app/lib/api';
+import { servicesService, projectsService, testimonialsService, clientsService, contactService, ContactSubmission } from '@/app/lib/api';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState({
@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
           testimonials: testimonials.length,
           clients: clients.length,
           contactSubmissions: contacts.length,
-          unreadContacts: contacts.filter((c: any) => !c.read).length,
+          unreadContacts: contacts.filter((c: ContactSubmission) => !c.read).length,
         });
       } catch (error) {
         console.error('Failed to fetch stats:', error);

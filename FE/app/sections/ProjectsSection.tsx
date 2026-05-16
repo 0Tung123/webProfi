@@ -3,10 +3,10 @@
 import { memo } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { useProjects } from "@/app/hooks/useProjects";
+import { useProjects, Project } from "@/app/hooks/useProjects";
 import Button from "@/app/components/common/Button";
 
-function ProjectCard({ project, index }: { project: any, index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
   
   const layouts = [
