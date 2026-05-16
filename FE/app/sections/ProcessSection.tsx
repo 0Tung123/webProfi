@@ -1,13 +1,34 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo, useState, useEffect } from "react";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { PROCESS_BY_FIELD, CLIENTS } from "@/app/lib/data";
+import { PROCESS_BY_FIELD, CLIENTS as STATIC_CLIENTS } from "@/app/lib/data";
+import { clientsService, Client } from "@/app/lib/api/clients.service";
 
 export default memo(function ProcessSection() {
   const { ref: stepsRef, isVisible: stepsVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { ref: partnersRef, isVisible: partnersVisible } = useIntersectionObserver({ threshold: 0.2 });
   const [activeField, setActiveField] = useState<keyof typeof PROCESS_BY_FIELD>("design");
+  const [dynamicClients, setDynamicClients] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const data = await clientsService.getAll();
+        if (data && data.length > 0) {
+          setDynamicClients(data.map(c => c.name));
+        } else {
+          setDynamicClients(STATIC_CLIENTS);
+        }
+      } catch (error) {
+        console.error("Failed to fetch clients:", error);
+        setDynamicClients(STATIC_CLIENTS);
+      }
+    };
+    fetchClients();
+  }, []);
+
+  const displayClients = dynamicClients.length > 0 ? dynamicClients : STATIC_CLIENTS;
 
   return (
     <section id="process" className="relative py-16 md:py-24 overflow-hidden bg-[var(--bg-0)]">
@@ -113,7 +134,7 @@ export default memo(function ProcessSection() {
 
             {/* Row 1: Left Scroll */}
             <div className="flex animate-marquee-left whitespace-nowrap gap-16 md:gap-24 items-center">
-              {[...CLIENTS, ...CLIENTS].map((client, i) => (
+              {[...displayClients, ...displayClients].map((client, i) => (
                 <span 
                   key={`${client}-1-${i}`}
                   className="text-[24px] md:text-[38px] font-display font-black tracking-tighter text-[var(--text-0)] opacity-70 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
@@ -125,7 +146,7 @@ export default memo(function ProcessSection() {
 
             {/* Row 2: Right Scroll */}
             <div className="flex animate-marquee-right whitespace-nowrap gap-16 md:gap-24 items-center">
-              {[...CLIENTS.slice().reverse(), ...CLIENTS.slice().reverse()].map((client, i) => (
+              {[...displayClients.slice().reverse(), ...displayClients.slice().reverse()].map((client, i) => (
                 <span 
                   key={`${client}-2-${i}`}
                   className="text-[24px] md:text-[38px] font-serif italic text-[var(--text-1)] opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"

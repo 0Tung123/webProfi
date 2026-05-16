@@ -101,6 +101,10 @@ export default function AdminDashboardPage() {
             <p className="font-medium text-purple-900">Manage Testimonials</p>
             <p className="text-sm text-purple-700">View all testimonials</p>
           </a>
+          <a href="/admin/clients" className="block p-4 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors">
+            <p className="font-medium text-orange-900">Manage Clients</p>
+            <p className="text-sm text-orange-700">Strategic partners</p>
+          </a>
           <a href="/admin/contact" className="block p-4 bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors">
             <p className="font-medium text-pink-900">View Messages</p>
             <p className="text-sm text-pink-700">Contact submissions</p>
