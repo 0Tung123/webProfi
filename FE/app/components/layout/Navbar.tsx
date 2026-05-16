@@ -31,7 +31,7 @@ export default function Navbar() {
           aria-label="HAT Studio"
         >
           <Image
-            src="/logo/ngang & slogan.png"
+            src="/logo/ngang-slogan.png"
             alt="HAT Studio"
             fill
             className="object-contain object-left"
