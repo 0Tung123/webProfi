@@ -9,6 +9,31 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("#top");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [clickCoords, setClickCoords] = useState({ x: 0, y: 0 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Set initial coordinates to button position
+  useEffect(() => {
+    const updateInitialCoords = () => {
+      const btn = buttonRef.current;
+      if (btn) {
+        const rect = btn.getBoundingClientRect();
+        setClickCoords({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        });
+      }
+    };
+
+    updateInitialCoords();
+    window.addEventListener('resize', updateInitialCoords);
+    return () => window.removeEventListener('resize', updateInitialCoords);
+  }, []);
+
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    if (!mobileMenuOpen) {
+      setClickCoords({ x: e.clientX, y: e.clientY });
+    }
+  };
 
   // Prevent scroll when menu is open
   useEffect(() => {
@@ -129,7 +154,9 @@ export default function Navbar() {
           </nav>
 
           <button
+            ref={buttonRef}
             onClick={toggleMenu}
+            onMouseEnter={handleMouseEnter}
             className="group relative z-[60] flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[var(--accent)] shadow-[0_8px_30px_rgba(213,175,52,0.4)] transition-all duration-500 hover:scale-110 active:scale-95"
             aria-label="Toggle menu"
           >
@@ -142,7 +169,9 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button
+          ref={buttonRef}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onMouseEnter={handleMouseEnter}
           className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] shadow-[0_8px_20px_rgba(213,175,52,0.25)] transition-all duration-300 active:scale-90"
           aria-label="Toggle menu"
         >
@@ -163,7 +192,7 @@ export default function Navbar() {
       style={{
         clipPath: mobileMenuOpen
           ? `circle(150% at ${clickCoords.x}px ${clickCoords.y}px)`
-          : `circle(0% at ${clickCoords.x}px ${clickCoords.y}px)`,
+          : `circle(0% at ${clickCoords.x > 0 ? `${clickCoords.x}px` : '100%'} ${clickCoords.y > 0 ? `${clickCoords.y}px` : '0%'})`,
       }}
     >
       {/* Menu Content Wrapper */}
