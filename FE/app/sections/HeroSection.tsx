@@ -4,6 +4,8 @@ import { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { heroService, HeroConfig } from "@/app/lib/api/hero.service";
+import { clientsService, Client as ApiClient } from "@/app/lib/api/clients.service";
+import { CLIENTS as STATIC_CLIENTS } from "@/app/lib/data";
 
 export default memo(function HeroSection() {
   const { ref: heroRef, isVisible } = useIntersectionObserver({
@@ -12,6 +14,7 @@ export default memo(function HeroSection() {
   });
 
   const [config, setConfig] = useState<HeroConfig | null>(null);
+  const [partners, setPartners] = useState<ApiClient[]>([]);
 
   useEffect(() => {
     const fetchConfig = async () => {
@@ -23,6 +26,37 @@ export default memo(function HeroSection() {
       }
     };
     fetchConfig();
+  }, []);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const data = await clientsService.getAll();
+        if (data && data.length > 0) {
+          setPartners(data);
+        } else {
+          setPartners(STATIC_CLIENTS.map((name, i) => ({
+            clientId: `static-${i}`,
+            name,
+            order: i,
+            isActive: true,
+            createdAt: "",
+            updatedAt: ""
+          })));
+        }
+      } catch (error) {
+        console.error("Failed to fetch clients for hero:", error);
+        setPartners(STATIC_CLIENTS.map((name, i) => ({
+          clientId: `static-${i}`,
+          name,
+          order: i,
+          isActive: true,
+          createdAt: "",
+          updatedAt: ""
+        })));
+      }
+    };
+    fetchPartners();
   }, []);
 
   // Use config data or fallback to defaults
@@ -124,7 +158,76 @@ export default memo(function HeroSection() {
 
           {/* Video / Image will show clearly without overlay */}
         </div>
+
+        {/* Partners Marquee Banner */}
+        <div 
+          className={`reveal mt-12 md:mt-20 w-full ${isVisible ? 'is-visible' : ''}`} 
+          style={{ transitionDelay: '0.6s' }}
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12 border-t border-b border-[var(--surface-border)] py-8 relative overflow-hidden">
+            
+            {/* Left side label: static & prominent */}
+            <div className="flex-shrink-0 z-20 bg-[var(--bg-0)] pr-6 flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--text-1)]">
+                Trusted Partners:
+              </span>
+            </div>
+
+            {/* Marquee Container */}
+            <div className="flex-grow overflow-hidden relative mask-fade-edges">
+              {/* Edge gradients */}
+              <div className="absolute inset-y-0 left-0 w-8 md:w-16 bg-gradient-to-r from-[var(--bg-0)] to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-[var(--bg-0)] to-transparent z-10 pointer-events-none" />
+
+              {/* Scrolling Row */}
+              <div className="flex animate-marquee-hero whitespace-nowrap gap-16 md:gap-24 items-center">
+                {partners.length > 0 && [...partners, ...partners, ...partners].map((partner, i) => (
+                  <div 
+                    key={`${partner.clientId || partner.name}-${i}`}
+                    className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
+                  >
+                    {partner.logo ? (
+                      <div className="relative h-8 w-24 md:h-10 md:w-32 opacity-50 hover:opacity-100 transition-opacity duration-300">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          fill
+                          className="object-contain filter grayscale dark:invert"
+                          sizes="(max-width: 768px) 100px, 150px"
+                        />
+                      </div>
+                    ) : (
+                      <span className="text-[15px] md:text-[18px] font-display font-semibold tracking-tight text-[var(--text-2)] hover:text-[var(--accent)] opacity-60 hover:opacity-100 transition-all duration-300 cursor-pointer uppercase">
+                        {partner.name}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes marquee-hero {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.33%); }
+        }
+        .animate-marquee-hero {
+          animation: marquee-hero 40s linear infinite;
+          width: max-content;
+          display: inline-flex;
+        }
+        .animate-marquee-hero:hover {
+          animation-play-state: paused;
+        }
+        .mask-fade-edges {
+          mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+      `}</style>
     </section>
   );
 });

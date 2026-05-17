@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { NAV_ITEMS, CONTACT_INFO, OFFICE_LOCATIONS, SOCIAL_LINKS, ABOUT_CONTENT } from "@/app/lib/data";
 
@@ -75,7 +76,18 @@ export default function Navbar() {
 
   // Active section tracking with Intersection Observer
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) => document.querySelector(item.href));
+    const sections = NAV_ITEMS
+      .filter((item) => item.href.startsWith("#"))
+      .map((item) => {
+        try {
+          return document.querySelector(item.href);
+        } catch (e) {
+          console.error("Failed to query selector for", item.href, e);
+          return null;
+        }
+      })
+      .filter((section): section is Element => section !== null);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -94,20 +106,31 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth scroll handler
-  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      const headerOffset = 100;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+  // Handle navigation - page links vs anchor scroll
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, isPage: boolean) => {
+    if (isPage) {
+      // Let Link handle page navigation
+      setMobileMenuOpen(false);
+    } else {
+      e.preventDefault();
+      setMobileMenuOpen(false);
+      if (href.startsWith("#")) {
+        try {
+          const target = document.querySelector(href);
+          if (target) {
+            const headerOffset = 100;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
+        } catch (error) {
+          console.error("Failed to scroll to target:", href, error);
+        }
+      }
     }
   }, []);
 
@@ -121,7 +144,7 @@ export default function Navbar() {
       <div className="flex h-[88px] w-full items-center justify-between border-b border-surface bg-[rgba(252,251,248,0.85)] px-6 shadow-[0_18px_60px_rgba(0,0,0,0.06)] backdrop-blur-xl md:h-[100px] md:px-16">
         <a
           href="#top"
-          onClick={(e) => handleNavClick(e, "#top")}
+          onClick={(e) => handleNavClick(e, "#top", false)}
           className="relative h-10 w-40 md:h-12 md:w-48 transition-transform duration-300 hover:scale-105"
           aria-label="HAT Studio"
         >
@@ -137,20 +160,33 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 lg:flex">
           <nav className="flex items-center gap-8">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className={`text-sm font-medium transition-colors duration-300 ${
-                  activeSection === item.href
-                    ? "text-[var(--accent)]"
-                    : "text-[var(--text-1)] hover:text-[var(--accent)]"
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isPageLink = item.href === "/gioi-thieu" || item.href === "/du-an" || item.href === "/lien-he";
+              return (
+                isPageLink ? (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`text-sm font-medium transition-colors duration-300 ${
+                      "text-[var(--text-1)] hover:text-[var(--accent)]"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href, false)}
+                    className={`text-sm font-medium transition-colors duration-300 ${
+                      "text-[var(--text-1)] hover:text-[var(--accent)]"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                )
+              );
+            })}
           </nav>
 
           <button
@@ -214,19 +250,31 @@ export default function Navbar() {
           <div className="flex flex-col justify-between lg:col-span-4 h-full pb-12 lg:pb-20">
             <div className="flex flex-col gap-2">
               <nav className="flex flex-col gap-2 md:gap-4">
-                {NAV_ITEMS.map((item, index) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href)}
-                      className={`group relative overflow-hidden text-3xl font-medium tracking-tight md:text-5xl transition-all duration-[1000ms] hover:pl-4 ${
-                        activeSection === item.href ? "opacity-100" : "opacity-70 hover:opacity-100"
-                      } ${mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-                      style={{ transitionDelay: `${index * 120 + 1000}ms` }}
-                    >
-                    {item.label}
-                  </a>
-                ))}
+                {NAV_ITEMS.map((item, index) => {
+                  const isPageLink = item.href === "/gioi-thieu" || item.href === "/du-an" || item.href === "/lien-he";
+                  return (
+                    isPageLink ? (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`group relative overflow-hidden text-3xl font-medium tracking-tight md:text-5xl transition-all duration-[1000ms] hover:pl-4 opacity-70 hover:opacity-100`}
+                        style={{ transitionDelay: `${index * 120 + 1000}ms` }}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href, false)}
+                        className={`group relative overflow-hidden text-3xl font-medium tracking-tight md:text-5xl transition-all duration-[1000ms] hover:pl-4 opacity-70 hover:opacity-100`}
+                        style={{ transitionDelay: `${index * 120 + 1000}ms` }}
+                      >
+                        {item.label}
+                      </a>
+                    )
+                  );
+                })}
               </nav>
               <div className="mt-8 h-[1px] w-24 bg-white/30" />
             </div>

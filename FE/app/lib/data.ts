@@ -1,11 +1,11 @@
 import type { NavItem, HeroCard, Service, Project, Testimonial, ProcessStep, Skill, Benefit, Client } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Giới thiệu", href: "#about" },
+  { label: "Giới thiệu", href: "/gioi-thieu" },
   { label: "Dịch vụ", href: "#services" },
-  { label: "Dự án", href: "#projects" },
+  { label: "Dự án", href: "/du-an" },
   { label: "Lợi ích", href: "#benefits" },
-  { label: "Liên hệ", href: "#contact" },
+  { label: "Liên hệ", href: "/lien-he" },
 ];
 
 export const HERO_CARDS: HeroCard[] = [
