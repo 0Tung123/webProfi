@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { uploadService, UploadResponse } from '@/app/lib/api/upload.service';
 import { getApiErrorMessage } from '@/app/lib/types/errors';
+import { Upload, X, FileVideo, Image as ImageIcon, CheckCircle } from 'lucide-react';
 
 interface ImageUploaderProps {
   onUploadComplete: (url: string) => void;
@@ -93,61 +94,95 @@ export default function ImageUploader({
   };
 
   return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+    <div className="space-y-3">
+      <label className="block text-sm font-semibold text-[var(--text-1)]">
         {label}
       </label>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-lg mb-3 text-sm">
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          <X size={16} />
           {error}
         </div>
       )}
 
       {preview ? (
         <div className="relative group">
-          {isVideo(preview) ? (
-            <video
-              src={preview}
-              controls
-              className="w-full h-48 object-cover rounded-lg border border-gray-300"
-            />
-          ) : (
-            <img
-              src={preview}
-              alt="Preview"
-              className="w-full h-48 object-cover rounded-lg border border-gray-300"
-            />
-          )}
-          <button
-            type="button"
-            onClick={handleRemove}
-            className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 z-10"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="relative rounded-2xl overflow-hidden border-2 border-gray-100 shadow-sm">
+            {isVideo(preview) ? (
+              <video
+                src={preview}
+                controls
+                className="w-full h-64 object-contain bg-gray-50"
+              />
+            ) : (
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-64 object-cover"
+              />
+            )}
+
+            {/* Overlay with remove button */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+              <a
+                href={preview}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg"
+                title="Download"
+              >
+                <CheckCircle size={20} className="text-green-600" />
+              </a>
+              <button
+                type="button"
+                onClick={handleRemove}
+                className="p-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors shadow-lg"
+                title="Remove"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* File info badge */}
+          <div className="absolute top-3 left-3 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium text-[var(--text-1)] shadow-sm flex items-center gap-1.5">
+            {isVideo(preview) ? (
+              <FileVideo size={14} className="text-blue-600" />
+            ) : (
+              <ImageIcon size={14} className="text-green-600" />
+            )}
+            {isVideo(preview) ? 'Video' : 'Image'}
+          </div>
         </div>
       ) : (
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors"
+          className="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center cursor-pointer hover:border-[var(--accent)] hover:bg-[var(--accent)]/5 transition-all group"
         >
           {uploading ? (
             <div className="flex flex-col items-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
-              <p className="text-gray-600 text-sm">Uploading...</p>
+              <div className="w-12 h-12 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin mb-4" />
+              <p className="text-[var(--text-1)] font-medium">Uploading...</p>
+              <p className="text-sm text-[var(--text-2)] mt-1">Please wait</p>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <svg className="w-12 h-12 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <p className="text-gray-600 text-sm">Click to upload media</p>
-              <p className="text-gray-500 text-xs mt-1">
+              <div className="w-16 h-16 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-deep)] rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                <Upload size={28} className="text-white" />
+              </div>
+              <p className="text-[var(--text-1)] font-medium">Click to upload media</p>
+              <p className="text-sm text-[var(--text-2)] mt-1">
                 Images or Videos up to {maxFileSizeMB}MB
               </p>
+              <div className="flex items-center gap-2 mt-4 text-xs text-[var(--text-2)]">
+                <ImageIcon size={14} />
+                <span> JPG, PNG, WebP</span>
+                <span className="mx-1">•</span>
+                <FileVideo size={14} />
+                <span> MP4, MOV</span>
+              </div>
             </div>
           )}
         </div>

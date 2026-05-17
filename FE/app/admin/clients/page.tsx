@@ -5,6 +5,8 @@ import { clientsService, Client, CreateClientDto, UpdateClientDto } from '@/app/
 import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
+import { PageHeader, DeleteConfirmModal, MessageBanner, LoadingSpinner, EmptyState, StatusBadge } from '../components/AdminLayout';
+import { Building2, Globe } from 'lucide-react';
 
 export default function AdminClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -14,6 +16,7 @@ export default function AdminClientsPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<Client | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchClients = async () => {
     try {
@@ -66,12 +69,13 @@ export default function AdminClientsPage() {
 
   const clearMessages = () => { setError(''); setSuccess(''); };
 
+  const filteredClients = clients.filter(c =>
+    c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.website?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen />;
   }
 
   if (isEditing) {
@@ -79,68 +83,103 @@ export default function AdminClientsPage() {
       <DataForm<CreateClientDto>
         title={editingItem ? 'Edit Client' : 'Create Client'}
         schema={[
-          { name: 'name', label: 'Name', type: 'text', required: true },
-          { name: 'logo', label: 'Logo', type: 'image', required: false },
-          { name: 'website', label: 'Website', type: 'text', required: false },
-          { name: 'order', label: 'Order', type: 'number', required: false },
+          { name: 'name', label: 'Client Name', type: 'text', required: true, placeholder: 'Enter client/company name' },
+          { name: 'logo', label: 'Client Logo', type: 'image', required: false },
+          { name: 'website', label: 'Website URL', type: 'text', required: false, placeholder: 'https://example.com' },
+          { name: 'order', label: 'Display Order', type: 'number', required: false },
         ]}
         initialValues={editingItem || { name: '', logo: '', website: '', order: 0 }}
         onSubmit={editingItem ? handleUpdate : handleCreate}
         onCancel={() => { setIsEditing(false); setEditingItem(null); }}
+        submitLabel={editingItem ? 'Update Client' : 'Create Client'}
       />
     );
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Clients</h1>
-          <p className="text-gray-600 mt-1">Manage your clients</p>
-        </div>
-        <button onClick={() => setIsEditing(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-          + Add Client
-        </button>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Clients"
+        subtitle="Manage your clients and partners"
+        onAdd={() => setIsEditing(true)}
+        addLabel="Add Client"
+      />
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">{error}<button onClick={clearMessages} className="float-right">&times;</button></div>}
-      {success && <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">{success}<button onClick={clearMessages} className="float-right">&times;</button></div>}
+      {error && <MessageBanner type="error" message={error} onClose={clearMessages} />}
+      {success && <MessageBanner type="success" message={success} onClose={clearMessages} />}
 
       <DataTable
-        data={clients}
+        data={filteredClients}
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
         columns={[
-          { key: 'name', header: 'Name' },
+          {
+            key: 'logo',
+            header: 'Logo',
+            render: (val) => (
+              <div className="w-14 h-14 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden">
+                {val ? (
+                  <img src={String(val)} alt="" className="w-full h-full object-contain p-1" />
+                ) : (
+                  <Building2 size={24} className="text-gray-400" />
+                )}
+              </div>
+            ),
+          },
+          { key: 'name', header: 'Client Name' },
           {
             key: 'website',
             header: 'Website',
             render: (val) => {
               const website = val as string | undefined;
-              return website ? <a href={website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{website}</a> : '-';
+              return website ? (
+                <a
+                  href={website.startsWith('http') ? website : `https://${website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[var(--accent)] hover:underline"
+                >
+                  <Globe size={14} />
+                  {website}
+                </a>
+              ) : (
+                <span className="text-[var(--text-2)]">-</span>
+              );
             },
           },
           { key: 'order', header: 'Order' },
           {
             key: 'isActive',
-            header: 'Active',
-            render: (val) => (val ? '✅' : '❌'),
+            header: 'Status',
+            render: (val) => <StatusBadge active={Boolean(val)} />,
           },
         ]}
         onEdit={(item) => { setEditingItem(item); setIsEditing(true); }}
         onDelete={(item) => setShowDeleteConfirm(item)}
       />
 
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md">
-            <h3 className="text-lg font-semibold mb-4">Delete Client</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to delete "{showDeleteConfirm.name}"?</p>
-            <div className="flex justify-end gap-4">
-              <button onClick={() => setShowDeleteConfirm(null)} className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
-            </div>
-          </div>
-        </div>
+      {filteredClients.length === 0 && (
+        <EmptyState
+          icon={Building2}
+          title="No clients found"
+          description={searchTerm ? 'Try adjusting your search' : 'Add your first client to showcase your partners'}
+          action={
+            <button
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--accent)] hover:bg-[var(--accent-deep)] text-white font-semibold rounded-xl"
+            >
+              <Building2 size={18} />
+              Add Client
+            </button>
+          }
+        />
       )}
+
+      <DeleteConfirmModal
+        item={showDeleteConfirm}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(null)}
+      />
     </div>
   );
 }

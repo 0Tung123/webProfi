@@ -5,6 +5,8 @@ import { processService, ProcessSection, CreateProcessSectionDto, UpdateProcessS
 import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
+import { PageHeader, DeleteConfirmModal, MessageBanner, LoadingSpinner, EmptyState, StatusBadge } from '../components/AdminLayout';
+import { GitGraph, Hash } from 'lucide-react';
 
 const CATEGORIES = [
   { value: 'design', label: 'Design' },
@@ -12,6 +14,13 @@ const CATEGORIES = [
   { value: 'code', label: 'Code' },
   { value: 'photo', label: 'Photo' },
 ];
+
+const categoryIcons: Record<string, string> = {
+  design: '🎨',
+  brand: '🏷️',
+  code: '💻',
+  photo: '📷',
+};
 
 export default function AdminProcessPage() {
   const [sections, setSections] = useState<ProcessSection[]>([]);
@@ -21,6 +30,7 @@ export default function AdminProcessPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<ProcessSection | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchSections = async () => {
     try {
@@ -73,12 +83,13 @@ export default function AdminProcessPage() {
 
   const clearMessages = () => { setError(''); setSuccess(''); };
 
+  const filteredSections = sections.filter(s =>
+    s.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen />;
   }
 
   if (isEditing) {
@@ -87,58 +98,76 @@ export default function AdminProcessPage() {
         title={editingItem ? 'Edit Process Section' : 'Create Process Section'}
         schema={[
           { name: 'category', label: 'Category', type: 'select', required: true, options: CATEGORIES },
-          { name: 'title', label: 'Title', type: 'text', required: true },
-          { name: 'description', label: 'Description', type: 'textarea', required: true },
-          { name: 'order', label: 'Order', type: 'number', required: false },
+          { name: 'title', label: 'Section Title', type: 'text', required: true, placeholder: 'Enter section title' },
+          { name: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe this process step' },
+          { name: 'order', label: 'Display Order', type: 'number', required: false },
         ]}
         initialValues={editingItem || { category: 'design', title: '', description: '', order: 0 }}
         onSubmit={editingItem ? handleUpdate : handleCreate}
         onCancel={() => { setIsEditing(false); setEditingItem(null); }}
+        submitLabel={editingItem ? 'Update Section' : 'Create Section'}
       />
     );
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Process Sections</h1>
-          <p className="text-gray-600 mt-1">Manage your workflow process</p>
-        </div>
-        <button onClick={() => setIsEditing(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-          + Add Section
-        </button>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Process"
+        subtitle="Manage your workflow process steps"
+        onAdd={() => setIsEditing(true)}
+        addLabel="Add Step"
+      />
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">{error}<button onClick={clearMessages} className="float-right">&times;</button></div>}
-      {success && <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">{success}<button onClick={clearMessages} className="float-right">&times;</button></div>}
+      {error && <MessageBanner type="error" message={error} onClose={clearMessages} />}
+      {success && <MessageBanner type="success" message={success} onClose={clearMessages} />}
 
       <DataTable
-        data={sections}
+        data={filteredSections}
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
         columns={[
+          {
+            key: 'order',
+            header: '#',
+            render: (val, row) => (
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-deep)] flex items-center justify-center text-white font-bold">
+                {row.order || 0}
+              </div>
+            ),
+          },
           {
             key: 'category',
             header: 'Category',
-            render: (val) => <span className="uppercase font-medium">{String(val)}</span>,
+            render: (val) => (
+              <span className="inline-flex items-center gap-2">
+                <span>{categoryIcons[val as string] || '📁'}</span>
+                <span className="uppercase font-semibold text-sm">{String(val)}</span>
+              </span>
+            ),
           },
-          { key: 'title', header: 'Title' },
+          { key: 'title', header: 'Step Title' },
           {
             key: 'description',
             header: 'Description',
-            render: (val) => <span className="truncate max-w-xs">{String(val)}</span>,
+            render: (val) => <span className="truncate max-w-xs text-[var(--text-2)]">{String(val)}</span>,
           },
-          { key: 'order', header: 'Order' },
           {
             key: 'isActive',
-            header: 'Active',
-            render: (val) => (val ? '✅' : '❌'),
+            header: 'Status',
+            render: (val) => <StatusBadge active={Boolean(val)} />,
           },
           {
             key: 'steps',
-            header: 'Steps',
+            header: 'Sub-steps',
             render: (val) => {
               const steps = val as { length?: number } | undefined;
-              return steps?.length ?? 0;
+              return (
+                <span className="inline-flex items-center gap-1 text-sm text-[var(--text-2)]">
+                  <Hash size={14} />
+                  {steps?.length ?? 0}
+                </span>
+              );
             },
           },
         ]}
@@ -146,18 +175,28 @@ export default function AdminProcessPage() {
         onDelete={(item) => setShowDeleteConfirm(item)}
       />
 
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md">
-            <h3 className="text-lg font-semibold mb-4">Delete Section</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to delete "{showDeleteConfirm.title}"?</p>
-            <div className="flex justify-end gap-4">
-              <button onClick={() => setShowDeleteConfirm(null)} className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
-            </div>
-          </div>
-        </div>
+      {filteredSections.length === 0 && (
+        <EmptyState
+          icon={GitGraph}
+          title="No process steps found"
+          description={searchTerm ? 'Try adjusting your search' : 'Add your first process step to showcase your workflow'}
+          action={
+            <button
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--accent)] hover:bg-[var(--accent-deep)] text-white font-semibold rounded-xl"
+            >
+              <GitGraph size={18} />
+              Add Step
+            </button>
+          }
+        />
       )}
+
+      <DeleteConfirmModal
+        item={showDeleteConfirm}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(null)}
+      />
     </div>
   );
 }

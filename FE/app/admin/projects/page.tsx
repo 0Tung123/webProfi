@@ -5,6 +5,8 @@ import { projectsService, Project, CreateProjectDto, UpdateProjectDto } from '@/
 import { getApiErrorMessage } from '@/app/lib/types/errors';
 import DataTable from '../components/DataTable';
 import DataForm from '../components/DataForm';
+import { PageHeader, DeleteConfirmModal, MessageBanner, LoadingSpinner, EmptyState, StatusBadge } from '../components/AdminLayout';
+import { Briefcase, Grid3x3 } from 'lucide-react';
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -14,6 +16,7 @@ export default function AdminProjectsPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<Project | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchProjects = async () => {
     try {
@@ -71,12 +74,13 @@ export default function AdminProjectsPage() {
     setSuccess('');
   };
 
+  const filteredProjects = projects.filter(p =>
+    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen />;
   }
 
   if (isEditing) {
@@ -84,11 +88,11 @@ export default function AdminProjectsPage() {
       <DataForm<CreateProjectDto>
         title={editingItem ? 'Edit Project' : 'Create Project'}
         schema={[
-          { name: 'title', label: 'Title', type: 'text', required: true },
-          { name: 'category', label: 'Category', type: 'text', required: true },
-          { name: 'description', label: 'Description', type: 'textarea', required: false },
-          { name: 'image', label: 'Image', type: 'image', required: true },
-          { name: 'order', label: 'Order', type: 'number', required: false },
+          { name: 'title', label: 'Project Title', type: 'text', required: true, placeholder: 'Enter project title' },
+          { name: 'category', label: 'Category', type: 'text', required: true, placeholder: 'e.g., Web Development, Branding' },
+          { name: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Describe the project' },
+          { name: 'image', label: 'Project Image', type: 'image', required: true },
+          { name: 'order', label: 'Display Order', type: 'number', required: false },
         ]}
         initialValues={editingItem || { title: '', category: '', description: '', image: '', order: 0 }}
         onSubmit={editingItem ? handleUpdate : handleCreate}
@@ -96,53 +100,49 @@ export default function AdminProjectsPage() {
           setIsEditing(false);
           setEditingItem(null);
         }}
+        submitLabel={editingItem ? 'Update Project' : 'Create Project'}
       />
     );
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-          <p className="text-gray-600 mt-1">Manage your portfolio projects</p>
-        </div>
-        <button
-          onClick={() => setIsEditing(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-        >
-          + Add Project
-        </button>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Projects"
+        subtitle="Manage your portfolio projects"
+        onAdd={() => setIsEditing(true)}
+        addLabel="Add Project"
+      />
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-          {error}
-          <button onClick={clearMessages} className="float-right">&times;</button>
-        </div>
-      )}
-      {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
-          {success}
-          <button onClick={clearMessages} className="float-right">&times;</button>
-        </div>
-      )}
+      {error && <MessageBanner type="error" message={error} onClose={clearMessages} />}
+      {success && <MessageBanner type="success" message={success} onClose={clearMessages} />}
 
       <DataTable
-        data={projects}
+        data={filteredProjects}
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
         columns={[
-          { key: 'title', header: 'Title' },
+          {
+            key: 'image',
+            header: 'Preview',
+            render: (val) => (
+              <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shadow-sm">
+                <img src={String(val || '')} alt="" className="w-full h-full object-cover" />
+              </div>
+            ),
+          },
+          { key: 'title', header: 'Project' },
           { key: 'category', header: 'Category' },
           {
             key: 'description',
             header: 'Description',
-            render: (val) => <span className="truncate max-w-xs">{String(val || '-')}</span>,
+            render: (val) => <span className="truncate max-w-xs text-[var(--text-2)]">{String(val || '-')}</span>,
           },
           { key: 'order', header: 'Order' },
           {
             key: 'isActive',
-            header: 'Active',
-            render: (val) => (val ? '✅' : '❌'),
+            header: 'Status',
+            render: (val) => <StatusBadge active={Boolean(val)} />,
           },
         ]}
         onEdit={(item) => {
@@ -152,30 +152,28 @@ export default function AdminProjectsPage() {
         onDelete={(item) => setShowDeleteConfirm(item)}
       />
 
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md">
-            <h3 className="text-lg font-semibold mb-4">Delete Project</h3>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to delete "{showDeleteConfirm.title}"? This action cannot be undone.
-            </p>
-            <div className="flex justify-end gap-4">
-              <button
-                onClick={() => setShowDeleteConfirm(null)}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+      {filteredProjects.length === 0 && (
+        <EmptyState
+          icon={Briefcase}
+          title="No projects found"
+          description={searchTerm ? 'Try adjusting your search' : 'Add your first project to showcase your work'}
+          action={
+            <button
+              onClick={() => setIsEditing(true)}
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--accent)] hover:bg-[var(--accent-deep)] text-white font-semibold rounded-xl"
+            >
+              <Briefcase size={18} />
+              Add Project
+            </button>
+          }
+        />
       )}
+
+      <DeleteConfirmModal
+        item={showDeleteConfirm}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(null)}
+      />
     </div>
   );
 }
