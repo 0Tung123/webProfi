@@ -84,7 +84,14 @@ export default function ContactForm() {
             <div
               className={`reveal bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 ${isVisible ? 'is-visible' : ''}`}
             >
-              {error}
+              <p className="font-semibold text-sm mb-1">Gửi tin nhắn thất bại</p>
+              <p className="text-sm">{error}</p>
+              <button
+                onClick={() => setError('')}
+                className="mt-2 text-xs text-red-500 underline hover:text-red-700"
+              >
+                Đóng
+              </button>
             </div>
           )}
 
@@ -107,6 +114,8 @@ export default function ContactForm() {
                   required
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"
                   placeholder="Nguyễn Văn A"
+                  minLength={2}
+                  title="Họ tên phải có ít nhất 2 ký tự"
                 />
               </div>
 
@@ -137,8 +146,9 @@ export default function ContactForm() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"
-                placeholder="090 123 4567"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"                  placeholder="090 123 4567"
+                  pattern="[0-9\s\+\-\(\)]+"
+                  title="Chỉ nhập số điện thoại hợp lệ"
               />
             </div>
 
@@ -154,7 +164,9 @@ export default function ContactForm() {
                 required
                 rows={6}
                 className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200 resize-none"
-                placeholder="Hãy mô tả dự án của bạn..."
+                placeholder="Hãy mô tả dự án của bạn... (tối thiểu 10 ký tự)"
+                minLength={10}
+                title="Tin nhắn phải có ít nhất 10 ký tự"
               />
             </div>
 
