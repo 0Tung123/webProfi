@@ -181,24 +181,24 @@ export default memo(function HeroSection() {
               <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-[var(--bg-0)] to-transparent z-10 pointer-events-none" />
 
               {/* Scrolling Row */}
-              <div className="flex animate-marquee-hero whitespace-nowrap gap-16 md:gap-24 items-center">
+              <div className="flex animate-marquee-hero whitespace-nowrap gap-20 md:gap-32 items-center">
                 {partners.length > 0 && [...partners, ...partners, ...partners].map((partner, i) => (
                   <div 
                     key={`${partner.clientId || partner.name}-${i}`}
                     className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
                   >
                     {partner.logo ? (
-                      <div className="relative h-8 w-24 md:h-10 md:w-32 opacity-50 hover:opacity-100 transition-opacity duration-300">
+                      <div className="relative h-14 w-36 md:h-20 md:w-52 opacity-60 hover:opacity-100 transition-all duration-300">
                         <Image
                           src={partner.logo}
                           alt={partner.name}
                           fill
                           className="object-contain filter grayscale dark:invert"
-                          sizes="(max-width: 768px) 100px, 150px"
+                          sizes="(max-width: 768px) 144px, 208px"
                         />
                       </div>
                     ) : (
-                      <span className="text-[15px] md:text-[18px] font-display font-semibold tracking-tight text-[var(--text-2)] hover:text-[var(--accent)] opacity-60 hover:opacity-100 transition-all duration-300 cursor-pointer uppercase">
+                      <span className="text-lg md:text-2xl font-display font-semibold tracking-tight text-[var(--text-2)] hover:text-[var(--accent)] opacity-70 hover:opacity-100 transition-all duration-300 cursor-pointer uppercase">
                         {partner.name}
                       </span>
                     )}
