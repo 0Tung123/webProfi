@@ -48,8 +48,8 @@ npm run dev
 
 ## 🔐 Default Admin
 
-- **Email:** `admin@hatstudio.local`
-- **Password:** `HatAdmin2024!`
+- **Email:** ``
+- **Password:** `!`
 
 ⚠️ **ĐỔI NGAY** trong production!
 
