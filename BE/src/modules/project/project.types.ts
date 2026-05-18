@@ -2,6 +2,7 @@ export interface Project {
   projectId: string;
   title: string;
   category: string;
+  categorySlug: string;
   description?: string | null;
   image: string;
   order: number;
@@ -13,6 +14,7 @@ export interface Project {
 export interface CreateProjectInput {
   title: string;
   category: string;
+  categorySlug?: string;
   description?: string;
   image: string;
   order?: number;
@@ -21,6 +23,7 @@ export interface CreateProjectInput {
 export interface UpdateProjectInput {
   title?: string;
   category?: string;
+  categorySlug?: string;
   description?: string;
   image?: string;
   order?: number;

@@ -44,7 +44,7 @@ export default function DataForm<T extends object>({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const handleChange = <K extends keyof T>(name: K, value: string) => {
+  const handleChange = <K extends keyof T>(name: K, value: string | number) => {
     setValues((prev) => ({ ...prev, [name]: value }) as T);
     if (success) setSuccess(false);
   };
@@ -167,7 +167,10 @@ export default function DataForm<T extends object>({
                   type={field.type}
                   id={field.name}
                   value={getValue(field.name as keyof T)}
-                  onChange={(e) => handleChange(field.name as keyof T, e.target.value)}
+                  onChange={(e) => {
+                    const val = field.type === 'number' ? Number(e.target.value) : e.target.value;
+                    handleChange(field.name as keyof T, val);
+                  }}
                   required={field.required}
                   placeholder={field.placeholder}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent outline-none transition-all text-[var(--text-1)]"

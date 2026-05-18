@@ -142,9 +142,8 @@ export default function Navbar() {
       }`}
     >
       <div className="flex h-[88px] w-full items-center justify-between border-b border-surface bg-[rgba(252,251,248,0.85)] px-6 shadow-[0_18px_60px_rgba(0,0,0,0.06)] backdrop-blur-xl md:h-[100px] md:px-16">
-        <a
-          href="#top"
-          onClick={(e) => handleNavClick(e, "#top", false)}
+        <Link
+          href="/"
           className="relative h-10 w-40 md:h-12 md:w-48 transition-transform duration-300 hover:scale-105"
           aria-label="HAT Studio"
         >
@@ -155,7 +154,7 @@ export default function Navbar() {
             className="object-contain object-left"
             priority
           />
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 lg:flex">

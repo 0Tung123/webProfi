@@ -6,6 +6,8 @@ const router = Router();
 
 // Public routes
 router.get('/', projectController.getAll);
+router.get('/categories', projectController.getAllCategories);
+router.get('/category/:categorySlug', projectController.getByCategory);
 router.get('/:projectId', projectController.getById);
 
 // Admin routes (protected)

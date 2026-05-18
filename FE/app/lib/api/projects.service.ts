@@ -4,6 +4,7 @@ export interface Project {
   projectId: string;
   title: string;
   category: string;
+  categorySlug: string;
   description?: string;
   image: string;
   order: number;
@@ -15,6 +16,7 @@ export interface Project {
 export interface CreateProjectDto {
   title: string;
   category: string;
+  categorySlug?: string;
   description?: string;
   image: string;
   order?: number;
@@ -23,6 +25,7 @@ export interface CreateProjectDto {
 export interface UpdateProjectDto {
   title?: string;
   category?: string;
+  categorySlug?: string;
   description?: string;
   image?: string;
   order?: number;
@@ -33,6 +36,18 @@ export const projectsService = {
   // Public: Get all active projects
   async getAll(): Promise<Project[]> {
     const response = await apiClient.get('/projects');
+    return response.data;
+  },
+
+  // Public: Get all categories
+  async getAllCategories(): Promise<string[]> {
+    const response = await apiClient.get('/projects/categories');
+    return response.data;
+  },
+
+  // Public: Get projects by category
+  async getByCategory(categorySlug: string): Promise<Project[]> {
+    const response = await apiClient.get(`/projects/category/${categorySlug}`);
     return response.data;
   },
 
@@ -57,5 +72,5 @@ export const projectsService = {
   // Admin: Delete project
   async delete(projectId: string): Promise<void> {
     await apiClient.delete(`/projects/${projectId}`);
-  },
+  }
 };

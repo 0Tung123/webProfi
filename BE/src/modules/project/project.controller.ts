@@ -15,6 +15,25 @@ export const projectController = {
     }
   },
 
+  async getAllCategories(_req: Request, res: Response): Promise<void> {
+    try {
+      const categories = await projectService.getAllCategories();
+      res.json({ success: true, data: categories });
+    } catch (_error: unknown) {
+      res.status(500).json({ success: false, error: 'Failed to fetch categories' });
+    }
+  },
+
+  async getByCategory(req: Request, res: Response): Promise<void> {
+    try {
+      const { categorySlug } = req.params;
+      const projects = await projectService.getAllByCategory(String(categorySlug));
+      res.json({ success: true, data: projects });
+    } catch (_error: unknown) {
+      res.status(500).json({ success: false, error: 'Failed to fetch projects by category' });
+    }
+  },
+
   async getById(req: Request, res: Response): Promise<void> {
     try {
       const { projectId } = req.params;

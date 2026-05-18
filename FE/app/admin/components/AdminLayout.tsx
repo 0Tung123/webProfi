@@ -89,6 +89,14 @@ interface DeleteConfirmModalProps<T extends object> {
   title?: string;
 }
 
+function getDisplayName(item: object): string {
+  const maybeTitle = 'title' in item ? (item as { title?: string }).title : undefined;
+  const maybeName = 'name' in item ? (item as { name?: string }).name : undefined;
+  const label = 'label' in item ? (item as { label?: string }).label : undefined;
+  const displayName = maybeTitle || maybeName || label;
+  return typeof displayName === 'string' && displayName.length > 0 ? displayName : 'this item';
+}
+
 export function DeleteConfirmModal<T extends object>({
   item,
   onConfirm,
@@ -97,7 +105,7 @@ export function DeleteConfirmModal<T extends object>({
 }: DeleteConfirmModalProps<T>) {
   if (!item) return null;
 
-  const itemName = (item as any).title || (item as any).name || 'this item';
+  const itemName = getDisplayName(item);
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">

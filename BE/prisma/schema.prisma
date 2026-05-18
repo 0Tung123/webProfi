@@ -18,15 +18,16 @@ model Admin {
 }
 
 model Project {
-  projectId   String   @id @default(uuid())
-  title       String
-  category    String
-  description String?
-  image       String
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  projectId    String   @id @default(uuid())
+  title        String
+  category     String
+  categorySlug String   @default("") // Optional slug for category filtering
+  description  String?
+  image        String
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@map("projects")
 }
@@ -121,4 +122,31 @@ model HeroConfig {
   updatedAt   DateTime @updatedAt
 
   @@map("hero_config")
+}
+
+model TeamMember {
+  teamMemberId String   @id @default(uuid())
+  name         String
+  role         String
+  image        String?
+  socials      Json?    // { facebook?: string, linkedin?: string, github?: string, instagram?: string, behance?: string, dribbble?: string }
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+model ContactInfo {
+  contactInfoId String   @id @default(uuid())
+  type          String   // phone, email, office, social
+  label         String   // Display label (e.g., "Showroom", "Studio")
+  value         String   // The actual value (phone number, email, address, URL)
+  order         Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("contact_info")
 }

@@ -11,6 +11,8 @@ import {
   Building2,
   GitGraph,
   Mail,
+  Users,
+  Contact,
   LogOut,
   Menu,
   X,
@@ -33,8 +35,10 @@ const navItems: NavItem[] = [
   { label: 'Services', href: '/admin/services', icon: Layers },
   { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
   { label: 'Clients', href: '/admin/clients', icon: Building2 },
+  { label: 'Team', href: '/admin/team', icon: Users },
   { label: 'Process', href: '/admin/process', icon: GitGraph },
-  { label: 'Contact', href: '/admin/contact', icon: Mail },
+  { label: 'Contact Info', href: '/admin/contact-info', icon: Contact },
+  { label: 'Messages', href: '/admin/contact', icon: Mail },
 ];
 
 export default function AdminSidebar({ children }: { children: React.ReactNode }) {

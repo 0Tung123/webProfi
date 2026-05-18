@@ -1,11 +1,11 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
 import ContactForm from "@/app/components/ContactForm";
-import { CONTACT_INFO, OFFICE_LOCATIONS, SOCIAL_LINKS } from "@/app/lib/data";
+import { contactInfoService, ContactInfo } from "@/app/lib/api/contact-info.service";
 
 function ContactInfoCard({
   icon,
@@ -39,7 +39,7 @@ function ContactInfoCard({
   );
 }
 
-function SocialLink({ label, href, index }: { label: string; href: string; index: number }) {
+function SocialLink({ label, href, icon, index }: { label: string; href: string; icon: React.ReactNode; index: number }) {
   const { ref, isVisible } = useIntersectionObserver({ once: true, threshold: 0.2 });
 
   return (
@@ -53,12 +53,9 @@ function SocialLink({ label, href, index }: { label: string; href: string; index
       style={{ transitionDelay: `${index * 0.05}s` }}
     >
       <div className="w-10 h-10 rounded-full bg-[var(--bg-2)] flex items-center justify-center group-hover:bg-[var(--accent)] transition-colors">
-        <svg className="w-5 h-5 text-[var(--text-1)] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
-          {label === "Facebook" && <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />}
-          {label === "Behance" && <path d="M22 7h-7v-.01A4.99 4.99 0 0119.59 2.5 5 5 0 0117 7.5V22h-3V7.5A5 5 0 0112 2.5 5 5 0 019.59 7.49V22h-3V2h7a5 5 0 015 5zM3 19.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5zM10 19.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />}
-          {label === "LinkedIn" && <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 2a2 2 0 11-2 2 2 2 0 012-2z" />}
-          {label === "Instagram" && <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m2 2h4.4a3.8 3.8 0 013.8 3.8v4.4a3.8 3.8 0 01-3.8 3.8H9.8A3.8 3.8 0 016 14.2V9.8A3.8 3.8 0 019.8 4z" stroke="currentColor" strokeWidth="2" fill="none" />}
-        </svg>
+        <div className="w-5 h-5 text-[var(--text-1)] group-hover:text-white transition-colors">
+          {icon}
+        </div>
       </div>
       <span className="text-sm font-medium text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
         {label}
@@ -67,16 +64,65 @@ function SocialLink({ label, href, index }: { label: string; href: string; index
   );
 }
 
+const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://facebook.com", icon: <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /> },
+  { label: "Behance", href: "https://behance.net", icon: <path d="M22 7h-7v-.01A4.99 4.99 0 0119.59 2.5 5 5 0 0117 7.5V22h-3V7.5A5 5 0 0112 2.5 5 5 0 019.59 7.49V22h-3V2h7a5 5 0 015 5zM3 19.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5zM10 19.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" /> },
+  { label: "LinkedIn", href: "https://linkedin.com", icon: <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 2a2 2 0 11-2 2 2 2 0 012-2z" /> },
+  { label: "Instagram", href: "https://instagram.com", icon: <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m2 2h4.4a3.8 3.8 0 013.8 3.8v4.4a3.8 3.8 0 01-3.8 3.8H9.8A3.8 3.8 0 016 14.2V9.8A3.8 3.8 0 019.8 4z" stroke="currentColor" strokeWidth="2" fill="none" /> },
+];
+
 export default function ContactPage() {
   const { ref: heroRef, isVisible: heroVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { ref: infoRef, isVisible: infoVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { ref: formRef, isVisible: formVisible } = useIntersectionObserver({ threshold: 0.1 });
 
+  const [contactInfos, setContactInfos] = useState<ContactInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        setIsLoading(true);
+        const data = await contactInfoService.getAll();
+        setContactInfos(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch contact info");
+        console.error("Failed to fetch contact info:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
+
+  const phones = contactInfos.filter((c) => c.type === "phone");
+  const emails = contactInfos.filter((c) => c.type === "email");
+  const offices = contactInfos.filter((c) => c.type === "office");
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-0)] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--accent)]" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-0)] flex items-center justify-center">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          Failed to load contact info: {error}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[var(--bg-0)]">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center pt-32 pb-20 overflow-hidden">
         <div ref={heroRef} className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40 relative z-10">
           <div className="max-w-4xl">
@@ -104,11 +150,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Info Section */}
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div ref={infoRef} className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20">
-            {/* Left Column - Info Cards */}
             <div className="space-y-6">
               <ContactInfoCard
                 icon={
@@ -119,11 +163,15 @@ export default function ContactPage() {
                 title="Điện thoại"
                 index={0}
               >
-                {CONTACT_INFO.phones.map((phone) => (
-                  <a key={phone} href={`tel:${phone}`} className="block text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
-                    {phone}
-                  </a>
-                ))}
+                {phones.length > 0 ? (
+                  phones.map((item) => (
+                    <a key={item.contactInfoId} href={`tel:${item.value}`} className="block text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
+                      {item.value}
+                    </a>
+                  ))
+                ) : (
+                  <p className="text-[var(--text-1)]">Chưa có thông tin liên hệ</p>
+                )}
               </ContactInfoCard>
 
               <ContactInfoCard
@@ -135,11 +183,15 @@ export default function ContactPage() {
                 title="Email"
                 index={1}
               >
-                {CONTACT_INFO.emails.map((email) => (
-                  <a key={email} href={`mailto:${email}`} className="block text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
-                    {email}
-                  </a>
-                ))}
+                {emails.length > 0 ? (
+                  emails.map((item) => (
+                    <a key={item.contactInfoId} href={`mailto:${item.value}`} className="block text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
+                      {item.value}
+                    </a>
+                  ))
+                ) : (
+                  <p className="text-[var(--text-1)]">Chưa có thông tin email</p>
+                )}
               </ContactInfoCard>
 
               <ContactInfoCard
@@ -152,30 +204,31 @@ export default function ContactPage() {
                 title="Văn phòng"
                 index={2}
               >
-                {OFFICE_LOCATIONS.map((location) => (
-                  <div key={location.name} className="flex flex-col">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-1">
-                      {location.name}
-                    </span>
-                    <p className="text-[var(--text-1)]">{location.address}</p>
-                  </div>
-                ))}
+                {offices.length > 0 ? (
+                  offices.map((item) => (
+                    <div key={item.contactInfoId} className="flex flex-col">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-1">
+                        {item.label}
+                      </span>
+                      <p className="text-[var(--text-1)]">{item.value}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-[var(--text-1)]">Chưa có thông tin văn phòng</p>
+                )}
               </ContactInfoCard>
             </div>
 
-            {/* Right Column - Social Links & Map Placeholder */}
             <div className="space-y-8">
-              {/* Social Links */}
               <div className={`reveal p-8 rounded-[2rem] bg-[var(--bg-2)] ${infoVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.1s" }}>
                 <h3 className="text-[18px] md:text-[20px] font-bold text-[var(--text-0)] mb-6">Theo dõi chúng tôi</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {SOCIAL_LINKS.map((link, index) => (
-                    <SocialLink key={link.label} label={link.label} href={link.href} index={index} />
+                    <SocialLink key={link.label} label={link.label} href={link.href} icon={link.icon} index={index} />
                   ))}
                 </div>
               </div>
 
-              {/* Map Placeholder */}
               <div
                 className={`reveal h-64 rounded-[2rem] overflow-hidden bg-[var(--bg-2)] relative ${infoVisible ? "is-visible" : ""}`}
                 style={{ transitionDelay: "0.2s" }}
@@ -190,7 +243,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div ref={formRef} className={`max-w-3xl mx-auto ${formVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.1s" }}>
             <div className="text-center mb-12">
               <h2 className="text-[32px] md:text-[40px] font-display font-bold text-[var(--text-0)] mb-4">
@@ -206,7 +258,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* CTA Banner */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-[var(--accent)]">
         <div className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40 text-center">
           <h2 className="text-[32px] md:text-[48px] font-display font-bold text-white mb-6">
@@ -216,13 +267,13 @@ export default function ContactPage() {
             Gọi ngay cho chúng tôi để được tư vấn miễn phí về dự án của bạn
           </p>
           <a
-            href={`tel:${CONTACT_INFO.phones[0]}`}
+            href={phones.length > 0 ? `tel:${phones[0].value}` : "tel:("+84+") 123 456 789"}
             className="inline-flex items-center gap-4 bg-white text-[var(--accent)] px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.2)]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            {CONTACT_INFO.phones[0]}
+            {phones.length > 0 ? phones[0].value : "(+84) 123 456 789"}
           </a>
         </div>
       </section>

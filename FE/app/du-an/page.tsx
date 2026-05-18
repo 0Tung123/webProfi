@@ -1,22 +1,14 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { useProjects, Project } from "@/app/hooks/useProjects";
+import { projectsService, Project } from "@/app/lib/api/projects.service";
 import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
 import Button from "@/app/components/common/Button";
 
-type CategoryFilter = "all" | "Design" | "Brand" | "Development" | "Photography" | "Digital Platform" | "Web App" | "Product Design" | "Digital Retail" | "Data Visualization";
-
-const CATEGORIES: { label: string; value: CategoryFilter }[] = [
-  { label: "Tất cả", value: "all" },
-  { label: "Design", value: "Design" },
-  { label: "Brand", value: "Brand" },
-  { label: "Development", value: "Development" },
-  { label: "Photography", value: "Photography" },
-];
+type CategoryFilter = "all" | string;
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { ref, isVisible } = useIntersectionObserver({ once: true, threshold: 0.2 });
@@ -32,14 +24,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
   const layout = layouts[index % layouts.length];
 
+  const isVideo = project.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i);
+
   return (
     <div
       ref={ref}
       className={`reveal group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] bg-[var(--bg-2)] ${layout.col} ${layout.row} ${isVisible ? "is-visible" : ""}`}
       style={{ transitionDelay: `${(index % 3) * 0.1}s` }}
     >
-      {/* Background Image/Video */}
-      {project.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i) ? (
+      {isVideo ? (
         <video
           src={project.image}
           autoPlay
@@ -58,10 +51,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         />
       )}
 
-      {/* Hover Overlay */}
       <div className="absolute inset-0 bg-black/40 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 ease-in-out" />
 
-      {/* Content Reveal */}
       <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-end">
         <div
           className="transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
@@ -75,7 +66,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Border interaction */}
       <div className="absolute inset-0 border border-white/10 rounded-[1.5rem] md:rounded-[2rem] pointer-events-none" />
     </div>
   );
@@ -85,13 +75,38 @@ export default function ProjectsPage() {
   const { ref: heroRef, isVisible: heroVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { ref: gridRef, isVisible: gridVisible } = useIntersectionObserver({ threshold: 0.1 });
 
-  const { projects, isLoading, error } = useProjects();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredProjects =
-    activeCategory === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory || p.category.toLowerCase().includes(activeCategory.toLowerCase()));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const [projectsData, categoriesData] = await Promise.all([
+          projectsService.getAll(),
+          projectsService.getAllCategories(),
+        ]);
+        setProjects(projectsData);
+        setCategories(categoriesData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch data");
+        console.error("Failed to fetch projects:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredProjects = activeCategory === "all"
+    ? projects
+    : projects.filter((p) => p.categorySlug === activeCategory || p.category === activeCategory);
+
+  const categoryOptions = ["all", ...categories];
 
   if (isLoading) {
     return (
@@ -115,7 +130,6 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-[var(--bg-0)]">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center pt-32 pb-16 overflow-hidden">
         <div ref={heroRef} className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40 relative z-10">
           <div className="max-w-4xl">
@@ -143,29 +157,27 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Filter Section */}
       <section className="relative py-12 overflow-hidden">
         <div className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40">
           <div className="flex flex-wrap gap-4">
-            {CATEGORIES.map((category, index) => (
+            {categoryOptions.map((category, index) => (
               <button
-                key={category.value}
-                onClick={() => setActiveCategory(category.value)}
+                key={category}
+                onClick={() => setActiveCategory(category)}
                 className={`group px-6 py-3 rounded-full text-sm font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
-                  activeCategory === category.value
+                  activeCategory === category
                     ? "bg-[var(--accent)] text-white shadow-[0_8px_30px_rgba(213,175,52,0.4)]"
                     : "bg-[var(--bg-2)] text-[var(--text-1)] hover:bg-[var(--bg-2)]/80 hover:text-[var(--text-0)]"
                 }`}
                 style={{ transitionDelay: `${index * 0.05}s` }}
               >
-                {category.label}
+                {category === "all" ? "Tất cả" : category}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Grid */}
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div ref={gridRef} className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
           {filteredProjects.length === 0 ? (
@@ -175,18 +187,15 @@ export default function ProjectsPage() {
               </p>
             </div>
           ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 auto-rows-[300px] md:auto-rows-[320px] mb-12 md:mb-16">
-                {filteredProjects.map((project, i) => (
-                  <ProjectCard key={project.projectId} project={project} index={i} />
-                ))}
-              </div>
-            </>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 auto-rows-[300px] md:auto-rows-[320px] mb-12 md:mb-16">
+              {filteredProjects.map((project, i) => (
+                <ProjectCard key={project.projectId} project={project} index={i} />
+              ))}
+            </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40 text-center">
           <h2 className="text-[32px] md:text-[48px] font-display font-bold text-[var(--text-0)] mb-8">
