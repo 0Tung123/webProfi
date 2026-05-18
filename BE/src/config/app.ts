@@ -3,15 +3,23 @@ import cors from 'cors';
 
 export function setupMiddleware(app: Application, express: typeof import('express')): void {
   // CORS
-  const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
+  const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || [
+    'http://localhost:3000',
+    'https://web-profi-jmlo.vercel.app'
+  ];
   app.use(cors({
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      // Allow requests with no origin (mobile apps, curl, etc.)
       if (!origin) return callback(null, true);
+      // Allow exact match
       if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
+        return callback(null, true);
       }
+      // Allow any Vercel preview deployment
+      if (origin.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+      callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
