@@ -3,10 +3,10 @@
 import { memo } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { PROJECTS } from "@/app/lib/data";
+import { useProjects, Project } from "@/app/hooks/useProjects";
 import Button from "@/app/components/common/Button";
 
-function ProjectCard({ project, index }: { project: any, index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
   
   const layouts = [
@@ -28,14 +28,25 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
         transitionDelay: `${(index % 3) * 0.1}s`
       }}
     >
-      {/* Background Image */}
-      <Image
-        src={project.image}
-        alt={project.title}
-        fill
-        className="object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-        sizes="(max-width: 768px) 100vw, 50vw"
-      />
+      {/* Background Image/Video */}
+      {project.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i) ? (
+        <video
+          src={project.image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+        />
+      ) : (
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      )}
 
       {/* Hover Overlay */}
       <div className="absolute inset-0 bg-black/40 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 ease-in-out" />
@@ -60,6 +71,31 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
 
 const ProjectsSection = memo(function ProjectsSection() {
   const { ref: headerRef, isVisible: headerVisible } = useIntersectionObserver({ threshold: 0.1 });
+  const { projects, isLoading, error } = useProjects();
+
+  if (isLoading) {
+    return (
+      <section className="relative py-20 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+        <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--accent)]"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="relative py-20 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+        <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            Failed to load projects: {error}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="relative py-20 md:py-32 overflow-hidden bg-[var(--bg-0)]">
@@ -79,8 +115,8 @@ const ProjectsSection = memo(function ProjectsSection() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 auto-rows-[300px] md:auto-rows-[320px] mb-12 md:mb-16">
-          {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
+          {projects.map((project, i) => (
+            <ProjectCard key={project.projectId} project={project} index={i} />
           ))}
         </div>
 

@@ -18,15 +18,16 @@ model Admin {
 }
 
 model Project {
-  projectId   String   @id @default(uuid())
-  title       String
-  category    String
-  description String?
-  image       String
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  projectId    String   @id @default(uuid())
+  title        String
+  category     String
+  categorySlug String   @default("") // Optional slug for category filtering
+  description  String?
+  image        String
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@map("projects")
 }
@@ -109,4 +110,43 @@ model ProcessStep {
   section     ProcessSection @relation(fields: [sectionId], references: [processId], onDelete: Cascade)
 
   @@map("process_steps")
+}
+
+model HeroConfig {
+  id          String   @id @default("hero-main")
+  title1      String   @default("WE COMPLETE")
+  title2      String   @default("YOUR CREATIVE IDEAS")
+  subtext     String   @default("HAT Studio is a visionary design agency that breathes life into ideas and transforms them into extraordinary realities.")
+  mediaUrl    String   @default("https://res.cloudinary.com/dykmrgu8e/image/upload/v1778861498/hat-studio/blq1qtdlokrit4cbmhvp.jpg")
+  mediaType   String   @default("image") // image or video
+  updatedAt   DateTime @updatedAt
+
+  @@map("hero_config")
+}
+
+model TeamMember {
+  teamMemberId String   @id @default(uuid())
+  name         String
+  role         String
+  image        String?
+  socials      Json?    // { facebook?: string, linkedin?: string, github?: string, instagram?: string, behance?: string, dribbble?: string }
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+model ContactInfo {
+  contactInfoId String   @id @default(uuid())
+  type          String   // phone, email, office, social
+  label         String   // Display label (e.g., "Showroom", "Studio")
+  value         String   // The actual value (phone number, email, address, URL)
+  order         Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("contact_info")
 }

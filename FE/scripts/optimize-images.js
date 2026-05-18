@@ -1,17 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Phase 3: Image Optimization Script
- *
- * This script:
- * 1. Converts PNG images to WebP format
- * 2. Generates blur placeholder data (base64)
- * 3. Updates data.ts with .webp paths and blurDataURL
- * 4. Updates Image components to include placeholder="blur"
- *
- * Run from FE directory: node scripts/optimize-images.js
- */
-
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import path, { join } from 'path';
 import { fileURLToPath } from 'url';

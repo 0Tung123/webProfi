@@ -2,92 +2,139 @@
 
 Express.js backend API cho HAT Studio portfolio.
 
-## Quick Start
+## 🚀 Quick Start
 
-1. **Install dependencies:**
-```bash
-npm install
-```
+### Option 1: Docker (Khuyến nghị)
 
-2. **Configure environment:**
 ```bash
-cp .env.example .env
-# Edit .env với cấu hình database PostgreSQL
-```
+# 1. Chạy database với Docker
+npm run docker:init
 
-3. **Setup database:**
-```bash
-npx prisma migrate dev
-npx prisma generate
-```
-
-4. **Seed database (tạo admin + dữ liệu mẫu):**
-```bash
-npm run seed
-```
-
-5. **Run development server:**
-```bash
+# 2. Server sẽ tự động chạy ở http://localhost:8080
 npm run dev
 ```
 
-Backend sẽ chạy trên `http://localhost:8080`
+### Option 2: Manual
 
-## API Endpoints
+```bash
+# 1. Install dependencies
+npm install
 
-### Public Endpoints
+# 2. Chạy PostgreSQL (qua Docker)
+npm run docker:up
+
+# 3. Wait 5 giây cho DB khởi động, sau đó:
+npx prisma migrate dev
+npx prisma generate
+
+# 4. Seed database
+npm run prisma:seed
+
+# 5. Chạy server
+npm run dev
+```
+
+## 📋 Scripts Available
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Chạy development server |
+| `npm run build` | Build TypeScript |
+| `npm start` | Chạy production server |
+| `npm run docker:up` | Start PostgreSQL container |
+| `npm run docker:down` | Stop PostgreSQL container |
+| `npm run docker:init` | Start DB + migrate + seed |
+| `npx prisma:studio` | GUI cho database |
+
+## 🔐 Default Admin
+
+- **Email:** `admin@hatstudio.local`
+- **Password:** `HatAdmin2024!`
+
+⚠️ **ĐỔI NGAY** trong production!
+
+## 📁 Cấu trúc
+
+```
+BE/
+├── .github/workflows/
+│   └── ci.yml              # CI/CD pipeline
+├── prisma/
+│   └── schema.prisma       # Database schema
+├── src/
+│   ├── lib/
+│   │   └── prisma.ts       # Prisma client
+│   ├── middleware/
+│   │   ├── auth.ts         # JWT authentication
+│   │   └── errorHandler.ts # Error handling
+│   ├── routes/
+│   │   ├── auth.routes.ts
+│   │   ├── project.routes.ts
+│   │   ├── service.routes.ts
+│   │   ├── testimonial.routes.ts
+│   │   ├── client.routes.ts
+│   │   ├── contact.routes.ts
+│   │   └── process.routes.ts
+│   ├── index.ts            # Entry point
+│   └── seed.ts             # Database seed
+├── .env                    # Environment variables
+├── docker-compose.yml      # Docker setup
+└── package.json
+```
+
+## 🌐 API Endpoints
+
+### Public
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/projects` | Lấy danh sách projects |
-| GET | `/api/projects/:projectId` | Lấy chi tiết project |
-| GET | `/api/services` | Lấy danh sách services |
-| GET | `/api/testimonials` | Lấy danh sách testimonials |
-| GET | `/api/clients` | Lấy danh sách clients |
-| GET | `/api/process` | Lấy tất cả quy trình |
-| GET | `/api/process/:category` | Lấy quy trình theo category (design/brand/code/photo) |
+| GET | `/api/projects` | Danh sách projects |
+| GET | `/api/projects/:id` | Chi tiết project |
+| GET | `/api/services` | Danh sách services |
+| GET | `/api/testimonials` | Danh sách testimonials |
+| GET | `/api/clients` | Danh sách clients |
+| GET | `/api/process` | Danh sách quy trình |
+| GET | `/api/process/:category` | Quy trình theo category |
 | POST | `/api/contact` | Submit contact form |
 
-### Admin Endpoints (cần JWT authentication)
+### Admin (cần JWT)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/auth/login` | Admin login |
-| POST | `/api/projects` | Create project |
-| PUT | `/api/projects/:projectId` | Update project |
-| DELETE | `/api/projects/:projectId` | Delete project |
-| *(tương tự cho services, testimonials, clients, process)* | | |
+| POST/PUT/DELETE | `/api/projects/*` | Quản lý projects |
+| POST/PUT/DELETE | `/api/services/*` | Quản lý services |
+| POST/PUT/DELETE | `/api/testimonials/*` | Quản lý testimonials |
+| POST/PUT/DELETE | `/api/clients/*` | Quản lý clients |
+| POST/PUT/DELETE | `/api/process/*` | Quản lý quy trình |
 
-## Default Admin Credentials
-
-Sau khi seed lần đầu:
-- **Email:** `admin@hatmedia.vn`
-- **Password:** `ChangeMe123!`
-
-⚠️ **THAY ĐỔI NGAY** trong production!
-
-## Database Management
-
-Xem database với Prisma Studio:
-```bash
-npx prisma studio
-```
-
-## Environment Variables
-
-```env
-PORT=8080
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/hat_studio?schema=public"
-JWT_SECRET=your-super-secret-jwt-key
-CORS_ORIGINS=http://localhost:3000
-ADMIN_EMAIL=admin@hatmedia.vn
-ADMIN_PASSWORD=ChangeMe123!
-```
-
-## Tech Stack
+## 🛠 Tech Stack
 
 - **Runtime:** Node.js + TypeScript
 - **Framework:** Express.js
 - **Database:** PostgreSQL
 - **ORM:** Prisma
-- **Auth:** JWT + bcrypt
+- **Auth:** JWT + bcryptjs
 - **Validation:** Zod
-- **File Upload:** Multer (sẵn sàng cho tích hợp)
+- **CORS:** cors
+- **File Upload:** multer (ready to integrate)
+
+## 📦 Production Deploy
+
+### Variables cần thiết:
+```env
+NODE_ENV=production
+DATABASE_URL=<postgresql connection string>
+JWT_SECRET=<strong random secret>
+CORS_ORIGINS=<your production domain>
+ADMIN_EMAIL=<admin email>
+ADMIN_PASSWORD=<strong password>
+```
+
+### Platforms gợi ý:
+- **Railway** (dễ nhất, có PostgreSQL built-in)
+- **Render** (free tier available)
+- **Vercel** (cho serverless)
+- **AWS** (RDS + ECS/Elastic Beanstalk)
+
+## 📝 License
+
+MIT

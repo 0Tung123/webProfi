@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Sora, Playfair_Display } from "next/font/google";
 
 import SmoothScroll from "@/app/components/common/SmoothScroll";
+import { AuthProvider } from "@/app/contexts/AuthContext";
 
 import "./globals.css";
 
@@ -34,8 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${sora.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
-        <SmoothScroll />
-        {children}
+        <AuthProvider>
+          <SmoothScroll />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

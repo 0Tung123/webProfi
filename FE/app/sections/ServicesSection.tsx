@@ -1,18 +1,43 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import { useState } from "react";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import { SERVICES } from "@/app/lib/data";
+import { useServices } from "@/app/hooks/useServices";
 
 export default function ServicesSection() {
   const { ref: sectionRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { services, isLoading, error } = useServices();
+
+  if (isLoading) {
+    return (
+      <section className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+        <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--accent)]"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
+        <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            Failed to load services: {error}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="services" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden bg-[var(--bg-0)]">
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
           <div className="max-w-2xl">
@@ -26,29 +51,40 @@ export default function ServicesSection() {
         </div>
 
         {/* Services Grid with Full Background Interaction */}
-        <div 
+        <div
           onMouseLeave={() => setHoveredIndex(null)}
           className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-[var(--surface-border)]"
         >
-          {SERVICES.map((service, i) => (
+          {services.map((service, i) => (
             <div
-              key={service.title}
+              key={service.serviceId}
               onMouseEnter={() => setHoveredIndex(i)}
               className={`service-item reveal group relative flex flex-col items-start p-10 lg:p-14 border-r border-b border-[var(--surface-border)] overflow-hidden transition-all duration-700 min-h-[350px] lg:min-h-[420px] ${isVisible ? 'is-visible' : ''}`}
               style={{ transitionDelay: isVisible ? `${0.1 * i}s` : '0s' } as React.CSSProperties}
             >
-              {/* Background Image Layer */}
+              {/* Background Image/Video Layer */}
               <div className="absolute inset-0 z-0 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                />
+                {service.image.match(/\.(mp4|mov|webm|ogg|mkv|avi)$|video/i) ? (
+                  <video
+                    src={service.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
+                  />
+                ) : (
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className={`object-cover transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${hoveredIndex === i ? 'scale-110' : 'opacity-20'}`}
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                  />
+                )}
                 {/* Dark overlay that intensifies on hover */}
                 <div className={`absolute inset-0 transition-opacity duration-[1000ms] ${hoveredIndex === i ? 'bg-black/60 opacity-100' : 'bg-transparent opacity-0'}`} />
-                
+
                 {/* Noise overlay for texture */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
               </div>
@@ -68,7 +104,7 @@ export default function ServicesSection() {
                 </h3>
 
                 <p className={`text-[15px] sm:text-[16px] font-light leading-relaxed max-w-[280px] transition-colors duration-[800ms] ${hoveredIndex === i ? 'text-white/80' : 'text-[var(--text-1)]'}`}>
-                  {service.desc}
+                  {service.description}
                 </p>
 
                 {/* Arrow Indicator */}
