@@ -23,15 +23,15 @@ function ContactInfoCard({
   return (
     <div
       ref={ref}
-      className={`reveal p-8 md:p-10 rounded-[2rem] bg-[var(--bg-2)] border border-transparent hover:border-[var(--accent)]/20 transition-all duration-500 ${isVisible ? "is-visible" : ""}`}
+      className={`reveal p-6 sm:p-8 md:p-10 rounded-[2rem] bg-[var(--bg-2)] border border-transparent hover:border-[var(--accent)]/20 transition-all duration-500 ${isVisible ? "is-visible" : ""}`}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      <div className="flex items-start gap-6">
-        <div className="flex-shrink-0 w-14 h-14 rounded-full bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)]">
+      <div className="flex items-start gap-4 sm:gap-6">
+        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)]">
           {icon}
         </div>
         <div className="flex-1">
-          <h3 className="text-[18px] md:text-[20px] font-bold text-[var(--text-0)] mb-4">{title}</h3>
+          <h3 className="text-[17px] sm:text-[18px] md:text-[20px] font-bold text-[var(--text-0)] mb-3 sm:mb-4">{title}</h3>
           <div className="space-y-2">{children}</div>
         </div>
       </div>
@@ -53,9 +53,9 @@ function SocialLink({ label, href, icon, index }: { label: string; href: string;
       style={{ transitionDelay: `${index * 0.05}s` }}
     >
       <div className="w-10 h-10 rounded-full bg-[var(--bg-2)] flex items-center justify-center group-hover:bg-[var(--accent)] transition-colors">
-        <div className="w-5 h-5 text-[var(--text-1)] group-hover:text-white transition-colors">
+        <svg className="w-5 h-5 text-[var(--text-1)] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
           {icon}
-        </div>
+        </svg>
       </div>
       <span className="text-sm font-medium text-[var(--text-1)] hover:text-[var(--accent)] transition-colors">
         {label}
@@ -133,7 +133,7 @@ export default function ContactPage() {
             </div>
 
             <h1
-              className={`reveal font-display text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.05] tracking-tight mb-8 ${heroVisible ? "is-visible" : ""}`}
+              className={`reveal font-display text-[36px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.15] md:leading-[1.05] tracking-tight mb-8 ${heroVisible ? "is-visible" : ""}`}
               style={{ transitionDelay: "0.2s" }}
             >
               Liên hệ
@@ -220,7 +220,7 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-8">
-              <div className={`reveal p-8 rounded-[2rem] bg-[var(--bg-2)] ${infoVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.1s" }}>
+              <div className={`reveal p-6 sm:p-8 rounded-[2rem] bg-[var(--bg-2)] ${infoVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.1s" }}>
                 <h3 className="text-[18px] md:text-[20px] font-bold text-[var(--text-0)] mb-6">Theo dõi chúng tôi</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {SOCIAL_LINKS.map((link, index) => (
@@ -268,9 +268,9 @@ export default function ContactPage() {
           </p>
           <a
             href={phones.length > 0 ? `tel:${phones[0].value}` : "tel:("+84+") 123 456 789"}
-            className="inline-flex items-center gap-4 bg-white text-[var(--accent)] px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.2)]"
+            className="inline-flex items-center gap-3 sm:gap-4 bg-white text-[var(--accent)] px-6 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-transform duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.15)]"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
             {phones.length > 0 ? phones[0].value : "(+84) 123 456 789"}

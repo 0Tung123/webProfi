@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import Image from "next/image";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 import { useProjects, Project } from "@/app/hooks/useProjects";
@@ -72,6 +72,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 const ProjectsSection = memo(function ProjectsSection() {
   const { ref: headerRef, isVisible: headerVisible } = useIntersectionObserver({ threshold: 0.1 });
   const { projects, isLoading, error } = useProjects();
+  const [selectedCategory, setSelectedCategory] = useState<string>("Tất cả");
 
   if (isLoading) {
     return (
@@ -97,12 +98,20 @@ const ProjectsSection = memo(function ProjectsSection() {
     );
   }
 
+  // Calculate unique categories dynamically from API or static list
+  const categories = ["Tất cả", ...Array.from(new Set(projects.map(p => p.category)))];
+
+  // Filter projects based on selected tab
+  const filteredProjects = selectedCategory === "Tất cả"
+    ? projects
+    : projects.filter(p => p.category === selectedCategory);
+
   return (
     <section id="projects" className="relative py-20 md:py-32 overflow-hidden bg-[var(--bg-0)]">
       <div className="mx-auto w-full max-w-[1920px] px-6 lg:px-12 xl:px-16">
         
         {/* Section Header */}
-        <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-24 gap-8">
+        <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-8">
           <div className="max-w-2xl">
             <span className={`reveal text-[12px] font-bold uppercase tracking-[0.3em] text-[var(--accent)] mb-4 block ${headerVisible ? 'is-visible' : ''}`}>
               Sản phẩm chúng tôi đã thực hiện
@@ -113,9 +122,27 @@ const ProjectsSection = memo(function ProjectsSection() {
           </div>
         </div>
 
+        {/* Dynamic Category Filter Bar */}
+        <div className="reveal flex flex-wrap gap-2.5 md:gap-3 mb-10 md:mb-12" style={{ transitionDelay: '0.15s' }}>
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              suppressHydrationWarning
+              className={`px-5 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-wider transition-all duration-500 border cursor-pointer ${
+                selectedCategory === category
+                  ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-lg shadow-[rgba(213,175,52,0.15)]'
+                  : 'bg-transparent text-[var(--text-2)] border-[var(--surface-border)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 auto-rows-[300px] md:auto-rows-[320px] mb-12 md:mb-16">
-          {projects.map((project, i) => (
+          {filteredProjects.map((project, i) => (
             <ProjectCard key={project.projectId} project={project} index={i} />
           ))}
         </div>

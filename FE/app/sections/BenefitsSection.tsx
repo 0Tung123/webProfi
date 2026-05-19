@@ -8,7 +8,7 @@ export default memo(function BenefitsSection() {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
-    <section id="benefits" className="relative py-40 md:py-60 overflow-hidden bg-[var(--bg-1)]">
+    <section id="benefits" className="relative py-24 md:py-48 overflow-hidden bg-[var(--bg-1)]">
       
       {/* Decorative Large Background Quote */}
       <div className="absolute top-0 left-10 text-[400px] font-serif text-black/[0.03] select-none pointer-events-none leading-none">
@@ -31,13 +31,13 @@ export default memo(function BenefitsSection() {
             {/* Main Statement */}
             <div className="flex-1">
               <h2 
-                className={`reveal font-serif italic text-[36px] sm:text-[54px] lg:text-[72px] font-medium text-[var(--text-0)] leading-[1.3] tracking-tight ${isVisible ? 'is-visible' : ''}`}
+                className={`reveal font-serif italic text-[22px] sm:text-[38px] md:text-[50px] lg:text-[64px] xl:text-[72px] font-medium text-[var(--text-0)] leading-[1.3] tracking-tight ${isVisible ? 'is-visible' : ''}`}
                 style={{ transitionDelay: '0.1s' }}
               >
                 "{BENEFITS_CONTENT.statement}"
               </h2>
               
-              <div className={`reveal mt-12 md:mt-16 flex items-center gap-6 md:gap-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+              <div className={`reveal mt-8 md:mt-16 flex items-center gap-6 md:gap-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
                 <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-bold text-xl shrink-0">
                   {BENEFITS_CONTENT.founder.initial}
                 </div>

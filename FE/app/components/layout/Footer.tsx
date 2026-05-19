@@ -97,9 +97,13 @@ export default memo(function Footer() {
               <input 
                 type="email" 
                 placeholder="Nhập email tại đây" 
+                suppressHydrationWarning
                 className="w-full bg-transparent border-b border-black/10 pb-4 pr-20 text-[13px] focus:outline-none focus:border-black transition-colors"
               />
-              <button className="absolute right-0 bottom-4 text-[13px] font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">
+              <button 
+                suppressHydrationWarning
+                className="absolute right-0 bottom-4 text-[13px] font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors"
+              >
                 Đăng ký
               </button>
             </div>

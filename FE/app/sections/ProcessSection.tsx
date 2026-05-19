@@ -72,6 +72,7 @@ export default memo(function ProcessSection() {
                 <button
                   key={key}
                   onClick={() => setActiveField(key)}
+                  suppressHydrationWarning
                   className={`px-6 py-3 rounded-full text-[13px] font-bold uppercase tracking-wider transition-all duration-500 border ${
                     activeField === key 
                       ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-lg' 
@@ -126,18 +127,18 @@ export default memo(function ProcessSection() {
           </div>
 
           {/* Marquee Rows */}
-          <div className={`reveal flex flex-col gap-12 overflow-hidden py-10 -mx-6 lg:-mx-16 relative ${partnersVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+          <div className={`reveal flex flex-col gap-6 md:gap-12 overflow-hidden py-4 md:py-10 -mx-6 lg:-mx-16 relative ${partnersVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             
             {/* Gradient Fades for edges */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--bg-0)] to-transparent z-10" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[var(--bg-0)] to-transparent z-10" />
+            <div className="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-[var(--bg-0)] to-transparent z-10" />
+            <div className="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-[var(--bg-0)] to-transparent z-10" />
 
             {/* Row 1: Left Scroll */}
-            <div className="flex animate-marquee-left whitespace-nowrap gap-16 md:gap-24 items-center">
+            <div className="flex animate-marquee-left whitespace-nowrap gap-8 md:gap-24 items-center">
               {[...displayClients, ...displayClients].map((client, i) => (
                 <span 
                   key={`${client}-1-${i}`}
-                  className="text-[24px] md:text-[38px] font-display font-black tracking-tighter text-[var(--text-0)] opacity-70 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
+                  className="text-[18px] md:text-[38px] font-display font-black tracking-tighter text-[var(--text-0)] opacity-70 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
                 >
                   {client}
                 </span>
@@ -145,11 +146,11 @@ export default memo(function ProcessSection() {
             </div>
 
             {/* Row 2: Right Scroll */}
-            <div className="flex animate-marquee-right whitespace-nowrap gap-16 md:gap-24 items-center">
+            <div className="flex animate-marquee-right whitespace-nowrap gap-8 md:gap-24 items-center">
               {[...displayClients.slice().reverse(), ...displayClients.slice().reverse()].map((client, i) => (
                 <span 
                   key={`${client}-2-${i}`}
-                  className="text-[24px] md:text-[38px] font-serif italic text-[var(--text-1)] opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
+                  className="text-[18px] md:text-[38px] font-serif italic text-[var(--text-1)] opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
                 >
                   {client}
                 </span>

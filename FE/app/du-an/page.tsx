@@ -140,7 +140,7 @@ export default function ProjectsPage() {
             </div>
 
             <h1
-              className={`reveal font-display text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.05] tracking-tight mb-8 ${heroVisible ? "is-visible" : ""}`}
+              className={`reveal font-display text-[36px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.15] md:leading-[1.05] tracking-tight mb-8 ${heroVisible ? "is-visible" : ""}`}
               style={{ transitionDelay: "0.2s" }}
             >
               Dự án của chúng tôi
@@ -157,17 +157,18 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="relative py-12 overflow-hidden">
+      <section className="relative py-8 overflow-hidden">
         <div className="mx-auto w-full max-w-[1920px] px-6 md:px-24 lg:px-40">
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-2.5 md:gap-3">
             {categoryOptions.map((category, index) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`group px-6 py-3 rounded-full text-sm font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
+                suppressHydrationWarning
+                className={`group px-5 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-wider transition-all duration-500 border cursor-pointer ${
                   activeCategory === category
-                    ? "bg-[var(--accent)] text-white shadow-[0_8px_30px_rgba(213,175,52,0.4)]"
-                    : "bg-[var(--bg-2)] text-[var(--text-1)] hover:bg-[var(--bg-2)]/80 hover:text-[var(--text-0)]"
+                    ? "bg-[var(--accent)] text-white border-[var(--accent)] shadow-lg shadow-[rgba(213,175,52,0.15)]"
+                    : "bg-transparent text-[var(--text-2)] border-[var(--surface-border)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
                 }`}
                 style={{ transitionDelay: `${index * 0.05}s` }}
               >

@@ -75,7 +75,7 @@ export default memo(function HeroSection() {
       className="relative w-full bg-[var(--bg-0)] pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden"
     >
       {/* Scroll Down Indicator (Left Side) */}
-      <div className="absolute left-6 md:left-10 top-[450px] flex flex-col items-center gap-6 z-20">
+      <div className="hidden md:flex absolute left-6 md:left-10 top-[450px] flex-col items-center gap-6 z-20">
         <div className="flex flex-col items-center gap-4">
           <span className="[writing-mode:vertical-lr] text-[10px] font-bold tracking-[0.4em] text-[#c5a12e] uppercase rotate-180">
             Scroll Down
@@ -93,8 +93,8 @@ export default memo(function HeroSection() {
         <div className="w-full flex flex-col items-start mb-20">
           
           {/* Line 1: WE COMPLETE (Aligned Left) */}
-          <div className={`reveal flex items-center gap-6 md:gap-12 mb-4 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
-            <h1 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
+          <div className={`reveal flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-12 mb-4 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
+            <h1 className="text-[32px] sm:text-[50px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
               {heroData.title1}
             </h1>
             
@@ -117,14 +117,14 @@ export default memo(function HeroSection() {
           </div>
 
           {/* Line 2: YOUR CREATIVE IDEAS (Indented) */}
-          <div className={`reveal ml-[10%] md:ml-[15%] mb-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
-            <h2 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
+          <div className={`reveal ml-0 md:ml-[15%] mb-6 md:mb-10 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
+            <h2 className="text-[32px] sm:text-[50px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-semibold leading-[1] tracking-[-0.02em] text-[var(--text-0)] uppercase">
               {heroData.title2}
             </h2>
           </div>
           
           {/* Subtext (Further Indented) */}
-          <div className={`reveal ml-[25%] md:ml-[40%] max-w-lg ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
+          <div className={`reveal ml-0 md:ml-[40%] max-w-lg ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             <p className="text-[13px] md:text-[15px] text-gray-500 font-normal leading-relaxed tracking-normal">
               {heroData.subtext}
             </p>
@@ -164,12 +164,12 @@ export default memo(function HeroSection() {
           className={`reveal mt-12 md:mt-20 w-full ${isVisible ? 'is-visible' : ''}`} 
           style={{ transitionDelay: '0.6s' }}
         >
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12 border-t border-b border-[var(--surface-border)] py-8 relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-2.5 lg:gap-12 border-t border-b border-[var(--surface-border)] py-3.5 md:py-6 relative overflow-hidden">
             
             {/* Left side label: static & prominent */}
             <div className="flex-shrink-0 z-20 bg-[var(--bg-0)] pr-6 flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--text-1)]">
+              <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--text-1)]">
                 Trusted Partners:
               </span>
             </div>
@@ -181,24 +181,24 @@ export default memo(function HeroSection() {
               <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-[var(--bg-0)] to-transparent z-10 pointer-events-none" />
 
               {/* Scrolling Row */}
-              <div className="flex animate-marquee-hero whitespace-nowrap gap-20 md:gap-32 items-center">
+              <div className="flex animate-marquee-hero whitespace-nowrap gap-8 md:gap-24 items-center">
                 {partners.length > 0 && [...partners, ...partners, ...partners].map((partner, i) => (
                   <div 
                     key={`${partner.clientId || partner.name}-${i}`}
                     className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
                   >
                     {partner.logo ? (
-                      <div className="relative h-14 w-36 md:h-20 md:w-52 opacity-60 hover:opacity-100 transition-all duration-300">
+                      <div className="relative h-8 w-24 sm:h-12 sm:w-32 md:h-16 md:w-44 opacity-60 hover:opacity-100 transition-all duration-300">
                         <Image
                           src={partner.logo}
                           alt={partner.name}
                           fill
                           className="object-contain filter grayscale dark:invert"
-                          sizes="(max-width: 768px) 144px, 208px"
+                          sizes="(max-width: 768px) 96px, 176px"
                         />
                       </div>
                     ) : (
-                      <span className="text-lg md:text-2xl font-display font-semibold tracking-tight text-[var(--text-2)] hover:text-[var(--accent)] opacity-70 hover:opacity-100 transition-all duration-300 cursor-pointer uppercase">
+                      <span className="text-sm md:text-xl lg:text-2xl font-display font-semibold tracking-tight text-[var(--text-2)] hover:text-[var(--accent)] opacity-70 hover:opacity-100 transition-all duration-300 cursor-pointer uppercase">
                         {partner.name}
                       </span>
                     )}

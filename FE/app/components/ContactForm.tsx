@@ -53,6 +53,7 @@ export default function ContactForm() {
             </p>
             <button
               onClick={() => setSuccess(false)}
+              suppressHydrationWarning
               className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3 text-sm font-bold uppercase tracking-widest text-black transition-all duration-300 hover:bg-accent-soft"
             >
               Gửi tin nhắn khác
@@ -102,8 +103,8 @@ export default function ContactForm() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Họ và tên <span className="text-red-500">*</span>
+                <label htmlFor="name" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
+                  Họ và tên <span className="text-red-500 font-normal">*</span>
                 </label>
                 <input
                   type="text"
@@ -112,7 +113,8 @@ export default function ContactForm() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"
+                  suppressHydrationWarning
+                  className="w-full bg-[var(--bg-1)] border border-[var(--surface-border)] px-5 py-4 text-[14px] text-[var(--text-0)] rounded-2xl placeholder-gray-400/70 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
                   placeholder="Nguyễn Văn A"
                   minLength={2}
                   title="Họ tên phải có ít nhất 2 ký tự"
@@ -120,8 +122,8 @@ export default function ContactForm() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                <label htmlFor="email" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
+                  Email <span className="text-red-500 font-normal">*</span>
                 </label>
                 <input
                   type="email"
@@ -130,14 +132,15 @@ export default function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"
+                  suppressHydrationWarning
+                  className="w-full bg-[var(--bg-1)] border border-[var(--surface-border)] px-5 py-4 text-[14px] text-[var(--text-0)] rounded-2xl placeholder-gray-400/70 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
                   placeholder="example@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="phone" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
                 Số điện thoại
               </label>
               <input
@@ -146,15 +149,17 @@ export default function ContactForm() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200"                  placeholder="090 123 4567"
-                  pattern="[0-9\s\+\-\(\)]+"
-                  title="Chỉ nhập số điện thoại hợp lệ"
+                suppressHydrationWarning
+                className="w-full bg-[var(--bg-1)] border border-[var(--surface-border)] px-5 py-4 text-[14px] text-[var(--text-0)] rounded-2xl placeholder-gray-400/70 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300"
+                placeholder="090 123 4567"
+                pattern="[0-9\s\+\-\(\)]+"
+                title="Chỉ nhập số điện thoại hợp lệ"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                Tin nhắn <span className="text-red-500">*</span>
+              <label htmlFor="message" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
+                Tin nhắn <span className="text-red-500 font-normal">*</span>
               </label>
               <textarea
                 id="message"
@@ -162,8 +167,9 @@ export default function ContactForm() {
                 value={formData.message}
                 onChange={handleChange}
                 required
+                suppressHydrationWarning
                 rows={6}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-200 resize-none"
+                className="w-full bg-[var(--bg-1)] border border-[var(--surface-border)] px-5 py-4 text-[14px] text-[var(--text-0)] rounded-2xl placeholder-gray-400/70 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300 resize-none"
                 placeholder="Hãy mô tả dự án của bạn... (tối thiểu 10 ký tự)"
                 minLength={10}
                 title="Tin nhắn phải có ít nhất 10 ký tự"
@@ -174,6 +180,7 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={isLoading}
+                suppressHydrationWarning
                 className="inline-flex items-center justify-center rounded-full bg-accent px-10 py-4 text-sm font-bold uppercase tracking-widest text-black transition-all duration-300 hover:bg-accent-soft hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_14px_35px_rgba(213,175,52,0.25)]"
               >
                 {isLoading ? 'Đang gửi...' : 'Gửi tin nhắn'}

@@ -8,6 +8,7 @@ import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
 import Button from "@/app/components/common/Button";
 import { teamService, TeamMember } from "@/app/lib/api/team.service";
+import { clientsService } from "@/app/lib/api/clients.service";
 import { CLIENTS } from "@/app/lib/data";
 import { SERVICES } from "@/app/lib/data";
 import { ABOUT_CONTENT } from "@/app/lib/data";
@@ -67,25 +68,25 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-        <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
-          <h3 className="text-white font-bold text-[20px] md:text-[24px] mb-1">{member.name}</h3>
-          <p className="text-white/80 text-xs md:text-sm font-light italic mb-3">{member.role}</p>
+      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+        <div className="transform translate-y-0 md:translate-y-4 opacity-100 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+          <h3 className="text-white font-bold text-[15px] sm:text-[18px] md:text-[24px] mb-0.5 md:mb-1">{member.name}</h3>
+          <p className="text-white/85 text-[10px] sm:text-xs md:text-sm font-light italic mb-2 md:mb-3">{member.role}</p>
 
-          <div className="flex gap-3">
+          <div className="flex gap-2.5 md:gap-3">
             {socialEntries.map(([platform, url]) => (
               <a
                 key={platform}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
                 aria-label={platform}
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24">
                   {getSocialIcon(platform)}
                 </svg>
               </a>
@@ -103,17 +104,17 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
    Impact Stat Item
    ======================================================================== */
 function StatItem({ value, label, index }: { value: string; label: string; index: number }) {
-  const { ref, isVisible } = useIntersectionObserver({ once: true, threshold: 0.5 });
+  const { ref, isVisible } = useIntersectionObserver({ once: true, threshold: 0.15 });
   return (
     <div
       ref={ref}
       className={`reveal flex flex-col items-center text-center ${isVisible ? "is-visible" : ""}`}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      <span className="text-[40px] md:text-[56px] font-display font-bold text-[var(--accent)] leading-none mb-2">
+      <span className="text-[36px] sm:text-[40px] md:text-[56px] font-display font-bold text-[var(--accent)] leading-none mb-1.5 md:mb-2">
         {value}
       </span>
-      <span className="text-[11px] md:text-[12px] uppercase tracking-[0.25em] text-[var(--text-2)] font-semibold">
+      <span className="text-[9px] sm:text-[11px] md:text-[12px] uppercase tracking-[0.15em] sm:tracking-[0.25em] text-[var(--text-2)] font-semibold leading-relaxed">
         {label}
       </span>
     </div>
@@ -181,24 +182,36 @@ export default function AboutPage() {
   const { ref: partnersRef, isVisible: partnersVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [dynamicClients, setDynamicClients] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTeam = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const members = await teamService.getAll();
+        const [members, clients] = await Promise.all([
+          teamService.getAll(),
+          clientsService.getAll(),
+        ]);
         setTeamMembers(members);
+        if (clients && clients.length > 0) {
+          setDynamicClients(clients.map((c) => c.name));
+        } else {
+          setDynamicClients(CLIENTS);
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch team members");
-        console.error("Failed to fetch team members:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch data");
+        console.error("Failed to fetch About page data:", err);
+        setDynamicClients(CLIENTS);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchTeam();
+    fetchData();
   }, []);
+
+  const displayClients = dynamicClients.length > 0 ? dynamicClients : CLIENTS;
 
   const STATS = [
     { value: "05+", label: "Năm kinh nghiệm" },
@@ -239,7 +252,7 @@ export default function AboutPage() {
         <div aria-hidden="true" className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--accent)] opacity-[0.02] blur-[100px] rounded-full pointer-events-none" />
 
         {/* Large background decorative text */}
-        <div aria-hidden="true" className="absolute top-12 right-12 text-[200px] md:text-[300px] font-display font-black text-black/[0.02] select-none leading-none pointer-events-none">
+        <div aria-hidden="true" className="absolute top-6 right-6 sm:top-12 sm:right-12 text-[120px] sm:text-[200px] md:text-[300px] font-display font-black text-black/[0.02] select-none leading-none pointer-events-none">
           About
         </div>
 
@@ -259,7 +272,7 @@ export default function AboutPage() {
 
           {/* Title */}
           <h1
-            className={`reveal font-display text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.05] tracking-tight mb-8 max-w-5xl ${heroVisible ? "is-visible" : ""}`}
+            className={`reveal font-display text-[36px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold text-[var(--text-0)] leading-[1.15] md:leading-[1.05] tracking-tight mb-8 max-w-5xl ${heroVisible ? "is-visible" : ""}`}
             style={{ transitionDelay: "0.15s" }}
           >
             Về <span className="text-[var(--accent)]">HAT</span> Studio
@@ -368,7 +381,7 @@ export default function AboutPage() {
             {/* Right: Visual block — quote + decorative */}
             <div className="flex-1 max-w-lg lg:mt-16">
               <div
-                className={`reveal relative p-10 md:p-14 rounded-[2rem] bg-[var(--bg-0)] border border-[var(--surface-border)] ${storyVisible ? "is-visible" : ""}`}
+                className={`reveal relative p-6 sm:p-10 md:p-14 rounded-[2rem] bg-[var(--bg-0)] border border-[var(--surface-border)] ${storyVisible ? "is-visible" : ""}`}
                 style={{ transitionDelay: "0.25s" }}
               >
                 {/* Decorative quotation mark */}
@@ -478,7 +491,7 @@ export default function AboutPage() {
               <p className="text-[var(--text-2)] font-light">Chưa có thành viên nào được thêm.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {teamMembers.map((member, index) => (
                 <TeamCard key={member.teamMemberId} member={member} index={index} />
               ))}
@@ -536,7 +549,7 @@ export default function AboutPage() {
             ].map((value, index) => (
               <div
                 key={index}
-                className={`reveal group p-8 md:p-10 rounded-[2rem] bg-[var(--bg-1)] border border-[var(--surface-border)] hover:border-[var(--accent)]/30 transition-all duration-500 hover:shadow-lg ${valuesVisible ? "is-visible" : ""}`}
+                className={`reveal group p-6 sm:p-8 md:p-10 rounded-[2rem] bg-[var(--bg-1)] border border-[var(--surface-border)] hover:border-[var(--accent)]/30 transition-all duration-500 hover:shadow-lg ${valuesVisible ? "is-visible" : ""}`}
                 style={{ transitionDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start gap-5">
@@ -580,16 +593,16 @@ export default function AboutPage() {
           </div>
 
           {/* Marquee */}
-          <div className={`reveal flex flex-col gap-10 overflow-hidden py-8 -mx-6 lg:-mx-24 relative ${partnersVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-            <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[var(--bg-1)] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[var(--bg-1)] to-transparent z-10 pointer-events-none" />
+          <div className={`reveal flex flex-col gap-6 md:gap-10 overflow-hidden py-8 -mx-6 lg:-mx-24 relative ${partnersVisible ? "is-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
+            <div className="absolute inset-y-0 left-0 w-12 md:w-40 bg-gradient-to-r from-[var(--bg-1)] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-12 md:w-40 bg-gradient-to-l from-[var(--bg-1)] to-transparent z-10 pointer-events-none" />
 
             {/* Row 1 */}
-            <div className="flex animate-marquee-left whitespace-nowrap gap-16 md:gap-24 items-center">
-              {[...CLIENTS, ...CLIENTS].map((client, i) => (
+            <div className="flex animate-marquee-left whitespace-nowrap gap-12 md:gap-24 items-center">
+              {[...displayClients, ...displayClients].map((client, i) => (
                 <span
                   key={`${client}-1-${i}`}
-                  className="text-[22px] md:text-[32px] font-display font-bold tracking-tighter text-[var(--text-0)] opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
+                  className="text-[18px] md:text-[32px] font-display font-bold tracking-tighter text-[var(--text-0)] opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
                 >
                   {client}
                 </span>
@@ -597,11 +610,11 @@ export default function AboutPage() {
             </div>
 
             {/* Row 2 */}
-            <div className="flex animate-marquee-right whitespace-nowrap gap-16 md:gap-24 items-center">
-              {[...CLIENTS].reverse().concat([...CLIENTS].reverse()).map((client, i) => (
+            <div className="flex animate-marquee-right whitespace-nowrap gap-12 md:gap-24 items-center">
+              {[...displayClients.slice().reverse(), ...displayClients.slice().reverse()].map((client, i) => (
                 <span
                   key={`${client}-2-${i}`}
-                  className="text-[20px] md:text-[28px] font-serif italic text-[var(--text-1)] opacity-50 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
+                  className="text-[16px] md:text-[28px] font-serif italic text-[var(--text-1)] opacity-50 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-500 cursor-default"
                 >
                   {client}
                 </span>
