@@ -37,7 +37,7 @@ export default memo(function AboutSection() {
 
           <div className={`reveal mt-8 sm:mt-16 flex items-center gap-6 ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '0.3s' }}>
             <div className="text-[12px] font-bold uppercase tracking-widest text-[var(--text-2)]">
-              Dẫn đầu xu hướng từ
+              Vì vậy chúng tôi luôn lắng nghe và thấu hiểu khách hàng từ 2017 đến nay
             </div>
             <div className="text-[24px] font-display font-light text-[var(--text-0)]">{ABOUT_CONTENT.since}</div>
           </div>

@@ -214,9 +214,9 @@ export default function AboutPage() {
   const displayClients = dynamicClients.length > 0 ? dynamicClients : CLIENTS;
 
   const STATS = [
-    { value: "05+", label: "Năm kinh nghiệm" },
-    { value: "100+", label: "Dự án hoàn thành" },
-    { value: "24+", label: "Đối tác tin cậy" },
+    { value: "10+", label: "Năm kinh nghiệm" },
+    { value: "1000+", label: "Dự án hoàn thiện" },
+    { value: "24+", label: "Đối tác chiến lược" },
     { value: "15+", label: "Thành viên" },
   ];
 

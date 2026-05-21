@@ -55,7 +55,7 @@ export default memo(function ProcessSection() {
                 className={`reveal font-display text-[32px] md:text-[56px] font-bold text-[var(--text-0)] leading-[1.1] tracking-tight ${stepsVisible ? 'is-visible' : ''}`}
                 style={{ transitionDelay: '0.1s' }}
               >
-                Quy trình tối ưu <br className="hidden lg:block" /> cho từng mục tiêu
+                Tinh gọn, minh bạch và hiệu quả <br className="hidden lg:block" /> cho từng mục tiêu
               </h2>
 
               <p 
@@ -161,10 +161,10 @@ export default memo(function ProcessSection() {
           {/* Trust Metrics */}
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { label: "Đối tác tin cậy", value: "24+" },
-              { label: "Dự án thành công", value: "100+" },
-              { label: "Năm kinh nghiệm", value: "05+" },
-              { label: "Lĩnh vực chuyên sâu", value: "08+" }
+              { label: "Đối tác chiến lược", value: "24+" },
+              { label: "Dự án hoàn thiện", value: "1000+" },
+              { label: "Năm kinh nghiệm", value: "10+" },
+              { label: "Ngành hàng chuyên sâu", value: "10+" }
             ].map((stat, i) => (
               <div 
                 key={stat.label} 

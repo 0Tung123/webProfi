@@ -71,14 +71,14 @@ export default function ContactForm() {
           <h2
             className={`reveal font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-0)] uppercase leading-tight mb-6 text-center ${isVisible ? 'is-visible' : ''}`}
           >
-            Liên hệ với chúng tôi
+            Bắt đầu dự án của bạn cùng với Hạt Media
           </h2>
 
           <p
             className={`reveal text-[var(--text-2)] text-base sm:text-lg mb-10 text-center ${isVisible ? 'is-visible' : ''}`}
             style={{ transitionDelay: '0.1s' }}
           >
-            Hãy cho chúng tôi biết ý tưởng của bạn. Chúng tôi sẵn sàng biến nó thành hiện thực.
+            ọi ý tưởng lớn đều cần một khởi đầu đúng đắn. Hãy chia sẻ bài toán của bạn, chúng tôi sẽ phác thảo nên giải pháp thị giác tối ưu nhất.
           </p>
 
           {error && (
@@ -104,7 +104,7 @@ export default function ContactForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
-                  Họ và tên <span className="text-red-500 font-normal">*</span>
+                  Tên cá nhân / Doanh nghiệp <span className="text-red-500 font-normal">*</span>
                 </label>
                 <input
                   type="text"
@@ -159,7 +159,7 @@ export default function ContactForm() {
 
             <div>
               <label htmlFor="message" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-1)] mb-2">
-                Tin nhắn <span className="text-red-500 font-normal">*</span>
+                Bài toán/Dự án của bạn là gì? <span className="text-red-500 font-normal">*</span>
               </label>
               <textarea
                 id="message"
@@ -172,7 +172,7 @@ export default function ContactForm() {
                 className="w-full bg-[var(--bg-1)] border border-[var(--surface-border)] px-5 py-4 text-[14px] text-[var(--text-0)] rounded-2xl placeholder-gray-400/70 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-all duration-300 resize-none"
                 placeholder="Hãy mô tả dự án của bạn... (tối thiểu 10 ký tự)"
                 minLength={10}
-                title="Tin nhắn phải có ít nhất 10 ký tự"
+                title="Bài toán/Dự án của bạn phải có ít nhất 10 ký tự"
               />
             </div>
 
@@ -183,7 +183,7 @@ export default function ContactForm() {
                 suppressHydrationWarning
                 className="inline-flex items-center justify-center rounded-full bg-accent px-10 py-4 text-sm font-bold uppercase tracking-widest text-black transition-all duration-300 hover:bg-accent-soft hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_14px_35px_rgba(213,175,52,0.25)]"
               >
-                {isLoading ? 'Đang gửi...' : 'Gửi tin nhắn'}
+                {isLoading ? 'Đang gửi...' : 'Gửi yêu cầu tư vấn'}
               </button>
             </div>
           </form>

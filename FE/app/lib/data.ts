@@ -101,7 +101,7 @@ export const PROCESS_BY_FIELD = {
     ]
   },
   brand: {
-    title: "Thiết kế Brand",
+    title: "Thương hiệu",
     desc: "Chúng tôi xây dựng thương hiệu dựa trên sự thấu hiểu sâu sắc về giá trị cốt lõi, từ đó tạo nên bản sắc độc bản và bền vững theo thời gian.",
     steps: [
       { step: "01", title: "Chiến lược", desc: "Định vị thương hiệu và giá trị cốt lõi." },
@@ -121,7 +121,7 @@ export const PROCESS_BY_FIELD = {
     ]
   },
   photo: {
-    title: "Chụp ảnh",
+    title: "Studio",
     desc: "Mỗi khung hình là một câu chuyện. Chúng tôi sử dụng ánh sáng và góc nhìn nghệ thuật để tôn vinh giá trị thực của sản phẩm và con người.",
     steps: [
       { step: "01", title: "Chuẩn bị trước", desc: "Lên Concept và chuẩn bị bối cảnh." },
@@ -189,9 +189,9 @@ export const BENEFITS_CONTENT = {
   philosophy: "Our Philosophy",
   statement: "Chúng tôi không chỉ kiến tạo sản phẩm số, HATMedia đồng hành cùng thương hiệu để định hình giá trị và tạo ra những trải nghiệm chạm tới cảm xúc.",
   founder: {
-    name: "Lê Xuân Hải",
-    role: "Founder of HATMedia",
-    initial: "H"
+    name: "Nguyễn Minh Công",
+    role: "Chief Marketing Officer",
+    initial: "DELI"
   },
   watermark: "Manifesto"
 };
