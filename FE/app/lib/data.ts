@@ -158,7 +158,7 @@ export const ABOUT_CONTENT = {
   subtitle: "Về HAT Studio",
   title: "Thấu hiểu, đồng hành và thiết kế trải nghiệm digital không giới hạn.",
   desc: "Chúng tôi xây dựng cho mình Tư duy thiết kế, Triết lý sáng tạo và gửi gắm Giá trị cho mỗi thương hiệu, mỗi doanh nghiệp cũng như cả cộng đồng. Mỗi dự án là một câu chuyện độc bản được kể bằng ngôn ngữ của trải nghiệm và cảm xúc.",
-  since: "2026"
+  since: "2017"
 };
 
 export const CONTACT_INFO = {

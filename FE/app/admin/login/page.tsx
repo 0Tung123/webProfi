@@ -189,7 +189,7 @@ export default function AdminLoginPage() {
 
           {/* Copyright */}
           <p className="text-center text-[var(--text-2)] text-sm mt-8">
-            © 2026 HATStudio. All rights reserved.
+            © 2017 HATStudio. All rights reserved.
           </p>
         </div>
       </div>
